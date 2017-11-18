@@ -8,3 +8,4 @@ lib\AceAddon-2.0\AceAddon-2.0.lua
 lib\AceDB-2.0\AceDB-2.0.lua
 
 ManaMinder.lua
+ManaMinder.xml

@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: Mana Minder
+## Notes: A tool to help manage mana consumables
+## Author: Grits
+## SavedVariables: ManaMinderDB
+
+lib\AceAddon-2.0\AceAddon-2.0.lua
+lib\AceDB-2.0\AceDB-2.0.lua
+
+ManaMinder.lua

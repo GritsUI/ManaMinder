@@ -4,8 +4,17 @@
 ## Author: Grits
 ## SavedVariables: ManaMinderDB
 
+lib\AceLibrary\AceLibrary.lua
+lib\AceOO-2.0\AceOO-2.0.lua
 lib\AceAddon-2.0\AceAddon-2.0.lua
+lib\AceEvent-2.0\AceEvent-2.0.lua
 lib\AceDB-2.0\AceDB-2.0.lua
 
-ManaMinder.lua
-ManaMinder.xml
+src\ManaMinder.lua
+
+src\data\Consumables.lua
+src\data\Defaults.lua
+src\Bar.lua
+src\BarManager.lua
+src\StateManager.lua
+src\Util.lua

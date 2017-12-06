@@ -126,8 +126,14 @@ function BarFrame.prototype:GetCurrentText()
     return ""
 end
 
-function BarFrame.prototype:Hide()
-    self.frame:Hide()
+function BarFrame.prototype:Consume()
+    if self.data.cooldown == 0 and self.data.deficitRemaining == 0 then
+        if self.data.type == "ITEM" then
+            UseContainerItem(self.data.bag, self.data.slot)
+        elseif self.data.type == "SPELL" then
+            CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
+        end
+    end
 end
 
 ManaMinder.BarFrame = BarFrame

@@ -35,10 +35,11 @@ function ManaMinder:GetCooldownForSpellName(spellName)
             local finish = start + duration
             local now = GetTime()
             local remaining = finish - now
-            return now < finish and remaining > 1.5 and remaining or 0
+            local cooldown = now < finish and remaining > 1.5 and remaining or 0
+            return cooldown, i
         end
     end
-    return 0
+    return 0, nil
 end
 
 function ManaMinder:SecondsToRelativeTime(seconds)

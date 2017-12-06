@@ -13,4 +13,12 @@ function Frame.prototype:GetPosition()
     return x, y
 end
 
+function Frame.prototype:Hide()
+    self.frame:Hide()
+end
+
+function Frame.prototype:Show()
+    self.frame:Show()
+end
+
 ManaMinder.Frame = Frame

@@ -9,7 +9,7 @@ function StateManager.prototype:init()
     self.state = {
 
         -- Map of tracked objects. Table index is equal to "key" in db consumables/items/spells config. Contains
-        -- objects with properties: key, priority, count, cooldown, cooldownTotal, texture
+        -- objects with properties: key, priority, count, cooldown, cooldownTotal, texture, type
         tracked = {}
     }
 end
@@ -48,7 +48,9 @@ function StateManager.prototype:UpdateStateForConsumables(state)
                             cooldownTotal = consumableData.cooldown,
                             texture = texture,
                             deficitRemaining = math.max(0, consumableData.maxMana - deficit),
-                            type = "ITEM"
+                            type = "ITEM",
+                            bag = bag,
+                            slot = slot
                         }
                     end
                 end
@@ -74,7 +76,7 @@ function StateManager.prototype:UpdateStateForSpells(state)
 
     for index, spellConfig in pairs(ManaMinder.db.profile.spells) do
         local spellData = ManaMinder.spells[spellConfig.key]
-        local cooldown = ManaMinder:GetCooldownForSpellName(spellData.name)
+        local cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
         state[spellConfig.key] = {
             key = spellConfig.key,
             priority = spellConfig.priority,
@@ -82,7 +84,8 @@ function StateManager.prototype:UpdateStateForSpells(state)
             cooldownTotal = spellData.cooldown,
             texture = spellData.iconTexture,
             deficitRemaining = math.max(0, spellData.maxMana - deficit),
-            type = "SPELL"
+            type = "SPELL",
+            spellId = spellId
         }
     end
 end

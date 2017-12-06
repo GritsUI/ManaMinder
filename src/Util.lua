@@ -25,6 +25,22 @@ function ManaMinder:GetItemIdFromLink(itemLink)
     end
 end
 
+function ManaMinder:SecondsToRelativeTime(seconds)
+    local m = math.floor(seconds / 60)
+    local s = math.floor((seconds - m * 60) + 0.5)
+    local rel = ""
+
+    if m > 0 then
+        rel = m .. ":"
+    end
+    if m > 0 and s < 10 then
+        rel = rel .. "0"
+    end
+    rel = rel .. s
+
+    return rel
+end
+
 function ManaMinder:SystemMessage(msg)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

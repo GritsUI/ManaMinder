@@ -1,5 +1,5 @@
 ## Interface: 11200
-## Title: Mana Minder
+## Title: ManaMinder
 ## Notes: A tool to help manage mana consumables
 ## Author: Grits
 ## SavedVariables: ManaMinderDB
@@ -14,7 +14,9 @@ src\ManaMinder.lua
 
 src\data\Consumables.lua
 src\data\Defaults.lua
-src\Bar.lua
+src\Frame.lua
+src\BarFrame.lua
 src\BarManager.lua
+src\MainFrame.lua
 src\StateManager.lua
 src\Util.lua

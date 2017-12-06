@@ -3,15 +3,16 @@ ManaMinder:RegisterDB("ManaMinderDB")
 
 local stateManager
 local barManager
+local mainFrame
 
 function ManaMinder:OnInitialize()
     ManaMinder:RegisterDefaults('profile', ManaMinder.defaults.profile)
 
-    stateManager = ManaMinder.StateManager:new()
-    barManager = ManaMinder.StateManager:new(stateManager)
+    mainFrame = ManaMinder.MainFrame:new()
+    mainFrame.frame:SetScript("OnUpdate", self.Update)
 
-    self.frame = CreateFrame("Frame", "ManaMinderRoot")
-    self.frame:SetScript("OnUpdate", self.Update)
+    stateManager = ManaMinder.StateManager:new()
+    barManager = ManaMinder.BarManager:new(mainFrame, stateManager)
 
     ManaMinder:SystemMessage("Addon Loaded")
 end

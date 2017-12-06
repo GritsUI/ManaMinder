@@ -34,14 +34,15 @@ function ManaMinder:GetCooldownForSpellName(spellName)
             local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")
             local finish = start + duration
             local now = GetTime()
-            return now < finish and finish - now or 0
+            local remaining = finish - now
+            return now < finish and remaining > 1.5 and remaining or 0
         end
     end
     return 0
 end
 
 function ManaMinder:SecondsToRelativeTime(seconds)
-    local m = math.floor(seconds / 60)
+    local m = math.floor((seconds + 0.5) / 60)
     local s = math.floor((seconds - m * 60) + 0.5)
     local rel = ""
 

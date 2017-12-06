@@ -87,7 +87,7 @@ function BarFrame.prototype:Update(index)
     self.frame:SetPoint("TOPLEFT", self.parentFrame, "TOPLEFT", 0, y)
     self.statusBar:SetValue(self:GetCurrentPercent())
 
-    local color = self:GetCurrentColor()
+    local color = self:GetCurrentColor(index)
     local alpha = db.profile.bars.alpha
     self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4] * alpha)
     self.statusBarText:SetText(self:GetCurrentText())
@@ -102,7 +102,7 @@ function BarFrame.prototype:GetCurrentPercent()
     return (self.data.cooldown / self.data.cooldownTotal) * 100
 end
 
-function BarFrame.prototype:GetCurrentColor()
+function BarFrame.prototype:GetCurrentColor(index)
     if self.data.cooldown > 0 then
         return db.profile.bars.cooldownColor
     end
@@ -111,7 +111,7 @@ function BarFrame.prototype:GetCurrentColor()
         return db.profile.bars.deficitColor
     end
 
-    return db.profile.bars.readyColor
+    return index == 1 and db.profile.bars.readyColor or db.profile.bars.cooldownColor
 end
 
 function BarFrame.prototype:GetCurrentText()

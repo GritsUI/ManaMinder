@@ -25,6 +25,21 @@ function ManaMinder:GetItemIdFromLink(itemLink)
     end
 end
 
+function ManaMinder:GetCooldownForSpellName(spellName)
+    local _,_,offset,numSpells = GetSpellTabInfo(GetNumSpellTabs())
+    local numAllSpell = offset + numSpells;
+    for i=1,numAllSpell do
+        local name = GetSpellName(i, "BOOKTYPE_SPELL");
+        if name == spellName then
+            local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")
+            local finish = start + duration
+            local now = GetTime()
+            return now < finish and finish - now or 0
+        end
+    end
+    return 0
+end
+
 function ManaMinder:SecondsToRelativeTime(seconds)
     local m = math.floor(seconds / 60)
     local s = math.floor((seconds - m * 60) + 0.5)

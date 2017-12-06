@@ -14,6 +14,7 @@ src\ManaMinder.lua
 
 src\data\Consumables.lua
 src\data\Defaults.lua
+src\data\Spells.lua
 src\Frame.lua
 src\BarFrame.lua
 src\BarManager.lua

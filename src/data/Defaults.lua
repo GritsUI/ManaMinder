@@ -28,6 +28,13 @@ ManaMinder.defaults = {
             },
             {
                 key = "DEMONIC_RUNE",
+                priority = 3,
+                enabled = true
+            }
+        },
+        spells = {
+            {
+                key = "MANA_TIDE_TOTEM",
                 priority = 2,
                 enabled = true
             }

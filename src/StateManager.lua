@@ -17,6 +17,7 @@ end
 function StateManager.prototype:Update()
     local newTracked = {}
     self:UpdateStateForConsumables(newTracked)
+    self:UpdateStateForSpells(newTracked)
 
     self.state = {
         tracked = newTracked
@@ -46,7 +47,8 @@ function StateManager.prototype:UpdateStateForConsumables(state)
                             cooldown = ManaMinder:GetContainerItemCooldownRemaining(bag, slot),
                             cooldownTotal = consumableData.cooldown,
                             texture = texture,
-                            deficitRemaining = math.max(0, consumableData.maxMana - deficit)
+                            deficitRemaining = math.max(0, consumableData.maxMana - deficit),
+                            type = "ITEM"
                         }
                     end
                 end
@@ -65,11 +67,31 @@ function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
     return nil
 end
 
+function StateManager.prototype:UpdateStateForSpells(state)
+    local mana = UnitMana("player")
+    local manaMax = UnitManaMax("player")
+    local deficit = manaMax - mana
+
+    for index, spellConfig in pairs(ManaMinder.db.profile.spells) do
+        local spellData = ManaMinder.spells[spellConfig.key]
+        local cooldown = ManaMinder:GetCooldownForSpellName(spellData.name)
+        state[spellConfig.key] = {
+            key = spellConfig.key,
+            priority = spellConfig.priority,
+            cooldown = cooldown,
+            cooldownTotal = spellData.cooldown,
+            texture = spellData.iconTexture,
+            deficitRemaining = math.max(0, spellData.maxMana - deficit),
+            type = "SPELL"
+        }
+    end
+end
+
 function StateManager.prototype:GetBarData()
     local bars = {}
 
     for key, consumable in self.state.tracked do
-       if consumable.count > 0 then
+       if consumable.type ~= "ITEM" or consumable.count > 0 then
            table.insert(bars, consumable)
        end
     end

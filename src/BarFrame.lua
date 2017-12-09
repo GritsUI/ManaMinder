@@ -59,24 +59,35 @@ function BarFrame.prototype:SetupStatusBar()
 end
 
 function BarFrame.prototype:SetupIcon()
-    self.icon = CreateFrame("Button", nil, self.frame)
-    self.icon:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
-    self.icon:SetWidth(db.profile.bars.height)
-    self.icon:SetHeight(db.profile.bars.height)
-    self.icon:SetNormalTexture(self.data.texture)
-    self.icon:SetAlpha(db.profile.bars.alpha)
+    local buttonName = self.frame:GetName() .. "_Button"
+    local buttonSize = db.profile.bars.height
+    self.button = CreateFrame("Button", buttonName, self.frame, "ActionButtonTemplate")
+    self.button:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 1)
+    self.button:SetWidth(buttonSize)
+    self.button:SetHeight(buttonSize)
+    self.button:SetAlpha(db.profile.bars.alpha)
+    self.button:EnableMouse(true)
+    self.button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    self.button:SetScript("OnClick", function() self:Consume(true) end)
+
+    local NORMALTEX_RATIO = 1.7
+    local buttonIcon = getglobal(buttonName .. "Icon")
+    local normalTexture = getglobal(buttonName .. "NormalTexture")
+    buttonIcon:SetTexture(self.data.texture)
+    normalTexture:SetWidth(buttonSize * NORMALTEX_RATIO)
+    normalTexture:SetHeight(buttonSize * NORMALTEX_RATIO)
 
     local color = db.profile.bars.iconFontColor
     local font = NumberFontNormalSmall:GetFont()
-    self.iconText = self.icon:CreateFontString(nil, "ARTWORK")
-    self.iconText:SetPoint("BOTTOMRIGHT", self.icon, "BOTTOMRIGHT", -2, 2)
-    self.iconText:SetJustifyH("RIGHT")
-    self.iconText:SetWidth(db.profile.bars.height)
-    self.iconText:SetFont(font, db.profile.bars.iconFontSize)
-    self.iconText:SetShadowColor(0, 0, 0, 1.0)
-    self.iconText:SetShadowOffset(0.80, -0.80)
-    self.iconText:SetTextColor(color[1], color[2], color[3], color[4] * db.profile.bars.alpha)
-    self.iconText:SetText(self.data.count)
+    self.buttonText = self.button:CreateFontString(nil, "ARTWORK")
+    self.buttonText:SetPoint("BOTTOMRIGHT", self.button, "BOTTOMRIGHT", -2, 2)
+    self.buttonText:SetJustifyH("RIGHT")
+    self.buttonText:SetWidth(db.profile.bars.height)
+    self.buttonText:SetFont(font, db.profile.bars.iconFontSize)
+    self.buttonText:SetShadowColor(0, 0, 0, 1.0)
+    self.buttonText:SetShadowOffset(0.80, -0.80)
+    self.buttonText:SetTextColor(color[1], color[2], color[3], color[4] * db.profile.bars.alpha)
+    self.buttonText:SetText(self.data.count)
 end
 
 function BarFrame.prototype:Update(index)
@@ -92,7 +103,7 @@ function BarFrame.prototype:Update(index)
     self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4] * alpha)
     self.statusBarText:SetText(self:GetCurrentText())
 
-    self.iconText:SetText(self.data.count)
+    self.buttonText:SetText(self.data.count)
 end
 
 function BarFrame.prototype:GetCurrentPercent()
@@ -126,8 +137,8 @@ function BarFrame.prototype:GetCurrentText()
     return ""
 end
 
-function BarFrame.prototype:Consume()
-    if self.data.cooldown == 0 and self.data.deficitRemaining == 0 then
+function BarFrame.prototype:Consume(force)
+    if force or (self.data.cooldown == 0 and self.data.deficitRemaining == 0) then
         if self.data.type == "ITEM" then
             UseContainerItem(self.data.bag, self.data.slot)
         elseif self.data.type == "SPELL" then

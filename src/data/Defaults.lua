@@ -5,10 +5,12 @@ ManaMinder.defaults = {
                 x = 0,
                 y = 0
             },
-            width = 200
+            width = 200,
+            hidden = false,
+            locked = false
         },
         bars = {
-            height = 25,
+            height = 24,
             alpha = 1,
             margin = 3,
             backgroundColor = { 0, 0, 0, 0.2 },

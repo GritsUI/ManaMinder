@@ -20,10 +20,14 @@ function MainFrame.prototype:SetupFrame()
     self.frame:SetWidth(db.profile.mainFrame.width)
     self.frame:SetHeight(100)
     self.frame:EnableMouse(true)
-    self.frame:SetMovable(true)
+    self.frame:SetMovable(not ManaMinder.db.profile.mainFrame.locked)
     self.frame:RegisterForDrag("LeftButton")
     self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
     self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
+
+    if ManaMinder.db.profile.mainFrame.hidden then
+        self:Hide()
+    end
 end
 
 function MainFrame.prototype:SetupFrameBackground()
@@ -33,10 +37,18 @@ function MainFrame.prototype:SetupFrameBackground()
 end
 
 function MainFrame.prototype:OnDragStart()
+    if ManaMinder.db.profile.mainFrame.locked then
+        return
+    end
+
     self.frame:StartMoving()
 end
 
 function MainFrame.prototype:OnDragStop()
+    if ManaMinder.db.profile.mainFrame.locked then
+        return
+    end
+
     self.frame:StopMovingOrSizing()
 
     local x, y = self:GetPosition()

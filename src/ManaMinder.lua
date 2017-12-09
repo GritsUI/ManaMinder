@@ -35,21 +35,25 @@ end
 
 function ManaMinder:Hide()
     mainFrame:Hide()
+    ManaMinder.db.profile.mainFrame.hidden = true
     ManaMinder:SystemMessage("Frames hidden")
 end
 
 function ManaMinder:Show()
     mainFrame:Show()
+    ManaMinder.db.profile.mainFrame.hidden = false
     ManaMinder:SystemMessage("Frames shown")
 end
 
 function ManaMinder:Lock()
-    mainFrame.frame:EnableMouse(false)
+    mainFrame.frame:SetMovable(false)
+    ManaMinder.db.profile.mainFrame.locked = true
     ManaMinder:SystemMessage("Frames locked")
 end
 
 function ManaMinder:Unlock()
-    mainFrame.frame:EnableMouse(true)
+    mainFrame.frame:SetMovable(true)
+    ManaMinder.db.profile.mainFrame.locked = false
     ManaMinder:SystemMessage("Frames unlocked")
 end
 

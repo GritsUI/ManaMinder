@@ -28,7 +28,7 @@ end
 function ManaMinder:GetCooldownForSpellName(spellName)
     local _,_,offset,numSpells = GetSpellTabInfo(GetNumSpellTabs())
     local numAllSpell = offset + numSpells;
-    for i=1,numAllSpell do
+    for i = numAllSpell, 1, -1 do
         local name = GetSpellName(i, "BOOKTYPE_SPELL");
         if name == spellName then
             local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")

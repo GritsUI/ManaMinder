@@ -77,16 +77,18 @@ function StateManager.prototype:UpdateStateForSpells(state)
     for index, spellConfig in pairs(ManaMinder.db.profile.spells) do
         local spellData = ManaMinder.spells[spellConfig.key]
         local cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
-        state[spellConfig.key] = {
-            key = spellConfig.key,
-            priority = spellConfig.priority,
-            cooldown = cooldown,
-            cooldownTotal = spellData.cooldown,
-            texture = spellData.iconTexture,
-            deficitRemaining = math.max(0, spellData.maxMana - deficit),
-            type = "SPELL",
-            spellId = spellId
-        }
+        if spellId ~= nil then
+            state[spellConfig.key] = {
+                key = spellConfig.key,
+                priority = spellConfig.priority,
+                cooldown = cooldown,
+                cooldownTotal = spellData.cooldown,
+                texture = spellData.iconTexture,
+                deficitRemaining = math.max(0, spellData.maxMana - deficit),
+                type = "SPELL",
+                spellId = spellId
+            }
+        end
     end
 end
 

@@ -1,0 +1,30 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+
+    <Frame name="ManaMinder_Options_Consumables" parent="ManaMinder_Options" hidden="true" id="3">
+        <Size>
+            <AbsDimension x="410" y="250"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
+                <Offset>
+                    <AbsDimension x="16" y="-28"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <Frames>
+            <Button name="$parent_Okay_Button" text="Consumables" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="120" y="25"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                    </Anchor>
+                </Anchors>
+            </Button>
+        </Frames>
+    </Frame>
+
+</Ui>

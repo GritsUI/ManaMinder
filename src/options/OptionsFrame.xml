@@ -1,0 +1,107 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+
+    <Frame name="ManaMinder_Options" toplevel="true" movable="true" enableMouse="true" frameStrata="DIALOG" hidden="true" parent="UIParent">
+        <Size>
+            <AbsDimension x="440" y="315"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOP" relativeTo="UIParent" relativePoint="TOP">
+                <Offset>
+                    <AbsDimension x="0" y="-40"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <TitleRegion setAllPoints="true"/>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parentHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+                    <Size>
+                        <AbsDimension x="375" y="64"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset>
+                                <AbsDimension x="1" y="12"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <FontString inherits="GameFontNormal" text="ManaMinder Options" nonspacewrap="true">
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="$parentHeader">
+                            <Offset>
+                                <AbsDimension x="0" y="-13"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Button name="$parentTab1" inherits="ManaMinder_FrameTabButtonTemplate" id="1" text="General">
+                <Anchors>
+                    <Anchor point="CENTER" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="50" y="-10"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="$parentTab2" inherits="ManaMinder_FrameTabButtonTemplate" id="2" text="Bars">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentTab1" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-15" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="$parentTab3" inherits="ManaMinder_FrameTabButtonTemplate" id="3" text="Consumables">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentTab2" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-15" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="$parent_Okay_Button" text="Okay" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="100" y="25"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+                        <Offset>
+                            <AbsDimension x="-15" y="15"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        ManaMinder.options:Close()
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                ManaMinder.options:OnLoad()
+            </OnLoad>
+        </Scripts>
+    </Frame>
+
+</Ui>

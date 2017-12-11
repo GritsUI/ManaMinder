@@ -14,11 +14,20 @@ lib\AceConsole-2.0\AceConsole-2.0.lua
 src\ManaMinder.lua
 
 src\data\Consumables.lua
-src\data\Defaults.lua
 src\data\Spells.lua
+src\options\Defaults.lua
+
 src\Frame.lua
 src\BarFrame.lua
 src\BarManager.lua
 src\MainFrame.lua
 src\StateManager.lua
 src\Util.lua
+
+src\options\OptionsFrame.lua
+src\options\OptionsFrameTabTemplate.xml
+src\options\OptionsFrame.xml
+src\options\GeneralOptionsFrame.lua
+src\options\GeneralOptionsFrame.xml
+src\options\BarsOptionsFrame.xml
+src\options\ConsumablesOptionsFrame.xml

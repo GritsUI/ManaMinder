@@ -14,8 +14,14 @@ function ManaMinder:OnInitialize()
     stateManager = ManaMinder.StateManager:new()
     barManager = ManaMinder.BarManager:new(mainFrame, stateManager)
 
-    ManaMinder:RegisterChatCommand({'/mana'}, ManaMinder:GetChatCommandOptions())
+    ManaMinder.controller = self
+    ManaMinder.mainFrame = mainFrame
+    ManaMinder.stateManage = stateManager
+    ManaMinder.barManager = barManager
 
+    ManaMinder.options:OnInitialize()
+
+    ManaMinder:RegisterChatCommand({'/mana'}, ManaMinder:GetChatCommandOptions())
     ManaMinder:SystemMessage("Addon Loaded. Type /mana for slash commands")
 end
 
@@ -23,6 +29,7 @@ function ManaMinder:GetChatCommandOptions()
     local options = {
         type = "group",
         args = {
+            config = {name = "Config", desc = "Open configuration window", type = "execute", func = "Config"},
             hide = {name = "Hide", desc = "Hides all frames", type = "execute", func = "Hide"},
             show = {name = "Show", desc = "Shows all frames", type = "execute", func = "Show"},
             lock = {name = "Lock", desc = "Lock all frames", type = "execute", func = "Lock" },
@@ -31,6 +38,10 @@ function ManaMinder:GetChatCommandOptions()
         }
     }
     return options
+end
+
+function ManaMinder:Config()
+    ManaMinder.options:Open()
 end
 
 function ManaMinder:Hide()

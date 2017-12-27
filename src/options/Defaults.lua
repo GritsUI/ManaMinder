@@ -2,8 +2,8 @@ ManaMinder.defaults = {
     profile = {
         mainFrame = {
             position = {
-                x = 0,
-                y = 0
+                x = 300,
+                y = 300
             },
             width = 200,
             hidden = false,

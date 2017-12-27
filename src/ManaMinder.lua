@@ -3,20 +3,18 @@ ManaMinder:RegisterDB("ManaMinderDB")
 
 local stateManager
 local barManager
-local mainFrame
 
 function ManaMinder:OnInitialize()
     ManaMinder:RegisterDefaults('profile', ManaMinder.defaults.profile)
 
-    mainFrame = ManaMinder.MainFrame:new()
-    mainFrame.frame:SetScript("OnUpdate", self.Update)
+    ManaMinder.mainFrame:OnInitialize()
+    ManaMinder.mainFrame.frame:SetScript("OnUpdate", self.Update)
 
     stateManager = ManaMinder.StateManager:new()
-    barManager = ManaMinder.BarManager:new(mainFrame, stateManager)
+    barManager = ManaMinder.BarManager:new(ManaMinder.mainFrame, stateManager)
 
     ManaMinder.controller = self
-    ManaMinder.mainFrame = mainFrame
-    ManaMinder.stateManage = stateManager
+    ManaMinder.stateManager = stateManager
     ManaMinder.barManager = barManager
 
     ManaMinder.options:OnInitialize()

@@ -99,7 +99,7 @@
         </Frames>
         <Scripts>
             <OnLoad>
-                ManaMinder.options:OnLoad()
+                ManaMinder.options:OnLoad(this)
             </OnLoad>
         </Scripts>
     </Frame>

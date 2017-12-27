@@ -5,13 +5,14 @@ function Options.prototype:init()
     Options.super.prototype.init(self)
 end
 
-function Options.prototype:OnInitialize()
-    ManaMinder.options.general:OnInitialize()
+function Options.prototype:OnLoad(frame)
+    self.frame = frame
+    PanelTemplates_SetNumTabs(frame, 3);
+    PanelTemplates_SetTab(frame, 1);
 end
 
-function Options.prototype:OnLoad()
-    PanelTemplates_SetNumTabs(ManaMinder_Options, 3);
-    PanelTemplates_SetTab(ManaMinder_Options, 1);
+function Options.prototype:OnInitialize()
+    ManaMinder.options.general:OnInitialize()
 end
 
 function Options.prototype:OnTabLoad(tab)
@@ -25,7 +26,7 @@ end
 
 function Options.prototype:OnTabClick(tab)
     PlaySound("igCharacterInfoTab");
-    PanelTemplates_Tab_OnClick(ManaMinder_Options);
+    PanelTemplates_Tab_OnClick(self.frame);
     self:HideSections()
 
     local tabName = tab:GetName()
@@ -45,11 +46,11 @@ function Options.prototype:HideSections()
 end
 
 function Options.prototype:Open()
-    ManaMinder_Options:Show()
+    self.frame:Show()
 end
 
 function Options.prototype:Close()
-    ManaMinder_Options:Hide()
+    self.frame:Hide()
 end
 
 ManaMinder.options = Options:new()

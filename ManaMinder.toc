@@ -21,6 +21,7 @@ src\Frame.lua
 src\BarFrame.lua
 src\BarManager.lua
 src\MainFrame.lua
+src\MainFrame.xml
 src\StateManager.lua
 src\Util.lua
 

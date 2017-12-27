@@ -1,23 +1,20 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local BarManager = AceOO.Class()
 
-function BarManager.prototype:init(mainFrame, stateManager)
+function BarManager.prototype:init()
     BarManager.super.prototype.init(self)
-
-    self.mainFrame = mainFrame
-    self.stateManager = stateManager
     self.barFrames = {}
 end
 
 function BarManager.prototype:Update()
-    local newData = self.stateManager:GetBarData()
+    local newData = ManaMinder.stateManager:GetBarData()
 
     -- Create bars that don't already exist for tracked items
     -- eg. On Initial setup, on going from item count 0 to > 0, on enabling of an item in settings
     self:CreateMissingBars(newData)
 
     -- Remove bars for tracked items that should no longer be shown
-    -- eg. On going from item count > 0 to 0, on disabling of an item in settings
+    -- eg. On going from item count > 0 to 0, on disabling of an item in settings, on spell loss from respec
     self:RemoveStaleBars(newData)
 
     -- Sort bars based on current cooldowns and priorities
@@ -47,7 +44,7 @@ function BarManager.prototype:IsBarInArray(array, key)
 end
 
 function BarManager.prototype:CreateBar(data)
-    local bar = ManaMinder.BarFrame:new(self.mainFrame.frame, data)
+    local bar = ManaMinder.BarFrame:new(ManaMinder.mainFrame.frame, data)
     return bar
 end
 
@@ -81,4 +78,4 @@ function BarManager.prototype:UpdateBars(newData)
     end
 end
 
-ManaMinder.BarManager = BarManager
+ManaMinder.barManager = BarManager:new()

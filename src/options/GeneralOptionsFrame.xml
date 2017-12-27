@@ -26,10 +26,10 @@
                 </Anchors>
                 <Scripts>
                     <OnLoad>
-                        ManaMinder.options.general:OnHideLoad()
+                        ManaMinder.optionsFrame.generalFrame:OnHideLoad()
                     </OnLoad>
                     <OnClick>
-                        ManaMinder.options.general:OnHideChange(this:GetChecked())
+                        ManaMinder.optionsFrame.generalFrame:OnHideChange(this:GetChecked())
                     </OnClick>
                 </Scripts>
             </CheckButton>
@@ -44,10 +44,10 @@
                 </Anchors>
                 <Scripts>
                     <OnLoad>
-                            ManaMinder.options.general:OnLockLoad()
+                            ManaMinder.optionsFrame.generalFrame:OnLockLoad()
                     </OnLoad>
                     <OnClick>
-                            ManaMinder.options.general:OnLockChange(this:GetChecked())
+                            ManaMinder.optionsFrame.generalFrame:OnLockChange(this:GetChecked())
                     </OnClick>
                 </Scripts>
             </CheckButton>

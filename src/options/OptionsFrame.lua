@@ -12,7 +12,7 @@ function Options.prototype:OnLoad(frame)
 end
 
 function Options.prototype:OnInitialize()
-    ManaMinder.options.general:OnInitialize()
+    self.generalFrame:OnInitialize()
 end
 
 function Options.prototype:OnTabLoad(tab)
@@ -53,4 +53,4 @@ function Options.prototype:Close()
     self.frame:Hide()
 end
 
-ManaMinder.options = Options:new()
+ManaMinder.optionsFrame = Options:new()

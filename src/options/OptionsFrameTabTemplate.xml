@@ -112,13 +112,13 @@
         </HighlightTexture>
         <Scripts>
             <OnLoad>
-                    ManaMinder.options:OnTabLoad(this)
+                    ManaMinder.optionsFrame:OnTabLoad(this)
             </OnLoad>
             <OnClick>
-                    ManaMinder.options:OnTabClick(this)
+                    ManaMinder.optionsFrame:OnTabClick(this)
             </OnClick>
             <OnShow>
-                    ManaMinder.options:OnTabShow(this)
+                    ManaMinder.optionsFrame:OnTabShow(this)
             </OnShow>
         </Scripts>
     </Button>

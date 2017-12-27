@@ -103,4 +103,4 @@ function StateManager.prototype:GetBarData()
     return bars
 end
 
-ManaMinder.StateManager = StateManager
+ManaMinder.stateManager = StateManager:new()

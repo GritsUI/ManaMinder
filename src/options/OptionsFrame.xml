@@ -92,14 +92,14 @@
                 </Anchors>
                 <Scripts>
                     <OnClick>
-                        ManaMinder.options:Close()
+                        ManaMinder.optionsFrame:Close()
                     </OnClick>
                 </Scripts>
             </Button>
         </Frames>
         <Scripts>
             <OnLoad>
-                ManaMinder.options:OnLoad(this)
+                ManaMinder.optionsFrame:OnLoad(this)
             </OnLoad>
         </Scripts>
     </Frame>

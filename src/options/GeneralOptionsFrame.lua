@@ -20,10 +20,10 @@ end
 function GeneralOptions.prototype:OnHideChange(hide)
     if hide then
         ManaMinder.db.profile.mainFrame.hidden = true
-        ManaMinder.mainFrame:Hide()
+        ManaMinder.mainFrame.frame:Hide()
     else
         ManaMinder.db.profile.mainFrame.hidden = false
-        ManaMinder.mainFrame:Show()
+        ManaMinder.mainFrame.frame:Show()
     end
 end
 
@@ -41,4 +41,4 @@ function GeneralOptions.prototype:OnLockChange(locked)
     end
 end
 
-ManaMinder.options.general = GeneralOptions:new()
+ManaMinder.optionsFrame.generalFrame = GeneralOptions:new()

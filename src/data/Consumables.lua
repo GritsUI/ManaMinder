@@ -73,7 +73,7 @@ local consumables = {
     }
 }
 
-if playerClass == "MAGE" then
+if playerClass == "Mage" then
     consumables["MANA_AGATE"] = {
         name = "Mana Agate",
         itemId = 5514,

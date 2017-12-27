@@ -26,19 +26,15 @@ ManaMinder.defaults = {
             {
                 key = "MAJOR_MANA_POTION",
                 priority = 1,
-                enabled = true
-            },
-            {
-                key = "DEMONIC_RUNE",
-                priority = 3,
-                enabled = true
-            }
-        },
-        spells = {
-            {
+                type = "ITEM"
+            }, {
                 key = "MANA_TIDE_TOTEM",
                 priority = 2,
-                enabled = true
+                type = "SPELL"
+            }, {
+                key = "DEMONIC_RUNE",
+                priority = 3,
+                type = "ITEM"
             }
         }
     }

@@ -14,7 +14,7 @@ end
 function MainFrame.prototype:OnInitialize()
     local selfDB = db.profile.mainFrame
 
-    self.frame:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", selfDB.position.x, selfDB.position.y)
+    self.frame:SetPoint("CENTER", "UIParent", "CENTER", selfDB.position.x, selfDB.position.y)
     self.frame:SetWidth(selfDB.width)
     self.frame:SetMovable(not selfDB.locked)
     self.frame:RegisterForDrag("LeftButton")

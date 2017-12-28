@@ -7,6 +7,7 @@ ManaMinder.defaults = {
             },
             width = 200,
             hidden = false,
+            hiddenOutOfCombat = false,
             locked = false
         },
         bars = {

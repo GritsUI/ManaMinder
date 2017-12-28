@@ -5,52 +5,105 @@
 
     <Frame name="ManaMinder_Options_General" parent="ManaMinder_Options" hidden="false" id="1">
         <Size>
-            <AbsDimension x="410" y="250"/>
+            <AbsDimension x="416" y="250"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
                 <Offset>
-                    <AbsDimension x="16" y="-28"/>
+                    <AbsDimension x="12" y="-36"/>
                 </Offset>
             </Anchor>
         </Anchors>
         <Frames>
 
-            <CheckButton name="ManaMinder_Options_General_Hide_Check" inherits="OptionsCheckButtonTemplate">
+            <Frame name="$parent_State_Section" inherits="OptionFrameBoxTemplate">
+                <Size>
+                    <AbsDimension x="10" y="72"/>
+                </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
                         <Offset>
                             <AbsDimension x="0" y="0"/>
                         </Offset>
                     </Anchor>
-                </Anchors>
-                <Scripts>
-                    <OnLoad>
-                        ManaMinder.optionsFrame.generalFrame:OnHideLoad()
-                    </OnLoad>
-                    <OnClick>
-                        ManaMinder.optionsFrame.generalFrame:OnHideChange(this:GetChecked())
-                    </OnClick>
-                </Scripts>
-            </CheckButton>
-
-            <CheckButton name="ManaMinder_Options_General_Lock_Check" inherits="OptionsCheckButtonTemplate">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_General_Hide_Check" relativePoint="BOTTOMLEFT">
+                    <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
                         <Offset>
-                            <AbsDimension x="0" y="5"/>
+                            <AbsDimension x="0" y="0"/>
                         </Offset>
                     </Anchor>
                 </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Display">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="6" y="12"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <CheckButton name="ManaMinder_Options_General_Hide_Check" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="8" y="-6"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.generalFrame:OnHideLoad()
+                            </OnLoad>
+                            <OnClick>
+                                    ManaMinder.optionsFrame.generalFrame:OnHideChange(this:GetChecked())
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="ManaMinder_Options_General_Hide_OOC_Check" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="206" y="-6"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.generalFrame:OnHideOutOfCombatLoad()
+                            </OnLoad>
+                            <OnClick>
+                                    ManaMinder.optionsFrame.generalFrame:OnHideOutOfCombatChange(this:GetChecked())
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="ManaMinder_Options_General_Lock_Check" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_General_Hide_Check" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="4"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.generalFrame:OnLockLoad()
+                            </OnLoad>
+                            <OnClick>
+                                    ManaMinder.optionsFrame.generalFrame:OnLockChange(this:GetChecked())
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                </Frames>
                 <Scripts>
                     <OnLoad>
-                            ManaMinder.optionsFrame.generalFrame:OnLockLoad()
+                            ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
                     </OnLoad>
-                    <OnClick>
-                            ManaMinder.optionsFrame.generalFrame:OnLockChange(this:GetChecked())
-                    </OnClick>
                 </Scripts>
-            </CheckButton>
+            </Frame>
 
         </Frames>
     </Frame>

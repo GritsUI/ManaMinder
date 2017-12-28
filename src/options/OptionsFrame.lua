@@ -39,6 +39,11 @@ function Options.prototype:OnTabClick(tab)
     end
 end
 
+function Options.prototype:OnOptionsFrameBoxLoad(box)
+    box:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.9);
+    box:SetBackdropColor(0.1, 0.1, 0.1, 0.9);
+end
+
 function Options.prototype:HideSections()
     ManaMinder_Options_General:Hide()
     ManaMinder_Options_Bars:Hide()

@@ -25,7 +25,7 @@ function MainFrame.prototype:InitializeState()
     self.frame:SetMovable(not selfDB.locked)
     self.frame:RegisterForDrag("LeftButton")
 
-    if selfDB.hidden then
+    if selfDB.hidden or selfDB.hiddenOutOfCombat then
         self.frame:Hide()
     end
 end
@@ -34,6 +34,8 @@ function MainFrame.prototype:InitializeEventHandlers()
     self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
     self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
 
+    self.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    self.frame:RegisterEvent("PLAYER_REGEN_DISABLED")
     self.frame:RegisterEvent("BAG_UPDATE")
     self.frame:RegisterEvent("BAG_UPDATE_COOLDOWN")
     self.frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
@@ -62,7 +64,27 @@ function MainFrame.prototype:OnDragStop()
 end
 
 function MainFrame.prototype:OnEvent(event)
-    self:UpdateAll()
+    if event == "PLAYER_REGEN_DISABLED" then
+        self:OnEnterCombat()
+    elseif event == "PLAYER_REGEN_ENABLED" then
+        self:OnLeaveCombat()
+    else
+        self:UpdateAll()
+    end
+end
+
+function MainFrame.prototype:OnEnterCombat()
+    self.inCombat = true
+    if db.profile.mainFrame.hiddenOutOfCombat then
+        self.frame:Show()
+    end
+end
+
+function MainFrame.prototype:OnLeaveCombat()
+    self.inCombat = false
+    if db.profile.mainFrame.hiddenOutOfCombat then
+        self.frame:Hide()
+    end
 end
 
 function MainFrame.prototype:UpdateAll()

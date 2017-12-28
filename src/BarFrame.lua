@@ -128,6 +128,7 @@ end
 
 function BarFrame.prototype:Update()
     self:UpdateAnimation()
+    self:UpdateCooldownState()
     self:UpdateStatusBar()
     self:UpdateConsumableCount()
 end
@@ -151,6 +152,16 @@ function BarFrame.prototype:UpdateAnimation()
     if percent == 1 then
         self.animation = nil
     end
+end
+
+function BarFrame.prototype:UpdateCooldownState()
+    local newValue = self:GetCooldownRemaining() > 0
+
+    if self.onCooldown ~= newValue then
+        ManaMinder.mainFrame:UpdateAll()
+    end
+
+    self.onCooldown = newValue
 end
 
 function BarFrame.prototype:UpdateStatusBar()
@@ -178,10 +189,6 @@ end
 
 function BarFrame.prototype:GetCooldownRemaining()
     return ManaMinder:GetCooldownRemaining(self.data.cooldownStart, self.data.cooldown, self.data.type == "SPELL")
-end
-
-function BarFrame.prototype:IsOnCooldown()
-    return self:GetCooldownRemaining() > 0
 end
 
 function BarFrame.prototype:GetCurrentPercent()
@@ -219,7 +226,7 @@ function BarFrame.prototype:GetCurrentText()
 end
 
 function BarFrame.prototype:Consume(force)
-    if force or (not self:IsOnCooldown() and self:GetDeficitRemaining() == 0) then
+    if force or (not self.onCooldown and self:GetDeficitRemaining() == 0) then
         if self.data.type == "ITEM" then
             UseContainerItem(self.data.bag, self.data.slot)
         elseif self.data.type == "SPELL" then

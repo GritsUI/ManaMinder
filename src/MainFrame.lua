@@ -14,7 +14,7 @@ end
 function MainFrame.prototype:OnInitialize()
     self:InitializeState()
     self:InitializeEventHandlers()
-    self:OnEvent()
+    self:UpdateAll()
 end
 
 function MainFrame.prototype:InitializeState()
@@ -37,6 +37,7 @@ function MainFrame.prototype:InitializeEventHandlers()
     self.frame:RegisterEvent("BAG_UPDATE")
     self.frame:RegisterEvent("BAG_UPDATE_COOLDOWN")
     self.frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
+    self.frame:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
     self.frame:SetScript("OnEvent", function() self:OnEvent(event) end)
 end
 
@@ -61,6 +62,10 @@ function MainFrame.prototype:OnDragStop()
 end
 
 function MainFrame.prototype:OnEvent(event)
+    self:UpdateAll()
+end
+
+function MainFrame.prototype:UpdateAll()
     ManaMinder.stateManager:Update()
     ManaMinder.barManager:Update()
 end

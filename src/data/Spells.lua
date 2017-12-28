@@ -8,7 +8,7 @@ if playerClass == "Shaman" then
         spellId = 17359,
         iconTexture = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
         cooldown = 300,
-        maxMana = 1000
+        requiredDeficit = 1000
     }
 end
 

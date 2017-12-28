@@ -106,19 +106,39 @@ function BarFrame.prototype:Update(index)
     self.buttonText:SetText(self.data.count)
 end
 
+function BarFrame.prototype:GetDeficitRemaining()
+    if not self.data.requiredDeficit then
+        return 0
+    end
+
+    local mana = UnitMana("player")
+    local manaMax = UnitManaMax("player")
+    local deficit = manaMax - mana
+    return math.max(0, self.data.requiredDeficit - deficit)
+end
+
+function BarFrame.prototype:GetCooldownRemaining()
+    return ManaMinder:GetCooldownRemaining(self.data.cooldownStart, self.data.cooldown, self.data.type == "SPELL")
+end
+
+function BarFrame.prototype:IsOnCooldown()
+    return self:GetCooldownRemaining() > 0
+end
+
 function BarFrame.prototype:GetCurrentPercent()
-    if self.data.cooldown == 0 then
+    local remaining = self:GetCooldownRemaining()
+    if remaining == 0 then
         return 100
     end
-    return (self.data.cooldown / self.data.cooldownTotal) * 100
+    return (remaining / self.data.cooldown) * 100
 end
 
 function BarFrame.prototype:GetCurrentColor(index)
-    if self.data.cooldown > 0 then
+    if self:GetCooldownRemaining() > 0 then
         return db.profile.bars.cooldownColor
     end
 
-    if self.data.deficitRemaining > 0 then
+    if self:GetDeficitRemaining() > 0 then
         return db.profile.bars.deficitColor
     end
 
@@ -126,19 +146,21 @@ function BarFrame.prototype:GetCurrentColor(index)
 end
 
 function BarFrame.prototype:GetCurrentText()
-    if self.data.cooldown > 0 then
-        return ManaMinder:SecondsToRelativeTime(self.data.cooldown)
+    local remaining = self:GetCooldownRemaining()
+    if remaining > 0 then
+        return ManaMinder:SecondsToRelativeTime(remaining)
     end
 
-    if self.data.deficitRemaining > 0 then
-        return "+" .. self.data.deficitRemaining
+    local deficit = self:GetDeficitRemaining()
+    if deficit > 0 then
+        return "+" .. deficit
     end
 
     return ""
 end
 
 function BarFrame.prototype:Consume(force)
-    if force or (self.data.cooldown == 0 and self.data.deficitRemaining == 0) then
+    if force or (not self:IsOnCooldown() and self:GetDeficitRemaining() == 0) then
         if self.data.type == "ITEM" then
             UseContainerItem(self.data.bag, self.data.slot)
         elseif self.data.type == "SPELL" then

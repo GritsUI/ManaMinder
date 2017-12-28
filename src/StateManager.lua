@@ -6,8 +6,10 @@ function StateManager.prototype:init()
 
     -- Tracks state of all consumable counts in bags and consumable/spell cooldowns. Only tracks those which are
     -- present in db.profile.consumables/items/spells, currently enabled and with a bag count greater than 0.
-    -- Table index is equal to "key" in db consumables/items/spells config. Contains
-    -- objects with properties: key, priority, count, cooldown, cooldownTotal, texture, type
+    -- Table index is equal to "key" in db consumables/items/spells config.
+    -- All objects contain properties: key, priority, cooldown, cooldownStart, texture, type, requiredDeficit
+    -- "ITEM" objects additionally contain: count, bag, slot
+    -- "SPELL" objects additionally contain: spellId
     self.state = {}
 end
 
@@ -19,10 +21,6 @@ function StateManager.prototype:Update()
 end
 
 function StateManager.prototype:UpdateStateForConsumables(state)
-    local mana = UnitMana("player")
-    local manaMax = UnitManaMax("player")
-    local deficit = manaMax - mana
-
     ManaMinder:ForEachContainerSlot(
         function(bag, slot)
             local texture, itemCount = GetContainerItemInfo(bag, slot)
@@ -30,18 +28,21 @@ function StateManager.prototype:UpdateStateForConsumables(state)
                 local link = GetContainerItemLink(bag, slot)
                 local itemId = ManaMinder:GetItemIdFromLink(link)
                 local consumableConfig, consumableData = self:GetConsumableConfigIfTracked(itemId)
+
                 if consumableConfig then
                     if state[consumableConfig.key] then
                         state[consumableConfig.key].count = state[consumableConfig.key].count + itemCount
                     else
+                        local start, duration = GetContainerItemCooldown(bag, slot)
+
                         state[consumableConfig.key] = {
                             key = consumableConfig.key,
                             priority = consumableConfig.priority,
                             count = itemCount,
-                            cooldown = ManaMinder:GetContainerItemCooldownRemaining(bag, slot),
-                            cooldownTotal = consumableData.cooldown,
+                            cooldown = duration,
+                            cooldownStart = start,
                             texture = texture,
-                            deficitRemaining = math.max(0, consumableData.maxMana - deficit),
+                            requiredDeficit = consumableData.requiredDeficit,
                             type = "ITEM",
                             bag = bag,
                             slot = slot
@@ -66,22 +67,18 @@ function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
 end
 
 function StateManager.prototype:UpdateStateForSpells(state)
-    local mana = UnitMana("player")
-    local manaMax = UnitManaMax("player")
-    local deficit = manaMax - mana
-
     for index, spellConfig in pairs(ManaMinder.db.profile.consumables) do
         if spellConfig.type == "SPELL" then
             local spellData = ManaMinder.spells[spellConfig.key]
-            local cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
+            local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
             if spellId ~= nil then
                 state[spellConfig.key] = {
                     key = spellConfig.key,
                     priority = spellConfig.priority,
                     cooldown = cooldown,
-                    cooldownTotal = spellData.cooldown,
+                    cooldownStart = cooldownStart,
                     texture = spellData.iconTexture,
-                    deficitRemaining = math.max(0, spellData.maxMana - deficit),
+                    requiredDeficit = spellData.requiredDeficit,
                     type = "SPELL",
                     spellId = spellId
                 }
@@ -98,7 +95,6 @@ function StateManager.prototype:GetBarData()
            table.insert(bars, consumable)
        end
     end
-    table.sort(bars, function(a, b) return a.priority < b.priority end)
 
     return bars
 end

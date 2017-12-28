@@ -16,6 +16,17 @@ function ManaMinder:GetContainerItemCooldownRemaining(bagId, slot)
     return enabled and now < finish and finish - now or 0
 end
 
+function ManaMinder:GetCooldownRemaining(start, duration, isSpell)
+    local now = GetTime()
+    local finish = start + duration
+    local remaining = now < finish and finish - now or 0
+
+    if isSpell and remaining < 1.5 then
+        return 0
+    end
+    return remaining
+end
+
 function ManaMinder:GetItemIdFromLink(itemLink)
     local id
     if (itemLink) then
@@ -32,11 +43,7 @@ function ManaMinder:GetCooldownForSpellName(spellName)
         local name = GetSpellName(i, "BOOKTYPE_SPELL");
         if name == spellName then
             local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")
-            local finish = start + duration
-            local now = GetTime()
-            local remaining = finish - now
-            local cooldown = now < finish and remaining > 1.5 and remaining or 0
-            return cooldown, i
+            return start, duration, i
         end
     end
     return 0, nil

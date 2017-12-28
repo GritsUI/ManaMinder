@@ -44,8 +44,7 @@ function BarManager.prototype:IsBarInArray(array, key)
 end
 
 function BarManager.prototype:CreateBar(data)
-    local bar = ManaMinder.BarFrame:new(ManaMinder.mainFrame.frame, data)
-    return bar
+    return ManaMinder.BarFrame:new(ManaMinder.mainFrame.frame, data)
 end
 
 function BarManager.prototype:RemoveStaleBars(newData)
@@ -59,10 +58,22 @@ end
 
 function BarManager.prototype:SortBars()
     table.sort(self.barFrames, function(barA, barB)
-        if barA.data.cooldown == barB.data.cooldown then
+        local cooldownRemainingA = ManaMinder:GetCooldownRemaining(
+            barA.data.cooldownStart,
+            barA.data.cooldown,
+            barA.data.type == "SPELL"
+        )
+
+        local cooldownRemainingB = ManaMinder:GetCooldownRemaining(
+            barB.data.cooldownStart,
+            barB.data.cooldown,
+            barB.data.type == "SPELL"
+        )
+
+        if cooldownRemainingA == cooldownRemainingB then
             return barA.data.priority < barB.data.priority
         end
-        return barA.data.cooldown < barB.data.cooldown
+        return cooldownRemainingA < cooldownRemainingB
     end)
 end
 

@@ -6,8 +6,6 @@ function ManaMinder:OnInitialize()
     ManaMinder:RegisterDefaults('profile', ManaMinder.defaults.profile)
 
     ManaMinder.mainFrame:OnInitialize()
-    ManaMinder.mainFrame.frame:SetScript("OnUpdate", self.Update)
-
     ManaMinder.optionsFrame:OnInitialize()
 
     ManaMinder:RegisterChatCommand({'/mana'}, ManaMinder:GetChatCommandOptions())
@@ -64,9 +62,4 @@ function ManaMinder:Consume()
     if ManaMinder.barManager.barFrames[1] then
         ManaMinder.barManager.barFrames[1]:Consume()
     end
-end
-
-function ManaMinder:Update()
-    ManaMinder.stateManager:Update()
-    ManaMinder.barManager:Update()
 end

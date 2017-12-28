@@ -65,6 +65,21 @@ function ManaMinder:SecondsToRelativeTime(seconds)
     return rel
 end
 
+function ManaMinder:Lerp(a, b, t)
+    return (1 - t) * a + t * b
+end
+
+function ManaMinder:EaseInOutQuad(a, b, t, d)
+    local c = b - a
+    t = (t * d) / (d / 2)
+    if t < 1 then
+        return c/2*t*t + a
+    end
+
+    t = t - 1
+    return -c/2 * (t*(t-2) - 1) + a
+end
+
 function ManaMinder:SystemMessage(msg)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

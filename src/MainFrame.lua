@@ -12,18 +12,32 @@ function MainFrame.prototype:OnLoad(frame)
 end
 
 function MainFrame.prototype:OnInitialize()
+    self:InitializeState()
+    self:InitializeEventHandlers()
+    self:OnEvent()
+end
+
+function MainFrame.prototype:InitializeState()
     local selfDB = db.profile.mainFrame
 
     self.frame:SetPoint("CENTER", "UIParent", "CENTER", selfDB.position.x, selfDB.position.y)
     self.frame:SetWidth(selfDB.width)
     self.frame:SetMovable(not selfDB.locked)
     self.frame:RegisterForDrag("LeftButton")
-    self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
-    self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
 
     if selfDB.hidden then
         self.frame:Hide()
     end
+end
+
+function MainFrame.prototype:InitializeEventHandlers()
+    self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
+    self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
+
+    self.frame:RegisterEvent("BAG_UPDATE")
+    self.frame:RegisterEvent("BAG_UPDATE_COOLDOWN")
+    self.frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
+    self.frame:SetScript("OnEvent", function() self:OnEvent(event) end)
 end
 
 function MainFrame.prototype:OnDragStart()
@@ -44,6 +58,11 @@ function MainFrame.prototype:OnDragStop()
     local point, parent, relativePoint, x, y = self.frame:GetPoint(1)
     db.profile.mainFrame.position.x = x
     db.profile.mainFrame.position.y = y
+end
+
+function MainFrame.prototype:OnEvent(event)
+    ManaMinder.stateManager:Update()
+    ManaMinder.barManager:Update()
 end
 
 ManaMinder.mainFrame = MainFrame:new()

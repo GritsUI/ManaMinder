@@ -20,7 +20,8 @@ ManaMinder.defaults = {
             fontSize = 11,
             fontColor = { 1, 1, 1, 1 },
             iconFontSize = 10,
-            iconFontColor = { 1, 1, 1, 1 }
+            iconFontColor = { 1, 1, 1, 1 },
+            animationDuration = 0.3
         },
         consumables = {
             {

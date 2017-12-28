@@ -83,7 +83,12 @@ function BarManager.prototype:UpdateBars(newData)
         for index, data in ipairs(newData) do
             if bar.data.key == data.key then
                 bar.data = data
-                bar:Update(i)
+
+                if not bar.index then
+                    bar:ChangeIndex(i, false)
+                elseif bar.index ~= i then
+                    bar:ChangeIndex(i, true)
+                end
             end
         end
     end

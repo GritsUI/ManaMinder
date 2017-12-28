@@ -24,6 +24,7 @@ end
 function BarFrame.prototype:SetupFrame()
     self.frame:SetWidth(db.profile.mainFrame.width)
     self.frame:SetHeight(db.profile.bars.height)
+    self.frame:SetScript("OnUpdate", function() self:Update() end)
 end
 
 function BarFrame.prototype:SetupFrameBackground()
@@ -90,19 +91,77 @@ function BarFrame.prototype:SetupIcon()
     self.buttonText:SetText(self.data.count)
 end
 
-function BarFrame.prototype:Update(index)
+function BarFrame.prototype:ChangeIndex(index, animate)
+    if self.index == index then
+        return
+    end
+
+    self.index = index
+
+    local targetPosition = self:GetPositionForIndex(index)
+    if not animate then
+        self:SetPosition(targetPosition)
+    else
+        self:BeginPositionAnimation(targetPosition)
+    end
+end
+
+function BarFrame.prototype:GetPositionForIndex(index)
     local margin = db.profile.bars.margin
     local height = db.profile.bars.height
-    local y = (index - 1) * (height + margin) * -1
+    return (index - 1) * (height + margin) * -1
+end
 
+function BarFrame.prototype:SetPosition(y)
     self.frame:SetPoint("TOPLEFT", self.parentFrame, "TOPLEFT", 0, y)
-    self.statusBar:SetValue(self:GetCurrentPercent())
+    self.position = y
+end
 
-    local color = self:GetCurrentColor(index)
+function BarFrame.prototype:BeginPositionAnimation(y)
+    self.animation = {
+        startPosition = self.position,
+        endPosition = y,
+        startTime = GetTime(),
+        duration = db.profile.bars.animationDuration
+    }
+end
+
+function BarFrame.prototype:Update()
+    self:UpdateAnimation()
+    self:UpdateStatusBar()
+    self:UpdateConsumableCount()
+end
+
+function BarFrame.prototype:UpdateAnimation()
+    if not self.animation then
+        return
+    end
+
+    local now = GetTime()
+    local percent = math.min(1, (now - self.animation.startTime) / self.animation.duration)
+
+    local newPosition = ManaMinder:EaseInOutQuad(
+        self.animation.startPosition,
+        self.animation.endPosition,
+        percent,
+        self.animation.duration
+    )
+    self:SetPosition(newPosition)
+
+    if percent == 1 then
+        self.animation = nil
+    end
+end
+
+function BarFrame.prototype:UpdateStatusBar()
+    local color = self:GetCurrentColor()
     local alpha = db.profile.bars.alpha
     self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4] * alpha)
+    self.statusBar:SetValue(self:GetCurrentPercent())
     self.statusBarText:SetText(self:GetCurrentText())
+end
 
+function BarFrame.prototype:UpdateConsumableCount()
     self.buttonText:SetText(self.data.count)
 end
 
@@ -133,7 +192,7 @@ function BarFrame.prototype:GetCurrentPercent()
     return (remaining / self.data.cooldown) * 100
 end
 
-function BarFrame.prototype:GetCurrentColor(index)
+function BarFrame.prototype:GetCurrentColor()
     if self:GetCooldownRemaining() > 0 then
         return db.profile.bars.cooldownColor
     end
@@ -142,7 +201,7 @@ function BarFrame.prototype:GetCurrentColor(index)
         return db.profile.bars.deficitColor
     end
 
-    return index == 1 and db.profile.bars.readyColor or db.profile.bars.cooldownColor
+    return self.index == 1 and db.profile.bars.readyColor or db.profile.bars.cooldownColor
 end
 
 function BarFrame.prototype:GetCurrentText()

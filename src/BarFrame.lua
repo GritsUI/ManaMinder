@@ -245,6 +245,14 @@ function BarFrame.prototype:UpdateHeight()
     normalTexture:SetWidth(height * NORMALTEX_RATIO)
     normalTexture:SetHeight(height * NORMALTEX_RATIO)
 
+    self:UpdatePosition()
+end
+
+function BarFrame.prototype:UpdateFontSize()
+    self.statusBarText:SetFont(GameFontHighlight:GetFont(), db.profile.bars.fontSize)
+end
+
+function BarFrame.prototype:UpdatePosition()
     self.animation = nil
     self:SetPosition(self:GetPositionForIndex(self.index))
 end

@@ -17,7 +17,7 @@
         <Frames>
             <Frame name="$parent_Size_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="10" y="92"/>
+                    <AbsDimension x="10" y="126"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -126,6 +126,48 @@
                             </OnValueChanged>
                             <OnLoad>
                                 ManaMinder.optionsFrame.barsFrame:OnHeightLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                    <Slider name="ManaMinder_Options_Bars_Font_Size_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="190" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-18" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnFontSizeChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnFontSizeLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                    <Slider name="ManaMinder_Options_Bars_Margin_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="190" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Height_Slider" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-18" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnMarginChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnMarginLoad()
                             </OnLoad>
                         </Scripts>
                     </Slider>

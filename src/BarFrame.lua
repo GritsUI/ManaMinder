@@ -4,6 +4,7 @@ AceOO.Class:init(BarFrame, ManaMinder.Frame)
 
 local db = ManaMinder.db
 local frameCount = 1
+local NORMALTEX_RATIO = 1.7
 
 function BarFrame.prototype:init(parentFrame, data)
     BarFrame.super.prototype.init(self, {
@@ -30,20 +31,17 @@ end
 function BarFrame.prototype:SetupFrameBackground()
     local color = db.profile.bars.backgroundColor
     self.background = self.frame:CreateTexture(nil, "BACKGROUND")
-    self.background:SetTexture(color[1], color[2], color[3], color[4] * db.profile.bars.alpha)
+    self.background:SetTexture(color[1], color[2], color[3], color[4])
     self.background:SetAllPoints()
 end
 
 function BarFrame.prototype:SetupStatusBar()
-    local statusBarWidth = db.profile.mainFrame.width - db.profile.bars.height - 1
-    local textMargin = 5
     local font = GameFontHighlight:GetFont()
     local fontColor = db.profile.bars.fontColor
 
     self.statusBar = CreateFrame("StatusBar", nil, self.frame)
     self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", db.profile.bars.height + 1, 0)
-    self.statusBar:SetWidth(statusBarWidth)
-    self.statusBar:SetHeight(db.profile.bars.height)
+    self.statusBar:SetPoint("BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
     self.statusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
     self.statusBar:SetStatusBarColor(0.7, 0.7, 0.7, 0.7)
     self.statusBar:SetMinMaxValues(0,100)
@@ -51,10 +49,9 @@ function BarFrame.prototype:SetupStatusBar()
 
     self.statusBarText = self.statusBar:CreateFontString(nil, "OVERLAY")
     self.statusBarText:SetFont(font, db.profile.bars.fontSize)
-    self.statusBarText:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4] * db.profile.bars.alpha)
-    self.statusBarText:SetHeight(db.profile.bars.height)
-    self.statusBarText:SetWidth(statusBarWidth - textMargin)
-    self.statusBarText:SetPoint( "LEFT", self.statusBar, "LEFT", textMargin, 0)
+    self.statusBarText:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
+    self.statusBarText:SetPoint("TOPLEFT", self.statusBar, "TOPLEFT", 5, 0)
+    self.statusBarText:SetPoint("BOTTOMRIGHT", self.statusBar, "BOTTOMRIGHT", 0, 0)
     self.statusBarText:SetJustifyH("LEFT")
     self.statusBarText:SetText("")
 end
@@ -66,12 +63,10 @@ function BarFrame.prototype:SetupIcon()
     self.button:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 1)
     self.button:SetWidth(buttonSize)
     self.button:SetHeight(buttonSize)
-    self.button:SetAlpha(db.profile.bars.alpha)
     self.button:EnableMouse(true)
     self.button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     self.button:SetScript("OnClick", function() self:Consume(true) end)
 
-    local NORMALTEX_RATIO = 1.7
     local buttonIcon = getglobal(buttonName .. "Icon")
     local normalTexture = getglobal(buttonName .. "NormalTexture")
     buttonIcon:SetTexture(self.data.texture)
@@ -87,7 +82,7 @@ function BarFrame.prototype:SetupIcon()
     self.buttonText:SetFont(font, db.profile.bars.iconFontSize)
     self.buttonText:SetShadowColor(0, 0, 0, 1.0)
     self.buttonText:SetShadowOffset(0.80, -0.80)
-    self.buttonText:SetTextColor(color[1], color[2], color[3], color[4] * db.profile.bars.alpha)
+    self.buttonText:SetTextColor(color[1], color[2], color[3], color[4])
     self.buttonText:SetText(self.data.count)
 end
 
@@ -166,8 +161,7 @@ end
 
 function BarFrame.prototype:UpdateStatusBar()
     local color = self:GetCurrentColor()
-    local alpha = db.profile.bars.alpha
-    self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4] * alpha)
+    self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4])
     self.statusBar:SetValue(self:GetCurrentPercent())
     self.statusBarText:SetText(self:GetCurrentText())
 end
@@ -233,6 +227,26 @@ function BarFrame.prototype:Consume(force)
             CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
         end
     end
+end
+
+function BarFrame.prototype:UpdateWidth()
+    self.frame:SetWidth(db.profile.mainFrame.width)
+end
+
+function BarFrame.prototype:UpdateHeight()
+    local height = db.profile.bars.height
+    self.frame:SetHeight(height)
+    self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", height + 1, 0)
+    self.button:SetWidth(height)
+    self.button:SetHeight(height)
+    self.buttonText:SetWidth(height)
+
+    local normalTexture = getglobal(self.button:GetName() .. "NormalTexture")
+    normalTexture:SetWidth(height * NORMALTEX_RATIO)
+    normalTexture:SetHeight(height * NORMALTEX_RATIO)
+
+    self.animation = nil
+    self:SetPosition(self:GetPositionForIndex(self.index))
 end
 
 ManaMinder.BarFrame = BarFrame

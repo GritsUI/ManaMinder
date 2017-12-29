@@ -22,6 +22,8 @@ function MainFrame.prototype:InitializeState()
 
     self.frame:SetPoint("CENTER", "UIParent", "CENTER", selfDB.position.x, selfDB.position.y)
     self.frame:SetWidth(selfDB.width)
+    self.frame:SetAlpha(selfDB.alpha)
+    self.frame:SetScale(selfDB.scale)
     self.frame:SetMovable(not selfDB.locked)
     self.frame:RegisterForDrag("LeftButton")
 
@@ -90,6 +92,12 @@ end
 function MainFrame.prototype:UpdateAll()
     ManaMinder.stateManager:Update()
     ManaMinder.barManager:Update()
+    self:UpdateAlpha()
+end
+
+function MainFrame.prototype:UpdateAlpha()
+    self.frame:SetAlpha(1)
+    self.frame:SetAlpha(db.profile.mainFrame.alpha)
 end
 
 ManaMinder.mainFrame = MainFrame:new()

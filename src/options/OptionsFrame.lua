@@ -13,6 +13,7 @@ end
 
 function Options.prototype:OnInitialize()
     self.generalFrame:OnInitialize()
+    self.barsFrame:OnInitialize()
 end
 
 function Options.prototype:OnTabLoad(tab)

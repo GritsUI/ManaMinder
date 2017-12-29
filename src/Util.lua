@@ -80,6 +80,10 @@ function ManaMinder:EaseInOutQuad(a, b, t, d)
     return -c/2 * (t*(t-2) - 1) + a
 end
 
+function ManaMinder:RoundTo(num, decimalPlaces)
+    return tonumber(string.format("%." .. (decimalPlaces or 0) .. "f", num))
+end
+
 function ManaMinder:SystemMessage(msg)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

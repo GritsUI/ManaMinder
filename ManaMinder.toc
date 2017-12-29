@@ -30,5 +30,6 @@ src\options\OptionsFrameTabTemplate.xml
 src\options\OptionsFrame.xml
 src\options\GeneralOptionsFrame.lua
 src\options\GeneralOptionsFrame.xml
+src\options\BarsOptionsFrame.lua
 src\options\BarsOptionsFrame.xml
 src\options\ConsumablesOptionsFrame.xml

@@ -5,25 +5,138 @@
 
     <Frame name="ManaMinder_Options_Bars" parent="ManaMinder_Options" hidden="true" id="2">
         <Size>
-            <AbsDimension x="410" y="250"/>
+            <AbsDimension x="416" y="250"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
                 <Offset>
-                    <AbsDimension x="16" y="-28"/>
+                    <AbsDimension x="12" y="-36"/>
                 </Offset>
             </Anchor>
         </Anchors>
         <Frames>
-            <Button name="$parent_Okay_Button" text="Bars" inherits="UIPanelButtonTemplate">
+            <Frame name="$parent_Size_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="120" y="25"/>
+                    <AbsDimension x="10" y="92"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                    <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
                     </Anchor>
                 </Anchors>
-            </Button>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Display">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="6" y="12"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+
+                    <Slider name="ManaMinder_Options_Bars_Scale_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="190" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="10" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnScaleChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnScaleLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                    <Slider name="ManaMinder_Options_Bars_Alpha_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="190" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="214" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnAlphaChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnAlphaLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                    <Slider name="ManaMinder_Options_Bars_Width_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="190" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Scale_Slider" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-18" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnWidthChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnWidthLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                    <Slider name="ManaMinder_Options_Bars_Height_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="190" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-18" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnHeightChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnHeightLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                </Frames>
+                <Scripts>
+                    <OnLoad>
+                            ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+                    </OnLoad>
+                </Scripts>
+            </Frame>
         </Frames>
     </Frame>
 

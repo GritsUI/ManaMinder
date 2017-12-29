@@ -94,4 +94,10 @@ function BarManager.prototype:UpdateBars(newData)
     end
 end
 
+function BarManager.prototype:ForEachBar(func)
+    for i = 1, table.getn(self.barFrames), 1 do
+        func(self.barFrames[i])
+    end
+end
+
 ManaMinder.barManager = BarManager:new()

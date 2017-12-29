@@ -6,13 +6,14 @@ ManaMinder.defaults = {
                 y = 0
             },
             width = 200,
+            scale = 1,
+            alpha = 1,
             hidden = false,
             hiddenOutOfCombat = false,
             locked = false
         },
         bars = {
             height = 24,
-            alpha = 1,
             margin = 3,
             backgroundColor = { 0, 0, 0, 0.2 },
             cooldownColor = { 0.7, 0.7, 0.7, 0.7 },

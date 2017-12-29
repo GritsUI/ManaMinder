@@ -5,12 +5,12 @@
 
     <Frame name="ManaMinder_Options_Consumables" parent="ManaMinder_Options" hidden="true" id="3">
         <Size>
-            <AbsDimension x="410" y="250"/>
+            <AbsDimension x="416" y="250"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
                 <Offset>
-                    <AbsDimension x="16" y="-28"/>
+                    <AbsDimension x="12" y="-36"/>
                 </Offset>
             </Anchor>
         </Anchors>

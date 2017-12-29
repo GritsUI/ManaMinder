@@ -16,7 +16,7 @@
         </Anchors>
         <Frames>
 
-            <Frame name="$parent_State_Section" inherits="OptionFrameBoxTemplate">
+            <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
                     <AbsDimension x="10" y="72"/>
                 </Size>
@@ -34,7 +34,7 @@
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
-                        <FontString name="$parentText" inherits="GameFontHighlight" text="Display">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Visibility">
                             <Anchors>
                                 <Anchor point="TOPLEFT">
                                     <Offset>

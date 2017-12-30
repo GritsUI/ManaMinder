@@ -5,7 +5,7 @@
 
     <Frame name="ManaMinder_Options_Bars" parent="ManaMinder_Options" hidden="true" id="2">
         <Size>
-            <AbsDimension x="416" y="250"/>
+            <AbsDimension x="416" y="380"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
@@ -15,6 +15,7 @@
             </Anchor>
         </Anchors>
         <Frames>
+
             <Frame name="$parent_Size_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
                     <AbsDimension x="10" y="126"/>
@@ -179,6 +180,262 @@
                     </OnLoad>
                 </Scripts>
             </Frame>
+
+            <Frame name="$parent_Ready_Section" inherits="OptionFrameBoxTemplate">
+                <Size>
+                    <AbsDimension x="206" y="100"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Size_Section" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="-18"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Ready State">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="6" y="12"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+
+                    <Frame name="ManaMinder_Options_Bars_Ready_Background_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="12" y="-13" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnReadyBackgroundLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="ManaMinder_Options_Bars_Ready_Font_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Background_Picker">
+                                <Offset>
+                                    <AbsDimension x="0" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnReadyFontLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Slider name="ManaMinder_Options_Bars_Ready_Alpha_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="180" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Font_Picker" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnReadyAlphaChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                ManaMinder.optionsFrame.barsFrame:OnReadyAlphaLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                </Frames>
+                <Scripts>
+                    <OnLoad>
+                        ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+
+            <Frame name="$parent_Deficit_Section" inherits="OptionFrameBoxTemplate">
+                <Size>
+                    <AbsDimension x="206" y="100"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Ready_Section" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="4" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Deficit State">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="6" y="12"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+
+                    <Frame name="ManaMinder_Options_Bars_Deficit_Background_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="12" y="-13" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnDeficitBackgroundLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="ManaMinder_Options_Bars_Deficit_Font_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Background_Picker">
+                                <Offset>
+                                    <AbsDimension x="0" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnDeficitFontLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Slider name="ManaMinder_Options_Bars_Deficit_Alpha_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="180" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Font_Picker" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+
+                </Frames>
+                <Scripts>
+                    <OnLoad>
+                            ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+
+            <Frame name="$parent_Cooldown_Section" inherits="OptionFrameBoxTemplate">
+                <Size>
+                    <AbsDimension x="206" y="100"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Ready_Section" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="-18"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Cooldown State">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="6" y="12"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+
+                    <Frame name="ManaMinder_Options_Bars_Cooldown_Background_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="12" y="-13" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnCooldownBackgroundLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="ManaMinder_Options_Bars_Cooldown_Font_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Background_Picker">
+                                <Offset>
+                                    <AbsDimension x="0" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnCooldownFontLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Slider name="ManaMinder_Options_Bars_Cooldown_Alpha_Slider" inherits="OptionsSliderTemplate">
+                        <Size>
+                            <AbsDimension x="180" y="17"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Font_Picker" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-20" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaChange(this:GetValue())
+                            </OnValueChanged>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                    
+                </Frames>
+                <Scripts>
+                    <OnLoad>
+                            ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+
         </Frames>
     </Frame>
 

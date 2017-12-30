@@ -37,7 +37,7 @@ end
 
 function BarFrame.prototype:SetupStatusBar()
     local font = GameFontHighlight:GetFont()
-    local fontColor = db.profile.bars.fontColor
+    local fontColor = db.profile.bars.readyFontColor
 
     self.statusBar = CreateFrame("StatusBar", nil, self.frame)
     self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", db.profile.bars.height + 1, 0)
@@ -123,6 +123,7 @@ end
 
 function BarFrame.prototype:Update()
     self:UpdateAnimation()
+    self:UpdateAlpha()
     self:UpdateCooldownState()
     self:UpdateStatusBar()
     self:UpdateConsumableCount()
@@ -149,6 +150,18 @@ function BarFrame.prototype:UpdateAnimation()
     end
 end
 
+function BarFrame.prototype:UpdateAlpha()
+    if self:GetCooldownRemaining() > 0 then
+        self.frame:SetAlpha(db.profile.bars.cooldownAlpha)
+    elseif self:GetDeficitRemaining() > 0 then
+        self.frame:SetAlpha(db.profile.bars.deficitAlpha)
+    elseif self.index == 1 then
+        self.frame:SetAlpha(db.profile.bars.readyAlpha)
+    else
+        self.frame:SetAlpha(db.profile.bars.cooldownAlpha)
+    end
+end
+
 function BarFrame.prototype:UpdateCooldownState()
     local newValue = self:GetCooldownRemaining() > 0
 
@@ -160,10 +173,11 @@ function BarFrame.prototype:UpdateCooldownState()
 end
 
 function BarFrame.prototype:UpdateStatusBar()
-    local color = self:GetCurrentColor()
+    local color, fontColor = self:GetCurrentColors()
     self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4])
     self.statusBar:SetValue(self:GetCurrentPercent())
     self.statusBarText:SetText(self:GetCurrentText())
+    self.statusBarText:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
 end
 
 function BarFrame.prototype:UpdateConsumableCount()
@@ -193,16 +207,20 @@ function BarFrame.prototype:GetCurrentPercent()
     return (remaining / self.data.cooldown) * 100
 end
 
-function BarFrame.prototype:GetCurrentColor()
+function BarFrame.prototype:GetCurrentColors()
     if self:GetCooldownRemaining() > 0 then
-        return db.profile.bars.cooldownColor
+        return db.profile.bars.cooldownColor, db.profile.bars.cooldownFontColor
     end
 
     if self:GetDeficitRemaining() > 0 then
-        return db.profile.bars.deficitColor
+        return db.profile.bars.deficitColor, db.profile.bars.deficitFontColor
     end
 
-    return self.index == 1 and db.profile.bars.readyColor or db.profile.bars.cooldownColor
+    if self.index == 1 then
+        return db.profile.bars.readyColor, db.profile.bars.readyFontColor
+    end
+
+    return db.profile.bars.cooldownColor, db.profile.bars.cooldownFontColor
 end
 
 function BarFrame.prototype:GetCurrentText()

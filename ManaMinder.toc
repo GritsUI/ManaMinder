@@ -25,6 +25,7 @@ src\MainFrame.xml
 src\StateManager.lua
 src\Util.lua
 
+src\options\ColorPickerButton.xml
 src\options\OptionsFrame.lua
 src\options\OptionsFrameTabTemplate.xml
 src\options\OptionsFrame.xml

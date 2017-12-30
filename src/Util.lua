@@ -84,6 +84,16 @@ function ManaMinder:RoundTo(num, decimalPlaces)
     return tonumber(string.format("%." .. (decimalPlaces or 0) .. "f", num))
 end
 
+function ManaMinder:ShowColorPicker(r, g, b, callback, options)
+    ColorPickerFrame.hasOpacity = nil
+    ColorPickerFrame.func = callback
+    ColorPickerFrame.options = options
+    ColorPickerFrame:SetFrameStrata("FULLSCREEN_DIALOG")
+    ColorPickerFrame:Hide(); -- Need to run the OnShow handler.
+    ColorPickerFrame:Show();
+    ColorPickerFrame:SetColorRGB(r,g,b);
+end
+
 function ManaMinder:SystemMessage(msg)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

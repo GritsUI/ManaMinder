@@ -2,8 +2,6 @@ local AceOO = AceLibrary("AceOO-2.0")
 local BarsOptions = AceOO.Class()
 local db = ManaMinder.db
 
-local SCALE_SLIDER_NAME = "ManaMinder_Options_Bars_Scale_Slider"
-local ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Alpha_Slider"
 local WIDTH_SLIDER_NAME = "ManaMinder_Options_Bars_Width_Slider"
 local HEIGHT_SLIDER_NAME = "ManaMinder_Options_Bars_Height_Slider"
 local FONT_SIZE_SLIDER_NAME = "ManaMinder_Options_Bars_Font_Size_Slider"
@@ -17,14 +15,14 @@ local DEFICIT_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Deficit_Alpha_Slider"
 local COOLDOWN_BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Cooldown_Background_Picker"
 local COOLDOWN_FONT_PICKER_NAME = "ManaMinder_Options_Bars_Cooldown_Font_Picker"
 local COOLDOWN_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Cooldown_Alpha_Slider"
+local BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Background_Picker"
+local BACKGROUND_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Background_Alpha_Slider"
 
 function BarsOptions.prototype:init()
     BarsOptions.super.prototype.init(self)
 end
 
 function BarsOptions.prototype:OnInitialize()
-    getglobal(SCALE_SLIDER_NAME):SetValue(db.profile.mainFrame.scale)
-    getglobal(ALPHA_SLIDER_NAME):SetValue(db.profile.mainFrame.alpha)
     getglobal(WIDTH_SLIDER_NAME):SetValue(db.profile.mainFrame.width)
     getglobal(HEIGHT_SLIDER_NAME):SetValue(db.profile.bars.height)
     getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.profile.bars.fontSize)
@@ -32,38 +30,18 @@ function BarsOptions.prototype:OnInitialize()
     getglobal(READY_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.readyAlpha)
     getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.deficitAlpha)
     getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.cooldownAlpha)
+    getglobal(BACKGROUND_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.backgroundAlpha)
     self:SetSwatchColor(READY_BACKGROUND_PICKER_NAME, db.profile.bars.readyColor)
     self:SetSwatchColor(READY_FONT_PICKER_NAME, db.profile.bars.readyFontColor)
     self:SetSwatchColor(DEFICIT_BACKGROUND_PICKER_NAME, db.profile.bars.deficitColor)
     self:SetSwatchColor(DEFICIT_FONT_PICKER_NAME, db.profile.bars.deficitFontColor)
     self:SetSwatchColor(COOLDOWN_BACKGROUND_PICKER_NAME, db.profile.bars.cooldownColor)
     self:SetSwatchColor(COOLDOWN_FONT_PICKER_NAME, db.profile.bars.cooldownFontColor)
+    self:SetSwatchColor(BACKGROUND_PICKER_NAME, db.profile.bars.backgroundColor)
 end
 
 function BarsOptions.prototype:SetSwatchColor(pickerName, color)
     getglobal(pickerName .. "ButtonSwatch"):SetVertexColor(color[1], color[2], color[3])
-end
-
-function BarsOptions.prototype:OnScaleLoad()
-    getglobal(SCALE_SLIDER_NAME):SetMinMaxValues(0.5, 2);
-    getglobal(SCALE_SLIDER_NAME):SetValueStep(0.01);
-end
-
-function BarsOptions.prototype:OnScaleChange(value)
-    db.profile.mainFrame.scale = value
-    ManaMinder.mainFrame.frame:SetScale(value)
-    getglobal(SCALE_SLIDER_NAME .. "Text"):SetText("Scale: " .. ManaMinder:RoundTo(db.profile.mainFrame.scale, 2))
-end
-
-function BarsOptions.prototype:OnAlphaLoad()
-    getglobal(ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1);
-    getglobal(ALPHA_SLIDER_NAME):SetValueStep(0.01);
-end
-
-function BarsOptions.prototype:OnAlphaChange(value)
-    db.profile.mainFrame.alpha = value
-    ManaMinder.mainFrame.frame:SetAlpha(value)
-    getglobal(ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.profile.mainFrame.alpha, 2))
 end
 
 function BarsOptions.prototype:OnWidthLoad()
@@ -176,7 +154,26 @@ function BarsOptions.prototype:OnCooldownAlphaChange(value)
     getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.profile.bars.cooldownAlpha, 2))
 end
 
-function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName)
+function BarsOptions.prototype:OnBackgroundPickerLoad()
+    getglobal(BACKGROUND_PICKER_NAME .. "Text"):SetText("Background Color")
+    getglobal(BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
+        self:GetColorPickerClickHandler(BACKGROUND_PICKER_NAME, "backgroundColor", function()
+            ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateBackground() end)
+        end))
+end
+
+function BarsOptions.prototype:OnBackgroundAlphaLoad()
+    getglobal(BACKGROUND_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1);
+    getglobal(BACKGROUND_ALPHA_SLIDER_NAME):SetValueStep(0.01);
+end
+
+function BarsOptions.prototype:OnBackgroundAlphaChange(value)
+    db.profile.bars.backgroundAlpha = value
+    ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateBackground() end)
+    getglobal(BACKGROUND_ALPHA_SLIDER_NAME .. "Text"):SetText("Background Alpha: " .. ManaMinder:RoundTo(db.profile.bars.backgroundAlpha, 2))
+end
+
+function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, callback)
     return function()
         local color = db.profile.bars[optionName]
         ManaMinder:ShowColorPicker(color[1], color[2], color[3], function()
@@ -184,6 +181,9 @@ function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName
                 local r, g, b = ColorPickerFrame:GetColorRGB()
                 db.profile.bars[optionName] = { r, g, b }
                 self:SetSwatchColor(pickerName, db.profile.bars[optionName])
+                if callback then
+                    callback()
+                end
             end
         end)
     end

@@ -31,7 +31,7 @@ end
 function BarFrame.prototype:SetupFrameBackground()
     local color = db.profile.bars.backgroundColor
     self.background = self.frame:CreateTexture(nil, "BACKGROUND")
-    self.background:SetTexture(color[1], color[2], color[3], color[4])
+    self.background:SetTexture(color[1], color[2], color[3], db.profile.bars.backgroundAlpha)
     self.background:SetAllPoints()
 end
 
@@ -273,6 +273,11 @@ end
 function BarFrame.prototype:UpdatePosition()
     self.animation = nil
     self:SetPosition(self:GetPositionForIndex(self.index))
+end
+
+function BarFrame.prototype:UpdateBackground()
+    local color = db.profile.bars.backgroundColor
+    self.background:SetTexture(color[1], color[2], color[3], db.profile.bars.backgroundAlpha)
 end
 
 ManaMinder.BarFrame = BarFrame

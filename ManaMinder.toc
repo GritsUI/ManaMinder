@@ -25,6 +25,8 @@ src\MainFrame.xml
 src\StateManager.lua
 src\Util.lua
 
+src\options\AvailableConsumableFrame.xml
+src\options\TrackedConsumableFrame.xml
 src\options\ColorPickerButton.xml
 src\options\OptionsFrame.lua
 src\options\OptionsFrameTabTemplate.xml
@@ -33,4 +35,5 @@ src\options\GeneralOptionsFrame.lua
 src\options\GeneralOptionsFrame.xml
 src\options\BarsOptionsFrame.lua
 src\options\BarsOptionsFrame.xml
+src\options\ConsumablesOptionsFrame.lua
 src\options\ConsumablesOptionsFrame.xml

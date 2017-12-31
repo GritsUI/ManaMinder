@@ -36,6 +36,16 @@ function ManaMinder:GetItemIdFromLink(itemLink)
     end
 end
 
+function ManaMinder:GetConsumableNameForKey(key, type)
+    if type == "SPELL" then
+        return ManaMinder.spells[key].name
+    end
+
+    if type == "ITEM" then
+        return ManaMinder.consumables[key].name
+    end
+end
+
 function ManaMinder:GetCooldownForSpellName(spellName)
     local _,_,offset,numSpells = GetSpellTabInfo(GetNumSpellTabs())
     local numAllSpell = offset + numSpells;

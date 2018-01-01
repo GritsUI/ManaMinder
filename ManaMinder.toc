@@ -25,7 +25,9 @@ src\MainFrame.xml
 src\StateManager.lua
 src\Util.lua
 
+src\options\AvailableConsumableFrame.lua
 src\options\AvailableConsumableFrame.xml
+src\options\TrackedConsumableFrame.lua
 src\options\TrackedConsumableFrame.xml
 src\options\ColorPickerButton.xml
 src\options\OptionsFrame.lua

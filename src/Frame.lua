@@ -5,6 +5,7 @@ function Frame.prototype:init(options)
     Frame.super.prototype.init(self)
     self.frame = CreateFrame(options.frameType, options.frameName, options.parentFrame, options.inheritsFrame)
     self.parentFrame = options.parentFrame
+    self.frameName = options.frameName
 end
 
 function Frame.prototype:GetPosition()

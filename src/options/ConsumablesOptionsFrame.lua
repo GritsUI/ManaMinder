@@ -4,10 +4,6 @@ local db = ManaMinder.db
 
 local AVAILABLE_SECTION_NAME = "ManaMinder_Options_Consumables_Available_Section"
 local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
-local SECTION_LEFT_MARGIN = 10
-local SECTION_RIGHT_MARGIN = -6
-local SECTION_TOP_MARGIN = -6
-local ITEM_HEIGHT = 20
 
 function ConsumablesOptions.prototype:init()
     ConsumablesOptions.super.prototype.init(self)
@@ -45,25 +41,15 @@ end
 
 function ConsumablesOptions.prototype:AddAvailableFrame(index, consumable)
     if not self.availableFrames[index] then
-        self.availableFrames[index] = CreateFrame(
-            "Frame",
-            "ManaMinder_Available_Consumable_" .. index,
-            self.availableSectionFrame,
-            "ManaMinder_Available_Consumable"
-        )
+        self.availableFrames[index] = ManaMinder.AvailableConsumableFrame:new(self.availableSectionFrame, consumable)
     end
 
     local frame = self.availableFrames[index]
-    frame:SetPoint(
-        "TOPLEFT",
-        self.availableSectionFrame,
-        "TOPLEFT",
-        SECTION_LEFT_MARGIN,
-        SECTION_TOP_MARGIN + (-1 * ITEM_HEIGHT) * (index - 1)
-    )
-    frame:SetPoint("RIGHT", self.availableSectionFrame, "RIGHT", SECTION_RIGHT_MARGIN, 0)
-
-    getglobal(frame:GetName() .. "_Text"):SetText(consumable.name)
+    frame.consumable = consumable
+    frame.onClick = function() self:TrackConsumable(consumable) end
+    frame:SetPosition(index)
+    frame:UpdateText()
+    frame:Show()
 end
 
 function ConsumablesOptions.prototype:GetAvailableConsumables()
@@ -104,28 +90,65 @@ function ConsumablesOptions.prototype:AddTrackedFrames()
 end
 
 function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
-    ManaMinder:SystemMessage("Add: " .. index .. " " .. (SECTION_TOP_MARGIN + (-1 * ITEM_HEIGHT) * (index - 1)))
-
     if not self.trackedFrames[index] then
-        self.trackedFrames[index] = CreateFrame(
-            "Frame",
-            "ManaMinder_Tracked_Consumable_" .. index,
-            self.trackedSectionFrame,
-            "ManaMinder_Tracked_Consumable"
-        )
+        self.trackedFrames[index] = ManaMinder.TrackedConsumableFrame:new(self.trackedSectionFrame, consumable)
     end
 
     local frame = self.trackedFrames[index]
-    frame:SetPoint(
-        "TOPLEFT",
-        self.trackedSectionFrame,
-        "TOPLEFT",
-        SECTION_LEFT_MARGIN,
-        SECTION_TOP_MARGIN + (-1 * ITEM_HEIGHT) * (index - 1)
-    )
-    frame:SetPoint("RIGHT", self.trackedSectionFrame, "RIGHT", SECTION_RIGHT_MARGIN, 0)
+    frame.consumable = consumable
+    frame.onRemoveClick = function() self:UntrackConsumable(consumable) end
+    frame.onUpClick = function() self:IncreasePriority(index) end
+    frame.onDownClick = function() self:DecreasePriority(index) end
+    frame:SetPosition(index)
+    frame:UpdateText()
+    frame:Show()
+end
 
-    getglobal(frame:GetName() .. "_Text"):SetText(ManaMinder:GetConsumableNameForKey(consumable.key, consumable.type))
+function ConsumablesOptions.prototype:TrackConsumable(consumable)
+    table.insert(db.profile.consumables, {
+        key = consumable.key,
+        priority = table.getn(db.profile.consumables) + 1,
+        type = consumable.type
+    })
+    self:RefreshFrames()
+    ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:UntrackConsumable(consumable)
+    db.profile.consumables = ManaMinder:Splice(db.profile.consumables, consumable.priority, 1)
+
+    for i = 1, table.getn(db.profile.consumables), 1 do
+        db.profile.consumables[i].priority = i
+    end
+
+    self:RefreshFrames()
+    ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:IncreasePriority(index)
+    if (index == 1) then
+        return
+    end
+
+    local old = db.profile.consumables[index - 1]
+    db.profile.consumables[index - 1] = db.profile.consumables[index]
+    db.profile.consumables[index] = old
+
+    self:RefreshFrames()
+    ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:DecreasePriority(index)
+    if (index == table.getn(db.profile.consumables)) then
+        return
+    end
+
+    local old = db.profile.consumables[index + 1]
+    db.profile.consumables[index + 1] = db.profile.consumables[index]
+    db.profile.consumables[index] = old
+
+    self:RefreshFrames()
+    ManaMinder.mainFrame:UpdateAll()
 end
 
 ManaMinder.optionsFrame.consumablesFrame = ConsumablesOptions:new()

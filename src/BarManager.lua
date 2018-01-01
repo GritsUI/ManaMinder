@@ -1,5 +1,6 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local BarManager = AceOO.Class()
+local db = ManaMinder.db
 
 function BarManager.prototype:init()
     BarManager.super.prototype.init(self)
@@ -16,6 +17,9 @@ function BarManager.prototype:Update()
     -- Remove bars for tracked items that should no longer be shown
     -- eg. On going from item count > 0 to 0, on disabling of an item in settings, on spell loss from respec
     self:RemoveStaleBars(newData)
+
+    -- Refresh priority numbers on bar data in case of changes
+    self:UpdatePriorities()
 
     -- Sort bars based on current cooldowns and priorities
     self:SortBars()
@@ -52,6 +56,16 @@ function BarManager.prototype:RemoveStaleBars(newData)
         if not self:IsBarInArray(newData, self.barFrames[i].data.key) then
             self.barFrames[i]:Hide()
             table.remove(self.barFrames, i)
+        end
+    end
+end
+
+function BarManager.prototype:UpdatePriorities()
+    for i = table.getn(self.barFrames), 1, -1 do
+        for priority, consumable in db.profile.consumables do
+            if self.barFrames[i].data.key == consumable.key then
+                self.barFrames[i].data.priority = priority
+            end
         end
     end
 end

@@ -104,6 +104,18 @@ function ManaMinder:ShowColorPicker(r, g, b, callback, options)
     ColorPickerFrame:SetColorRGB(r,g,b);
 end
 
+function ManaMinder:Splice(tbl, first, length)
+    local spliced = {}
+
+    for i = 1, table.getn(tbl), 1 do
+        if i < first or i >= first + length then
+            table.insert(spliced, tbl[i])
+        end
+    end
+
+    return spliced
+end
+
 function ManaMinder:SystemMessage(msg)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

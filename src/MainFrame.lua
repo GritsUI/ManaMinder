@@ -40,6 +40,7 @@ function MainFrame.prototype:InitializeEventHandlers()
     self.frame:RegisterEvent("BAG_UPDATE_COOLDOWN")
     self.frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
     self.frame:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
+    self.frame:RegisterEvent("UNIT_INVENTORY_CHANGED")
     self.frame:SetScript("OnEvent", function() self:OnEvent(event) end)
 end
 

@@ -68,6 +68,12 @@ function ConsumablesOptions.prototype:GetAvailableConsumables()
         end
     end
 
+    for key, data in pairs(ManaMinder.items) do
+        if not self:IsConsumableTracked(key) then
+            table.insert(consumables, data)
+        end
+    end
+
     for key, data in pairs(ManaMinder.spells) do
         if not self:IsConsumableTracked(key) then
             table.insert(consumables, data)

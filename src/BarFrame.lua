@@ -243,6 +243,8 @@ function BarFrame.prototype:Consume(force)
             UseContainerItem(self.data.bag, self.data.slot)
         elseif self.data.type == "SPELL" then
             CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
+        elseif self.data.type == "EQUIPPED" then
+            UseInventoryItem(self.data.slot)
         end
     end
 end

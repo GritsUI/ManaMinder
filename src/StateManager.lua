@@ -18,6 +18,7 @@ function StateManager.prototype:Update()
     local newState = {}
     self:UpdateStateForConsumables(newState)
     self:UpdateStateForSpells(newState)
+    self:UpdateStateForEquippedItems(newState)
     self.state = newState
 end
 
@@ -58,12 +59,10 @@ end
 
 function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
     for index, consumableConfig in pairs(ManaMinder.db.profile.consumables) do
-        if consumableConfig.type == "ITEM" then
+        if consumableConfig.type == "ITEM" and ManaMinder.consumables[consumableConfig.key] then
             local consumableData = ManaMinder.consumables[consumableConfig.key]
-            if consumableData then
-                if consumableData.itemId == itemId then
-                    return consumableConfig, consumableData
-                end
+            if consumableData.itemId == itemId then
+                return consumableConfig, consumableData
             end
         end
     end
@@ -72,21 +71,50 @@ end
 
 function StateManager.prototype:UpdateStateForSpells(state)
     for index, spellConfig in pairs(ManaMinder.db.profile.consumables) do
-        if spellConfig.type == "SPELL" then
+        if spellConfig.type == "SPELL" and ManaMinder.spells[spellConfig.key] then
             local spellData = ManaMinder.spells[spellConfig.key]
-            if spellData then
-                local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
-                if spellId ~= nil then
-                    state[spellConfig.key] = {
-                        key = spellConfig.key,
-                        group = spellData.group,
-                        priority = spellConfig.priority,
-                        cooldown = cooldown,
-                        cooldownStart = cooldownStart,
-                        texture = spellData.iconTexture,
-                        requiredDeficit = spellData.requiredDeficit,
-                        type = "SPELL",
-                        spellId = spellId
+            local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
+            if spellId ~= nil then
+                state[spellConfig.key] = {
+                    key = spellConfig.key,
+                    group = spellData.group,
+                    priority = spellConfig.priority,
+                    cooldown = cooldown,
+                    cooldownStart = cooldownStart,
+                    texture = spellData.iconTexture,
+                    requiredDeficit = spellData.requiredDeficit,
+                    type = "SPELL",
+                    spellId = spellId
+                }
+            end
+        end
+    end
+end
+
+function StateManager.prototype:UpdateStateForEquippedItems(state)
+    local equipped = {}
+
+    for index, itemConfig in pairs(ManaMinder.db.profile.consumables) do
+        if itemConfig.type == "EQUIPPED" and ManaMinder.items[itemConfig.key] then
+            local itemData = ManaMinder.items[itemConfig.key]
+            for index2, slot in itemData.slots do
+                local slotId = GetInventorySlotInfo(slot)
+                if not equipped[slot] then
+                    equipped[slot] = ManaMinder:GetItemIdFromLink(GetInventoryItemLink("player", slotId))
+                end
+
+                if equipped[slot] == itemData.itemId then
+                    local start, duration = GetInventoryItemCooldown("player", slotId)
+                    state[itemConfig.key] = {
+                        key = itemConfig.key,
+                        group = itemData.group,
+                        priority = itemConfig.priority,
+                        cooldown = duration,
+                        cooldownStart = start,
+                        texture = itemData.iconTexture,
+                        requiredDeficit = itemData.requiredDeficit,
+                        type = "EQUIPPED",
+                        slot = slotId
                     }
                 end
             end

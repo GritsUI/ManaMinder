@@ -45,6 +45,10 @@ function ManaMinder:GetConsumableNameForKey(key, type)
         return ManaMinder.consumables[key].name
     end
 
+    if type == "EQUIPPED" and ManaMinder.items[key] then
+        return ManaMinder.items[key].name
+    end
+
     return nil
 end
 

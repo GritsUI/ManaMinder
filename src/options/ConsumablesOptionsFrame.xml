@@ -21,7 +21,7 @@
                     <AbsDimension x="206" y="250"/>
                 </Size>
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT"></Anchor>
+                    <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">

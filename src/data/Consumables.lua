@@ -1,5 +1,3 @@
-local playerClass = UnitClass("player")
-
 local consumables = {
     ["MINOR_MANA_POTION"] = {
         name = "Minor Mana Potion",
@@ -89,46 +87,47 @@ local consumables = {
         iconTexture = "Interface\Icons\INV_Misc_Herb_02",
         requiredDeficit = 676,
         type = "ITEM"
-    }
-}
-
-if playerClass == "Mage" then
-    consumables["MANA_AGATE"] = {
+    },
+    ["MANA_AGATE"] = {
         name = "Mana Agate",
         key = "MANA_AGATE",
         group = "GEM",
         itemId = 5514,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Emerald_01",
         requiredDeficit = 426,
-        type = "ITEM"
-    }
-    consumables["MANA_JADE"] = {
+        type = "ITEM",
+        class = "Mage"
+    },
+    ["MANA_JADE"] = {
         name = "Mana Jade",
         key = "MANA_JADE",
         group = "GEM",
         itemId = 5513,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Emerald_02",
         requiredDeficit = 651,
-        type = "ITEM"
-    }
-    consumables["MANA_CITRINE"] = {
+        type = "ITEM",
+        class = "Mage"
+    },
+    ["MANA_CITRINE"] = {
         name = "Mana Citrine",
         key = "MANA_CITRINE",
         group = "GEM",
         itemId = 8007,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Opal_01",
         requiredDeficit = 926,
-        type = "ITEM"
-    }
-    consumables["MANA_RUBY"] = {
+        type = "ITEM",
+        class = "Mage"
+    },
+    ["MANA_RUBY"] = {
         name = "Mana Ruby",
         key = "MANA_RUBY",
         group = "GEM",
         itemId = 8008,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Ruby_01",
         requiredDeficit = 1201,
-        type = "ITEM"
+        type = "ITEM",
+        class = "Mage"
     }
-end
+}
 
 ManaMinder.consumables = consumables

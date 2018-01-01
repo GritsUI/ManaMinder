@@ -1,27 +1,22 @@
-local playerClass = UnitClass("player")
-
-local spells = {}
-
-if playerClass == "Shaman" then
-    spells["MANA_TIDE_TOTEM"] = {
+local spells = {
+    ["MANA_TIDE_TOTEM"] = {
         name = "Mana Tide Totem",
         key = "MANA_TIDE_TOTEM",
         spellId = 17359,
         iconTexture = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
         requiredDeficit = 1000,
-        type = "SPELL"
-    }
-end
-
-if playerClass == "Mage" then
-    spells["EVOCATION"] = {
+        type = "SPELL",
+        class = "Shaman"
+    },
+    ["EVOCATION"] = {
         name = "Evocation",
         key = "EVOCATION",
         spellId = 12051,
         iconTexture = "Interface\\Icons\\Spell_Nature_Purge",
         requiredDeficit = 4000,
-        type = "SPELL"
+        type = "SPELL",
+        class = "Mage"
     }
-end
+}
 
 ManaMinder.spells = spells

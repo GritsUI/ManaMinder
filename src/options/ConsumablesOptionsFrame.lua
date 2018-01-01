@@ -63,19 +63,19 @@ function ConsumablesOptions.prototype:GetAvailableConsumables()
     local consumables = {}
 
     for key, data in pairs(ManaMinder.consumables) do
-        if not self:IsConsumableTracked(key) then
+        if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
             table.insert(consumables, data)
         end
     end
 
     for key, data in pairs(ManaMinder.items) do
-        if not self:IsConsumableTracked(key) then
+        if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
             table.insert(consumables, data)
         end
     end
 
     for key, data in pairs(ManaMinder.spells) do
-        if not self:IsConsumableTracked(key) then
+        if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
             table.insert(consumables, data)
         end
     end
@@ -94,6 +94,10 @@ function ConsumablesOptions.prototype:IsConsumableTracked(consumableKey)
         end
     end
     return false
+end
+
+function ConsumablesOptions.prototype:IsConsumableAvailableForClass(consumable)
+    return not consumable.class or consumable.class == UnitClass("player")
 end
 
 function ConsumablesOptions.prototype:AddTrackedFrames()

@@ -59,7 +59,7 @@ end
 
 function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
     for index, consumableConfig in pairs(ManaMinder.db.profile.consumables) do
-        if consumableConfig.type == "ITEM" and ManaMinder.consumables[consumableConfig.key] then
+        if consumableConfig.type == "ITEM" then
             local consumableData = ManaMinder.consumables[consumableConfig.key]
             if consumableData.itemId == itemId then
                 return consumableConfig, consumableData
@@ -71,7 +71,7 @@ end
 
 function StateManager.prototype:UpdateStateForSpells(state)
     for index, spellConfig in pairs(ManaMinder.db.profile.consumables) do
-        if spellConfig.type == "SPELL" and ManaMinder.spells[spellConfig.key] then
+        if spellConfig.type == "SPELL" then
             local spellData = ManaMinder.spells[spellConfig.key]
             local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
             if spellId ~= nil then
@@ -95,7 +95,7 @@ function StateManager.prototype:UpdateStateForEquippedItems(state)
     local equipped = {}
 
     for index, itemConfig in pairs(ManaMinder.db.profile.consumables) do
-        if itemConfig.type == "EQUIPPED" and ManaMinder.items[itemConfig.key] then
+        if itemConfig.type == "EQUIPPED" then
             local itemData = ManaMinder.items[itemConfig.key]
             for index2, slot in itemData.slots do
                 local slotId = GetInventorySlotInfo(slot)

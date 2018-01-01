@@ -1,5 +1,3 @@
-local playerClass = UnitClass("player")
-
 local items = {
     ["WARMTH_OF_FORGIVENESS"] = {
         name = "Warmth of Forgiveness",
@@ -27,41 +25,37 @@ local items = {
         requiredDeficit = 300,
         type = "EQUIPPED",
         slots = {"Trinket0Slot", "Trinket1Slot"}
-    }
-}
-
-if playerClass == "Shaman" then
-    items["ENAMORED_WATER_SPIRIT"] = {
+    },
+    ["ENAMORED_WATER_SPIRIT"] = {
         name = "Enamored Water Spirit",
         key = "ENAMORED_WATER_SPIRIT",
         itemId = 20503,
         iconTexture = "Interface\\Icons\\INV_Wand_01",
         requiredDeficit = 100,
         type = "EQUIPPED",
-        slots = {"Trinket0Slot", "Trinket1Slot"}
-    }
-end
-
-if playerClass == "Mage" then
-    items["FIRE_RUBY"] = {
+        slots = {"Trinket0Slot", "Trinket1Slot"},
+        class = "Shaman"
+    },
+    ["FIRE_RUBY"] = {
         name = "Fire Ruby",
         key = "FIRE_RUBY",
         itemId = 20036,
         iconTexture = "Interface\\Icons\\INV_Misc_Gem_Bloodstone_02",
         requiredDeficit = 500,
         type = "EQUIPPED",
-        slots = {"Trinket0Slot", "Trinket1Slot"}
-    }
-
-    items["ROBE_OF_THE_ARCHMAGE"] = {
+        slots = {"Trinket0Slot", "Trinket1Slot"},
+        class = "Mage"
+    },
+    ["ROBE_OF_THE_ARCHMAGE"] = {
         name = "Robe of the Archmage",
         key = "ROBE_OF_THE_ARCHMAGE",
         itemId = 14152,
         iconTexture = "Interface\\Icons\\INV_Chest_Cloth_38",
         requiredDeficit = 626,
         type = "EQUIPPED",
-        slots = {"ChestSlot"}
+        slots = {"ChestSlot"},
+        class = "Mage"
     }
-end
+}
 
 ManaMinder.items = items

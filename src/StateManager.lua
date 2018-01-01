@@ -70,18 +70,20 @@ function StateManager.prototype:UpdateStateForSpells(state)
     for index, spellConfig in pairs(ManaMinder.db.profile.consumables) do
         if spellConfig.type == "SPELL" then
             local spellData = ManaMinder.spells[spellConfig.key]
-            local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
-            if spellId ~= nil then
-                state[spellConfig.key] = {
-                    key = spellConfig.key,
-                    priority = spellConfig.priority,
-                    cooldown = cooldown,
-                    cooldownStart = cooldownStart,
-                    texture = spellData.iconTexture,
-                    requiredDeficit = spellData.requiredDeficit,
-                    type = "SPELL",
-                    spellId = spellId
-                }
+            if spellData then
+                local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
+                if spellId ~= nil then
+                    state[spellConfig.key] = {
+                        key = spellConfig.key,
+                        priority = spellConfig.priority,
+                        cooldown = cooldown,
+                        cooldownStart = cooldownStart,
+                        texture = spellData.iconTexture,
+                        requiredDeficit = spellData.requiredDeficit,
+                        type = "SPELL",
+                        spellId = spellId
+                    }
+                end
             end
         end
     end

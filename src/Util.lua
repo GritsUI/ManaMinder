@@ -37,13 +37,15 @@ function ManaMinder:GetItemIdFromLink(itemLink)
 end
 
 function ManaMinder:GetConsumableNameForKey(key, type)
-    if type == "SPELL" then
+    if type == "SPELL" and ManaMinder.spells[key] then
         return ManaMinder.spells[key].name
     end
 
-    if type == "ITEM" then
+    if type == "ITEM" and ManaMinder.consumables[key] then
         return ManaMinder.consumables[key].name
     end
+
+    return nil
 end
 
 function ManaMinder:GetCooldownForSpellName(spellName)

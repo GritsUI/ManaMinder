@@ -105,6 +105,42 @@
                 </Layers>
                 <Frames>
 
+                    <CheckButton name="ManaMinder_Options_Consumables_Potions_Check" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="8" y="-6"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckLoad()
+                            </OnLoad>
+                            <OnClick>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckChange(this:GetChecked())
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+
+                    <CheckButton name="ManaMinder_Options_Consumables_Runes_Check" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Consumables_Potions_Check" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="4"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckLoad()
+                            </OnLoad>
+                            <OnClick>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckChange(this:GetChecked())
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+
                 </Frames>
                 <Scripts>
                     <OnLoad>

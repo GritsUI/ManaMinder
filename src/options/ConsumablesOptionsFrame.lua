@@ -4,6 +4,8 @@ local db = ManaMinder.db
 
 local AVAILABLE_SECTION_NAME = "ManaMinder_Options_Consumables_Available_Section"
 local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
+local POTIONS_CHECK_NAME = "ManaMinder_Options_Consumables_Potions_Check"
+local RUNES_CHECK_NAME = "ManaMinder_Options_Consumables_Runes_Check"
 
 function ConsumablesOptions.prototype:init()
     ConsumablesOptions.super.prototype.init(self)
@@ -15,6 +17,9 @@ function ConsumablesOptions.prototype:OnInitialize()
     self.availableSectionFrame = getglobal(AVAILABLE_SECTION_NAME)
     self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
     self:RefreshFrames()
+
+    getglobal(POTIONS_CHECK_NAME):SetChecked(db.profile.combinePotions);
+    getglobal(RUNES_CHECK_NAME):SetChecked(db.profile.combineRunes);
 end
 
 function ConsumablesOptions.prototype:RefreshFrames()
@@ -132,7 +137,9 @@ function ConsumablesOptions.prototype:IncreasePriority(index)
 
     local old = db.profile.consumables[index - 1]
     db.profile.consumables[index - 1] = db.profile.consumables[index]
+    db.profile.consumables[index - 1].priority = index - 1
     db.profile.consumables[index] = old
+    db.profile.consumables[index].priority = index
 
     self:RefreshFrames()
     ManaMinder.mainFrame:UpdateAll()
@@ -145,9 +152,29 @@ function ConsumablesOptions.prototype:DecreasePriority(index)
 
     local old = db.profile.consumables[index + 1]
     db.profile.consumables[index + 1] = db.profile.consumables[index]
+    db.profile.consumables[index + 1].priority = index + 1
     db.profile.consumables[index] = old
+    db.profile.consumables[index].priority = index
 
     self:RefreshFrames()
+    ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:OnPotionsCheckLoad()
+    getglobal(POTIONS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Potion")
+end
+
+function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
+    db.profile.combinePotions = value
+    ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:OnRunesCheckLoad()
+    getglobal(RUNES_CHECK_NAME .. "Text"):SetText("Only Show One of Demonic Rune/Dark Rune/Lily Root")
+end
+
+function ConsumablesOptions.prototype:OnRunesCheckChange(value)
+    db.profile.combineRunes = value
     ManaMinder.mainFrame:UpdateAll()
 end
 

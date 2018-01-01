@@ -43,6 +43,8 @@ ManaMinder.defaults = {
                 priority = 3,
                 type = "ITEM"
             }
-        }
+        },
+        combinePotions = true,
+        combineRunes = true
     }
 }

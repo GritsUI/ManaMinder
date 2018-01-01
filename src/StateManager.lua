@@ -1,5 +1,6 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local StateManager = AceOO.Class()
+local db = ManaMinder.db
 
 function StateManager.prototype:init()
     StateManager.super.prototype.init(self)
@@ -37,6 +38,7 @@ function StateManager.prototype:UpdateStateForConsumables(state)
 
                         state[consumableConfig.key] = {
                             key = consumableConfig.key,
+                            group = consumableData.group,
                             priority = consumableConfig.priority,
                             count = itemCount,
                             cooldown = duration,
@@ -75,6 +77,7 @@ function StateManager.prototype:UpdateStateForSpells(state)
                 if spellId ~= nil then
                     state[spellConfig.key] = {
                         key = spellConfig.key,
+                        group = spellData.group,
                         priority = spellConfig.priority,
                         cooldown = cooldown,
                         cooldownStart = cooldownStart,
@@ -97,8 +100,35 @@ function StateManager.prototype:GetBarData()
            table.insert(bars, consumable)
        end
     end
+    table.sort(bars, function(barA, barB) return barA.priority < barB.priority end)
+
+    if db.profile.combinePotions then
+        bars = self:FilterGroup(bars, "POTION")
+    end
+
+    if db.profile.combineRunes then
+        bars = self:FilterGroup(bars, "RUNE")
+    end
 
     return bars
+end
+
+function StateManager.prototype:FilterGroup(bars, group)
+    local filtered = {}
+    local groupFound = false
+
+    for index, bar in bars do
+        if bar.group == group then
+            if not groupFound then
+                table.insert(filtered, bar)
+                groupFound = true
+            end
+        else
+            table.insert(filtered, bar)
+        end
+    end
+
+    return filtered
 end
 
 ManaMinder.stateManager = StateManager:new()

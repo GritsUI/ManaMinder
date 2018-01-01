@@ -7,7 +7,6 @@ local consumables = {
         group = "POTION",
         itemId = 2455,
         iconTexture = "Interface\Icons\INV_Potion_70",
-        cooldown = 120,
         requiredDeficit = 181,
         type = "ITEM"
     },
@@ -17,7 +16,6 @@ local consumables = {
         group = "POTION",
         itemId = 3385,
         iconTexture = "Interface\Icons\INV_Potion_71",
-        cooldown = 120,
         requiredDeficit = 361,
         type = "ITEM"
     },
@@ -27,7 +25,6 @@ local consumables = {
         group = "POTION",
         itemId = 3827,
         iconTexture = "Interface\Icons\INV_Potion_72",
-        cooldown = 120,
         requiredDeficit = 586,
         type = "ITEM"
     },
@@ -37,7 +34,6 @@ local consumables = {
         group = "POTION",
         itemId = 6149,
         iconTexture = "Interface\Icons\INV_Potion_73",
-        cooldown = 120,
         requiredDeficit = 901,
         type = "ITEM"
     },
@@ -47,7 +43,6 @@ local consumables = {
         group = "POTION",
         itemId = 13443,
         iconTexture = "Interface\Icons\INV_Potion_74",
-        cooldown = 120,
         requiredDeficit = 1501,
         type = "ITEM"
     },
@@ -57,7 +52,6 @@ local consumables = {
         group = "POTION",
         itemId = 13444,
         iconTexture = "Interface\Icons\INV_Potion_76",
-        cooldown = 120,
         requiredDeficit = 2250,
         type = "ITEM"
     },
@@ -66,7 +60,6 @@ local consumables = {
         key = "MAJOR_REJUVENATION_POTION",
         itemId = 18253,
         iconTexture = "Interface\Icons\INV_Potion_47",
-        cooldown = 120,
         requiredDeficit = 1761,
         type = "ITEM"
     },
@@ -76,7 +69,6 @@ local consumables = {
         group = "RUNE",
         itemId = 12662,
         iconTexture = "Interface\Icons\INV_Misc_Rune_04",
-        cooldown = 120,
         requiredDeficit = 1500,
         type = "ITEM"
     },
@@ -86,7 +78,6 @@ local consumables = {
         group = "RUNE",
         itemId = 20520,
         iconTexture = "Interface\Icons\Spell_Shadow_SealOfKings",
-        cooldown = 120,
         requiredDeficit = 1500,
         type = "ITEM"
     },
@@ -96,7 +87,6 @@ local consumables = {
         group = "RUNE",
         itemId = 14894,
         iconTexture = "Interface\Icons\INV_Misc_Herb_02",
-        cooldown = 120,
         requiredDeficit = 676,
         type = "ITEM"
     }
@@ -106,36 +96,36 @@ if playerClass == "Mage" then
     consumables["MANA_AGATE"] = {
         name = "Mana Agate",
         key = "MANA_AGATE",
+        group = "GEM",
         itemId = 5514,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Emerald_01",
-        cooldown = 0,
         requiredDeficit = 426,
         type = "ITEM"
     }
     consumables["MANA_JADE"] = {
         name = "Mana Jade",
         key = "MANA_JADE",
+        group = "GEM",
         itemId = 5513,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Emerald_02",
-        cooldown = 0,
         requiredDeficit = 651,
         type = "ITEM"
     }
     consumables["MANA_CITRINE"] = {
         name = "Mana Citrine",
         key = "MANA_CITRINE",
+        group = "GEM",
         itemId = 8007,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Opal_01",
-        cooldown = 0,
         requiredDeficit = 926,
         type = "ITEM"
     }
     consumables["MANA_RUBY"] = {
         name = "Mana Ruby",
         key = "MANA_RUBY",
+        group = "GEM",
         itemId = 8008,
         iconTexture = "Interface\Icons\INV_Misc_Gem_Ruby_01",
-        cooldown = 0,
         requiredDeficit = 1201,
         type = "ITEM"
     }

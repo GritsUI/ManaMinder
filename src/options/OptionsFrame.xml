@@ -5,7 +5,7 @@
 
     <Frame name="ManaMinder_Options" toplevel="true" movable="true" enableMouse="true" frameStrata="DIALOG" hidden="true" parent="UIParent">
         <Size>
-            <AbsDimension x="440" y="445"/>
+            <AbsDimension x="440" y="450"/>
         </Size>
         <Anchors>
             <Anchor point="TOP" relativeTo="UIParent" relativePoint="TOP">

@@ -45,6 +45,7 @@ ManaMinder.defaults = {
             }
         },
         combinePotions = true,
-        combineRunes = true
+        combineRunes = true,
+        combineGems = true
     }
 }

@@ -5,7 +5,7 @@
 
     <Frame name="ManaMinder_Options_General" parent="ManaMinder_Options" hidden="false" id="1">
         <Size>
-            <AbsDimension x="416" y="380"/>
+            <AbsDimension x="416" y="385"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">

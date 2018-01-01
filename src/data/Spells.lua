@@ -8,8 +8,18 @@ if playerClass == "Shaman" then
         key = "MANA_TIDE_TOTEM",
         spellId = 17359,
         iconTexture = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
-        cooldown = 300,
         requiredDeficit = 1000,
+        type = "SPELL"
+    }
+end
+
+if playerClass == "Mage" then
+    spells["EVOCATION"] = {
+        name = "Evocation",
+        key = "EVOCATION",
+        spellId = 12051,
+        iconTexture = "Interface\\Icons\\Spell_Nature_Purge",
+        requiredDeficit = 4000,
         type = "SPELL"
     }
 end

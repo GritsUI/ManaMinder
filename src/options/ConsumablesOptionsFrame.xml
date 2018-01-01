@@ -5,7 +5,7 @@
 
     <Frame name="ManaMinder_Options_Consumables" parent="ManaMinder_Options" hidden="true" id="3">
         <Size>
-            <AbsDimension x="416" y="380"/>
+            <AbsDimension x="416" y="385"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
@@ -76,7 +76,7 @@
 
             <Frame name="$parent_Options_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="10" y="72"/>
+                    <AbsDimension x="10" y="98"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent_Available_Section" relativePoint="BOTTOMLEFT">
@@ -92,7 +92,7 @@
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
-                        <FontString name="$parentText" inherits="GameFontHighlight" text="Options">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Shared Cooldowns">
                             <Anchors>
                                 <Anchor point="TOPLEFT">
                                     <Offset>
@@ -137,6 +137,24 @@
                             </OnLoad>
                             <OnClick>
                                     ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckChange(this:GetChecked())
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+
+                    <CheckButton name="ManaMinder_Options_Consumables_Gems_Check" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Consumables_Runes_Check" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="4"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckLoad()
+                            </OnLoad>
+                            <OnClick>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckChange(this:GetChecked())
                             </OnClick>
                         </Scripts>
                     </CheckButton>

@@ -60,8 +60,10 @@ function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
     for index, consumableConfig in pairs(ManaMinder.db.profile.consumables) do
         if consumableConfig.type == "ITEM" then
             local consumableData = ManaMinder.consumables[consumableConfig.key]
-            if consumableData.itemId == itemId then
-                return consumableConfig, consumableData
+            if consumableData then
+                if consumableData.itemId == itemId then
+                    return consumableConfig, consumableData
+                end
             end
         end
     end
@@ -108,6 +110,10 @@ function StateManager.prototype:GetBarData()
 
     if db.profile.combineRunes then
         bars = self:FilterGroup(bars, "RUNE")
+    end
+
+    if db.profile.combineGems then
+        bars = self:FilterGroup(bars, "GEM")
     end
 
     return bars

@@ -6,6 +6,7 @@ local AVAILABLE_SECTION_NAME = "ManaMinder_Options_Consumables_Available_Section
 local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
 local POTIONS_CHECK_NAME = "ManaMinder_Options_Consumables_Potions_Check"
 local RUNES_CHECK_NAME = "ManaMinder_Options_Consumables_Runes_Check"
+local GEMS_CHECK_NAME = "ManaMinder_Options_Consumables_Gems_Check"
 
 function ConsumablesOptions.prototype:init()
     ConsumablesOptions.super.prototype.init(self)
@@ -20,6 +21,7 @@ function ConsumablesOptions.prototype:OnInitialize()
 
     getglobal(POTIONS_CHECK_NAME):SetChecked(db.profile.combinePotions);
     getglobal(RUNES_CHECK_NAME):SetChecked(db.profile.combineRunes);
+    getglobal(GEMS_CHECK_NAME):SetChecked(db.profile.combineGems);
 end
 
 function ConsumablesOptions.prototype:RefreshFrames()
@@ -175,6 +177,15 @@ end
 
 function ConsumablesOptions.prototype:OnRunesCheckChange(value)
     db.profile.combineRunes = value
+    ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:OnGemsCheckLoad()
+    getglobal(GEMS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Mana Gem")
+end
+
+function ConsumablesOptions.prototype:OnGemsCheckChange(value)
+    db.profile.combineGems = value
     ManaMinder.mainFrame:UpdateAll()
 end
 

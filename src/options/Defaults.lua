@@ -12,7 +12,7 @@ ManaMinder.defaults = {
         },
         bars = {
             height = 24,
-            margin = 3,
+            margin = 2,
             backgroundColor = { 0, 0, 0, 0.2 },
             cooldownColor = { 0.7, 0.7, 0.7 },
             cooldownFontColor = { 1, 1, 1 },
@@ -27,7 +27,7 @@ ManaMinder.defaults = {
             iconFontSize = 10,
             iconFontColor = { 1, 1, 1 },
             animationDuration = 0.3,
-            texture = "Blizzard"
+            texture = "Smooth"
         },
         consumables = {
             {
@@ -35,11 +35,11 @@ ManaMinder.defaults = {
                 priority = 1,
                 type = "ITEM"
             }, {
-                key = "MANA_TIDE_TOTEM",
-                priority = 2,
-                type = "SPELL"
-            }, {
                 key = "DEMONIC_RUNE",
+                priority = 2,
+                type = "ITEM"
+            }, {
+                key = "DARK_RUNE",
                 priority = 3,
                 type = "ITEM"
             }

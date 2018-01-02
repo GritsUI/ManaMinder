@@ -14,255 +14,255 @@ local MAX_SCROLL_ITEMS = 12
 local SCROLL_ITEM_HEIGHT = 20
 
 function ConsumablesOptions.prototype:init()
-    ConsumablesOptions.super.prototype.init(self)
-    self.availableConsumables = {}
-    self.availableFrames = {}
-    self.trackedFrames = {}
+  ConsumablesOptions.super.prototype.init(self)
+  self.availableConsumables = {}
+  self.availableFrames = {}
+  self.trackedFrames = {}
 end
 
 function ConsumablesOptions.prototype:OnInitialize()
-    self.availableSectionFrame = getglobal(AVAILABLE_SECTION_NAME)
-    self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
-    self:RefreshAllFrames()
+  self.availableSectionFrame = getglobal(AVAILABLE_SECTION_NAME)
+  self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
+  self:RefreshAllFrames()
 
-    getglobal(POTIONS_CHECK_NAME):SetChecked(db.char.combinePotions);
-    getglobal(RUNES_CHECK_NAME):SetChecked(db.char.combineRunes);
-    getglobal(GEMS_CHECK_NAME):SetChecked(db.char.combineGems);
+  getglobal(POTIONS_CHECK_NAME):SetChecked(db.char.combinePotions);
+  getglobal(RUNES_CHECK_NAME):SetChecked(db.char.combineRunes);
+  getglobal(GEMS_CHECK_NAME):SetChecked(db.char.combineGems);
 end
 
 function ConsumablesOptions.prototype:RefreshAllFrames()
-    self:RefreshAvailableFrames()
-    self:RefreshTrackedFrames()
+  self:RefreshAvailableFrames()
+  self:RefreshTrackedFrames()
 end
 
 function ConsumablesOptions.prototype:RefreshAvailableFrames()
-    self:RemoveCurrentAvailableFrames()
-    self:AddAvailableFrames()
+  self:RemoveCurrentAvailableFrames()
+  self:AddAvailableFrames()
 end
 
 function ConsumablesOptions.prototype:RefreshTrackedFrames()
-    self:RemoveCurrentTrackedFrames()
-    self:AddTrackedFrames()
+  self:RemoveCurrentTrackedFrames()
+  self:AddTrackedFrames()
 end
 
 function ConsumablesOptions.prototype:RemoveCurrentAvailableFrames()
-    for i = 1, table.getn(self.availableFrames), 1 do
-        self.availableFrames[i]:Hide()
-    end
+  for i = 1, table.getn(self.availableFrames), 1 do
+    self.availableFrames[i]:Hide()
+  end
 end
 
 function ConsumablesOptions.prototype:AddAvailableFrames()
-    self.availableConsumables = self:GetAvailableConsumables()
+  self.availableConsumables = self:GetAvailableConsumables()
 
-    local consumableCount = table.getn(self.availableConsumables)
-    local offset = FauxScrollFrame_GetOffset(getglobal(AVAILABLE_SCROLL_FRAME))
-    if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
-        offset = offset - 1
-        FauxScrollFrame_SetOffset(getglobal(AVAILABLE_SCROLL_FRAME), offset)
-    end
+  local consumableCount = table.getn(self.availableConsumables)
+  local offset = FauxScrollFrame_GetOffset(getglobal(AVAILABLE_SCROLL_FRAME))
+  if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
+    offset = offset - 1
+    FauxScrollFrame_SetOffset(getglobal(AVAILABLE_SCROLL_FRAME), offset)
+  end
 
-    local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
-    for index = 1, itemCount, 1 do
-        self:AddAvailableFrame(index, self.availableConsumables[index + offset])
-    end
+  local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
+  for index = 1, itemCount, 1 do
+    self:AddAvailableFrame(index, self.availableConsumables[index + offset])
+  end
 end
 
 function ConsumablesOptions.prototype:AddAvailableFrame(index, consumable)
-    if not self.availableFrames[index] then
-        self.availableFrames[index] = ManaMinder.AvailableConsumableFrame:new(self.availableSectionFrame, consumable)
-    end
+  if not self.availableFrames[index] then
+    self.availableFrames[index] = ManaMinder.AvailableConsumableFrame:new(self.availableSectionFrame, consumable)
+  end
 
-    local frame = self.availableFrames[index]
-    frame.consumable = consumable
-    frame.onClick = function() self:TrackConsumable(consumable) end
-    frame:SetPosition(index)
-    frame:UpdateText()
-    frame:Show()
+  local frame = self.availableFrames[index]
+  frame.consumable = consumable
+  frame.onClick = function() self:TrackConsumable(consumable) end
+  frame:SetPosition(index)
+  frame:UpdateText()
+  frame:Show()
 end
 
 function ConsumablesOptions.prototype:GetAvailableConsumables()
-    local consumables = {}
+  local consumables = {}
 
-    for key, data in pairs(ManaMinder.consumables) do
-        if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
-            table.insert(consumables, data)
-        end
+  for key, data in pairs(ManaMinder.consumables) do
+    if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
+      table.insert(consumables, data)
     end
+  end
 
-    for key, data in pairs(ManaMinder.items) do
-        if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
-            table.insert(consumables, data)
-        end
+  for key, data in pairs(ManaMinder.items) do
+    if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
+      table.insert(consumables, data)
     end
+  end
 
-    for key, data in pairs(ManaMinder.spells) do
-        if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
-            table.insert(consumables, data)
-        end
+  for key, data in pairs(ManaMinder.spells) do
+    if not self:IsConsumableTracked(key) and self:IsConsumableAvailableForClass(data) then
+      table.insert(consumables, data)
     end
+  end
 
-    table.sort(consumables, function(consumableA, consumableB)
-        return consumableA.name < consumableB.name
-    end)
+  table.sort(consumables, function(consumableA, consumableB)
+    return consumableA.name < consumableB.name
+  end)
 
-    return consumables
+  return consumables
 end
 
 function ConsumablesOptions.prototype:OnAvailableScroll()
-    self:UpdateAvailableScroll()
-    self:RefreshAvailableFrames()
+  self:UpdateAvailableScroll()
+  self:RefreshAvailableFrames()
 end
 
 function ConsumablesOptions.prototype:UpdateAvailableScroll()
-    local consumableCount = table.getn(self.availableConsumables)
-    FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
+  local consumableCount = table.getn(self.availableConsumables)
+  FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
 
-    for i = 1, table.getn(self.availableFrames), 1 do
-        self.availableFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
-    end
+  for i = 1, table.getn(self.availableFrames), 1 do
+    self.availableFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
+  end
 end
 
 function ConsumablesOptions.prototype:IsConsumableTracked(consumableKey)
-    for i, consumable in pairs(db.char.consumables) do
-        if consumable.key == consumableKey then
-            return true
-        end
+  for i, consumable in pairs(db.char.consumables) do
+    if consumable.key == consumableKey then
+      return true
     end
-    return false
+  end
+  return false
 end
 
 function ConsumablesOptions.prototype:IsConsumableAvailableForClass(consumable)
-    return not consumable.class or consumable.class == UnitClass("player")
+  return not consumable.class or consumable.class == UnitClass("player")
 end
 
 function ConsumablesOptions.prototype:RemoveCurrentTrackedFrames()
-    for i = 1, table.getn(self.trackedFrames), 1 do
-        self.trackedFrames[i]:Hide()
-    end
+  for i = 1, table.getn(self.trackedFrames), 1 do
+    self.trackedFrames[i]:Hide()
+  end
 end
 
 function ConsumablesOptions.prototype:AddTrackedFrames()
-    local consumableCount = table.getn(db.char.consumables)
-    local offset = FauxScrollFrame_GetOffset(getglobal(TRACKED_SCROLL_FRAME))
-    if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
-        offset = offset - 1
-        FauxScrollFrame_SetOffset(getglobal(TRACKED_SCROLL_FRAME), offset)
-    end
+  local consumableCount = table.getn(db.char.consumables)
+  local offset = FauxScrollFrame_GetOffset(getglobal(TRACKED_SCROLL_FRAME))
+  if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
+    offset = offset - 1
+    FauxScrollFrame_SetOffset(getglobal(TRACKED_SCROLL_FRAME), offset)
+  end
 
-    local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
-    for index = 1, itemCount, 1 do
-        self:AddTrackedFrame(index, db.char.consumables[index + offset])
-    end
+  local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
+  for index = 1, itemCount, 1 do
+    self:AddTrackedFrame(index, db.char.consumables[index + offset])
+  end
 end
 
 function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
-    if not self.trackedFrames[index] then
-        self.trackedFrames[index] = ManaMinder.TrackedConsumableFrame:new(self.trackedSectionFrame, consumable)
-    end
+  if not self.trackedFrames[index] then
+    self.trackedFrames[index] = ManaMinder.TrackedConsumableFrame:new(self.trackedSectionFrame, consumable)
+  end
 
-    local frame = self.trackedFrames[index]
-    frame.consumable = consumable
-    frame.onRemoveClick = function() self:UntrackConsumable(consumable) end
-    frame.onUpClick = function() self:IncreasePriority(index) end
-    frame.onDownClick = function() self:DecreasePriority(index) end
-    frame:SetPosition(index)
-    frame:UpdateText()
-    frame:Show()
+  local frame = self.trackedFrames[index]
+  frame.consumable = consumable
+  frame.onRemoveClick = function() self:UntrackConsumable(consumable) end
+  frame.onUpClick = function() self:IncreasePriority(index) end
+  frame.onDownClick = function() self:DecreasePriority(index) end
+  frame:SetPosition(index)
+  frame:UpdateText()
+  frame:Show()
 end
 
 function ConsumablesOptions.prototype:OnTrackedScroll()
-    self:UpdateTrackedScroll()
-    self:RefreshTrackedFrames()
+  self:UpdateTrackedScroll()
+  self:RefreshTrackedFrames()
 end
 
 function ConsumablesOptions.prototype:UpdateTrackedScroll()
-    local consumableCount = table.getn(db.char.consumables)
-    FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
+  local consumableCount = table.getn(db.char.consumables)
+  FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
 
-    for i = 1, table.getn(self.trackedFrames), 1 do
-        self.trackedFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
-    end
+  for i = 1, table.getn(self.trackedFrames), 1 do
+    self.trackedFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
+  end
 end
 
 function ConsumablesOptions.prototype:TrackConsumable(consumable)
-    table.insert(db.char.consumables, {
-        key = consumable.key,
-        priority = table.getn(db.char.consumables) + 1,
-        type = consumable.type
-    })
-    self:RefreshAllFrames()
-    self:UpdateAvailableScroll()
-    self:UpdateTrackedScroll()
-    ManaMinder.mainFrame:UpdateAll()
+  table.insert(db.char.consumables, {
+    key = consumable.key,
+    priority = table.getn(db.char.consumables) + 1,
+    type = consumable.type
+  })
+  self:RefreshAllFrames()
+  self:UpdateAvailableScroll()
+  self:UpdateTrackedScroll()
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 function ConsumablesOptions.prototype:UntrackConsumable(consumable)
-    db.char.consumables = ManaMinder:Splice(db.char.consumables, consumable.priority, 1)
+  db.char.consumables = ManaMinder:Splice(db.char.consumables, consumable.priority, 1)
 
-    for i = 1, table.getn(db.char.consumables), 1 do
-        db.char.consumables[i].priority = i
-    end
-    self:RefreshAllFrames()
-    self:UpdateAvailableScroll()
-    self:UpdateTrackedScroll()
-    ManaMinder.mainFrame:UpdateAll()
+  for i = 1, table.getn(db.char.consumables), 1 do
+    db.char.consumables[i].priority = i
+  end
+  self:RefreshAllFrames()
+  self:UpdateAvailableScroll()
+  self:UpdateTrackedScroll()
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 function ConsumablesOptions.prototype:IncreasePriority(index)
-    if (index == 1) then
-        return
-    end
+  if (index == 1) then
+    return
+  end
 
-    local old = db.char.consumables[index - 1]
-    db.char.consumables[index - 1] = db.char.consumables[index]
-    db.char.consumables[index - 1].priority = index - 1
-    db.char.consumables[index] = old
-    db.char.consumables[index].priority = index
+  local old = db.char.consumables[index - 1]
+  db.char.consumables[index - 1] = db.char.consumables[index]
+  db.char.consumables[index - 1].priority = index - 1
+  db.char.consumables[index] = old
+  db.char.consumables[index].priority = index
 
-    self:RefreshAllFrames()
-    ManaMinder.mainFrame:UpdateAll()
+  self:RefreshAllFrames()
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 function ConsumablesOptions.prototype:DecreasePriority(index)
-    if (index == table.getn(db.char.consumables)) then
-        return
-    end
+  if (index == table.getn(db.char.consumables)) then
+    return
+  end
 
-    local old = db.char.consumables[index + 1]
-    db.char.consumables[index + 1] = db.char.consumables[index]
-    db.char.consumables[index + 1].priority = index + 1
-    db.char.consumables[index] = old
-    db.char.consumables[index].priority = index
+  local old = db.char.consumables[index + 1]
+  db.char.consumables[index + 1] = db.char.consumables[index]
+  db.char.consumables[index + 1].priority = index + 1
+  db.char.consumables[index] = old
+  db.char.consumables[index].priority = index
 
-    self:RefreshAllFrames()
-    ManaMinder.mainFrame:UpdateAll()
+  self:RefreshAllFrames()
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 function ConsumablesOptions.prototype:OnPotionsCheckLoad()
-    getglobal(POTIONS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Potion")
+  getglobal(POTIONS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Potion")
 end
 
 function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
-    db.char.combinePotions = value
-    ManaMinder.mainFrame:UpdateAll()
+  db.char.combinePotions = value
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckLoad()
-    getglobal(RUNES_CHECK_NAME .. "Text"):SetText("Only Show One of Demonic Rune/Dark Rune/Lily Root")
+  getglobal(RUNES_CHECK_NAME .. "Text"):SetText("Only Show One of Demonic Rune/Dark Rune/Lily Root")
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckChange(value)
-    db.char.combineRunes = value
-    ManaMinder.mainFrame:UpdateAll()
+  db.char.combineRunes = value
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 function ConsumablesOptions.prototype:OnGemsCheckLoad()
-    getglobal(GEMS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Mana Gem")
+  getglobal(GEMS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Mana Gem")
 end
 
 function ConsumablesOptions.prototype:OnGemsCheckChange(value)
-    db.char.combineGems = value
-    ManaMinder.mainFrame:UpdateAll()
+  db.char.combineGems = value
+  ManaMinder.mainFrame:UpdateAll()
 end
 
 ManaMinder.optionsFrame.consumablesFrame = ConsumablesOptions:new()

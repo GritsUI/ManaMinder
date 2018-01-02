@@ -3,80 +3,80 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 
-    <Frame name="ManaMinder_ColorPicker" virtual="true">
+  <Frame name="ManaMinder_ColorPicker" virtual="true">
+    <Size>
+      <AbsDimension x="150" y="14"/>
+    </Size>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="CENTER" text="Color">
+          <Size>
+            <AbsDimension x="84" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="0" />
+              </Offset>
+            </Anchor>
+            <Anchor point="BOTTOMRIGHT" />
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parentButton">
         <Size>
-            <AbsDimension x="150" y="14"/>
+          <AbsDimension x="14" y="14" />
         </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+        </Anchors>
         <Layers>
-            <Layer level="ARTWORK">
-                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="CENTER" text="Color">
-                    <Size>
-                        <AbsDimension x="84" y="14" />
-                    </Size>
-                    <Anchors>
-                        <Anchor point="TOPLEFT">
-                            <Offset>
-                                <AbsDimension x="20" y="0" />
-                            </Offset>
-                        </Anchor>
-                        <Anchor point="BOTTOMRIGHT" />
-                    </Anchors>
-                </FontString>
-            </Layer>
+          <Layer level="OVERLAY">
+            <Texture name="$parentSwatch">
+              <Size>
+                <AbsDimension x="10" y="10"/>
+              </Size>
+              <Anchors>
+                <Anchor point="CENTER" />
+              </Anchors>
+              <Color r="1" g="1" b="1" a="1" />
+            </Texture>
+          </Layer>
+          <Layer level="BACKGROUND">
+            <Texture name="$parentInnerBorder">
+              <Size>
+                <AbsDimension x="12" y="12"/>
+              </Size>
+              <Anchors>
+                <Anchor point="CENTER" />
+              </Anchors>
+              <Color r="0.2" g="0.2" b="0.2" a="1" />
+            </Texture>
+          </Layer>
+          <Layer level="BACKGROUND">
+            <Texture name="$parentBorder">
+              <Size>
+                <AbsDimension x="14" y="14"/>
+              </Size>
+              <Anchors>
+                <Anchor point="CENTER" />
+              </Anchors>
+              <Color r="1" g="1" b="1" a="1" />
+            </Texture>
+          </Layer>
         </Layers>
-        <Frames>
-            <Button name="$parentButton">
-                <Size>
-                    <AbsDimension x="14" y="14" />
-                </Size>
-                <Anchors>
-                    <Anchor point="TOPLEFT" />
-                </Anchors>
-                <Layers>
-                    <Layer level="OVERLAY">
-                        <Texture name="$parentSwatch">
-                            <Size>
-                                <AbsDimension x="10" y="10"/>
-                            </Size>
-                            <Anchors>
-                                <Anchor point="CENTER" />
-                            </Anchors>
-                            <Color r="1" g="1" b="1" a="1" />
-                        </Texture>
-                    </Layer>
-                    <Layer level="BACKGROUND">
-                        <Texture name="$parentInnerBorder">
-                            <Size>
-                                <AbsDimension x="12" y="12"/>
-                            </Size>
-                            <Anchors>
-                                <Anchor point="CENTER" />
-                            </Anchors>
-                            <Color r="0.2" g="0.2" b="0.2" a="1" />
-                        </Texture>
-                    </Layer>
-                    <Layer level="BACKGROUND">
-                        <Texture name="$parentBorder">
-                            <Size>
-                                <AbsDimension x="14" y="14"/>
-                            </Size>
-                            <Anchors>
-                                <Anchor point="CENTER" />
-                            </Anchors>
-                            <Color r="1" g="1" b="1" a="1" />
-                        </Texture>
-                    </Layer>
-                </Layers>
-                <Scripts>
-                    <OnEnter>
-                            getglobal(this:GetName() .. "Border"):SetVertexColor(0.91, 0.78, 0.09)
-                    </OnEnter>
-                    <OnLeave>
-                            getglobal(this:GetName() .. "Border"):SetVertexColor(1, 1, 1)
-                    </OnLeave>
-                </Scripts>
-            </Button>
-        </Frames>
-    </Frame>
+        <Scripts>
+          <OnEnter>
+              getglobal(this:GetName() .. "Border"):SetVertexColor(0.91, 0.78, 0.09)
+          </OnEnter>
+          <OnLeave>
+              getglobal(this:GetName() .. "Border"):SetVertexColor(1, 1, 1)
+          </OnLeave>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Frame>
 
 </Ui>

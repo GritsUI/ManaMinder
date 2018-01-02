@@ -16,7 +16,7 @@ local COOLDOWN_BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Cooldown_Backgr
 local COOLDOWN_FONT_PICKER_NAME = "ManaMinder_Options_Bars_Cooldown_Font_Picker"
 local COOLDOWN_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Cooldown_Alpha_Slider"
 local BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Background_Picker"
-local BACKGROUND_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Background_Alpha_Slider"
+local TEXTURE_DROPDOWN_NAME = "ManaMinder_Options_Bars_Texture_DropDown"
 
 function BarsOptions.prototype:init()
     BarsOptions.super.prototype.init(self)
@@ -30,6 +30,7 @@ function BarsOptions.prototype:OnInitialize()
     getglobal(READY_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.readyAlpha)
     getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.deficitAlpha)
     getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.cooldownAlpha)
+    UIDropDownMenu_SetSelectedValue(getglobal(TEXTURE_DROPDOWN_NAME), db.profile.bars.texture)
     self:SetSwatchColor(READY_BACKGROUND_PICKER_NAME, db.profile.bars.readyColor)
     self:SetSwatchColor(READY_FONT_PICKER_NAME, db.profile.bars.readyFontColor)
     self:SetSwatchColor(DEFICIT_BACKGROUND_PICKER_NAME, db.profile.bars.deficitColor)
@@ -161,15 +162,22 @@ function BarsOptions.prototype:OnBackgroundPickerLoad()
         end))
 end
 
-function BarsOptions.prototype:OnBackgroundAlphaLoad()
-    getglobal(BACKGROUND_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1);
-    getglobal(BACKGROUND_ALPHA_SLIDER_NAME):SetValueStep(0.01);
-end
-
-function BarsOptions.prototype:OnBackgroundAlphaChange(value)
-    db.profile.bars.backgroundAlpha = value
-    ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateBackground() end)
-    getglobal(BACKGROUND_ALPHA_SLIDER_NAME .. "Text"):SetText("Background Alpha: " .. ManaMinder:RoundTo(db.profile.bars.backgroundAlpha, 2))
+function BarsOptions.prototype:OnTextureDropDownLoad()
+    local dropdown = this
+    UIDropDownMenu_Initialize(this, function()
+        for key, value in ipairs(ManaMinder.texturesList) do
+            local info = {}
+            info.text = value.name
+            info.value = value.name
+            info.func = function()
+                UIDropDownMenu_SetSelectedID(dropdown, this:GetID())
+                db.profile.bars.texture = UIDropDownMenu_GetText(dropdown)
+                ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateTexture() end)
+            end
+            info.checked = false
+            UIDropDownMenu_AddButton(info, 1)
+        end
+    end);
 end
 
 function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, hasOpacity, callback)

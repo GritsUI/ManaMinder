@@ -16,6 +16,7 @@ src\ManaMinder.lua
 src\data\Consumables.lua
 src\data\Items.lua
 src\data\Spells.lua
+src\data\Textures.lua
 src\options\Defaults.lua
 
 src\Frame.lua

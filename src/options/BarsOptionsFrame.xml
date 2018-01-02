@@ -18,7 +18,7 @@
 
             <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="0" y="95"/>
+                    <AbsDimension x="0" y="97"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -117,7 +117,7 @@
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="0" y="-20" />
+                                    <AbsDimension x="0" y="-22" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -131,11 +131,40 @@
                         </Scripts>
                     </Slider>
 
-                    <Frame name="ManaMinder_Options_Bars_Background_Picker" inherits="ManaMinder_ColorPicker">
+                    <Frame name="ManaMinder_Options_Bars_Texture_DropDown" inherits="UIDropDownMenuTemplate">
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="TOPRIGHT">
                                 <Offset>
-                                    <AbsDimension x="16" y="-3" />
+                                    <AbsDimension x="-4" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <FontString name="$parent_Text" inherits="GameFontNormalSmall" justifyH="LEFT" text="Texture">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT">
+                                            <Offset x="21" y="9" />
+                                        </Anchor>
+                                        <Anchor pont="BOTTOMRIGHT">
+                                            <Offset x="0" y="0" />
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>
+                                    ManaMinder.optionsFrame.barsFrame:OnTextureDropDownLoad()
+                            </OnLoad>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="ManaMinder_Options_Bars_Background_Picker" inherits="ManaMinder_ColorPicker">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Margin_Slider" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="2" y="-25" />
                                 </Offset>
                             </Anchor>
                         </Anchors>

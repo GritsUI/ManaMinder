@@ -38,11 +38,12 @@ end
 function BarFrame.prototype:SetupStatusBar()
     local font = GameFontHighlight:GetFont()
     local fontColor = db.profile.bars.readyFontColor
+    local texture = ManaMinder.textures[db.profile.bars.texture]
 
     self.statusBar = CreateFrame("StatusBar", nil, self.frame)
     self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", db.profile.bars.height + 1, 0)
     self.statusBar:SetPoint("BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
-    self.statusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
+    self.statusBar:SetStatusBarTexture(texture.texture)
     self.statusBar:SetStatusBarColor(0.7, 0.7, 0.7, 0.7)
     self.statusBar:SetMinMaxValues(0,100)
     self.statusBar:SetValue(self:GetCurrentPercent())
@@ -280,6 +281,11 @@ end
 function BarFrame.prototype:UpdateBackground()
     local color = db.profile.bars.backgroundColor
     self.background:SetTexture(color[1], color[2], color[3], color[4])
+end
+
+function BarFrame.prototype:UpdateTexture()
+    local texture = ManaMinder.textures[db.profile.bars.texture]
+    self.statusBar:SetStatusBarTexture(texture.texture)
 end
 
 ManaMinder.BarFrame = BarFrame

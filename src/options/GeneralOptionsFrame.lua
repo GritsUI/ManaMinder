@@ -11,13 +11,13 @@ function GeneralOptions.prototype:init()
 end
 
 function GeneralOptions.prototype:OnInitialize()
-  getglobal(HIDE_CHECK_NAME):SetChecked(db.char.mainFrame.hidden);
-  getglobal(HIDE_OOC_CHECK_NAME):SetChecked(db.char.mainFrame.hiddenOutOfCombat);
-  getglobal(LOCK_CHECK_NAME):SetChecked(db.char.mainFrame.locked);
+  getglobal(HIDE_CHECK_NAME):SetChecked(db.char.mainFrame.hidden)
+  getglobal(HIDE_OOC_CHECK_NAME):SetChecked(db.char.mainFrame.hiddenOutOfCombat)
+  getglobal(LOCK_CHECK_NAME):SetChecked(db.char.mainFrame.locked)
 end
 
 function GeneralOptions.prototype:OnHideLoad()
-  getglobal(HIDE_CHECK_NAME .. "Text"):SetText("Hide Bars");
+  getglobal(HIDE_CHECK_NAME .. "Text"):SetText("Hide Bars")
 end
 
 function GeneralOptions.prototype:OnHideChange(hide)
@@ -31,7 +31,7 @@ function GeneralOptions.prototype:OnHideChange(hide)
 end
 
 function GeneralOptions.prototype:OnHideOutOfCombatLoad()
-  getglobal(HIDE_OOC_CHECK_NAME .. "Text"):SetText("Hide Bars Out of Combat");
+  getglobal(HIDE_OOC_CHECK_NAME .. "Text"):SetText("Hide Bars Out of Combat")
 end
 
 function GeneralOptions.prototype:OnHideOutOfCombatChange(hide)
@@ -51,7 +51,7 @@ function GeneralOptions.prototype:OnHideOutOfCombatChange(hide)
 end
 
 function GeneralOptions.prototype:OnLockLoad()
-  getglobal(LOCK_CHECK_NAME .. "Text"):SetText("Lock Bars");
+  getglobal(LOCK_CHECK_NAME .. "Text"):SetText("Lock Bars")
 end
 
 function GeneralOptions.prototype:OnLockChange(locked)

@@ -7,8 +7,8 @@ end
 
 function Options.prototype:OnLoad(frame)
   self.frame = frame
-  PanelTemplates_SetNumTabs(frame, 3);
-  PanelTemplates_SetTab(frame, 1);
+  PanelTemplates_SetNumTabs(frame, 3)
+  PanelTemplates_SetTab(frame, 1)
 end
 
 function Options.prototype:OnInitialize()
@@ -18,17 +18,17 @@ function Options.prototype:OnInitialize()
 end
 
 function Options.prototype:OnTabLoad(tab)
-  tab:SetFrameLevel(tab:GetFrameLevel() + 4);
+  tab:SetFrameLevel(tab:GetFrameLevel() + 4)
 end
 
 function Options.prototype:OnTabShow(tab)
-  PanelTemplates_TabResize(0);
-  getglobal(tab:GetName().."HighlightTexture"):SetWidth(tab:GetTextWidth() + 30);
+  PanelTemplates_TabResize(0)
+  getglobal(tab:GetName().."HighlightTexture"):SetWidth(tab:GetTextWidth() + 30)
 end
 
 function Options.prototype:OnTabClick(tab)
-  PlaySound("igCharacterInfoTab");
-  PanelTemplates_Tab_OnClick(self.frame);
+  PlaySound("igCharacterInfoTab")
+  PanelTemplates_Tab_OnClick(self.frame)
   self:HideSections()
 
   local tabName = tab:GetName()
@@ -42,8 +42,8 @@ function Options.prototype:OnTabClick(tab)
 end
 
 function Options.prototype:OnOptionsFrameBoxLoad(box)
-  box:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.9);
-  box:SetBackdropColor(0.1, 0.1, 0.1, 0.9);
+  box:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.9)
+  box:SetBackdropColor(0.1, 0.1, 0.1, 0.9)
 end
 
 function Options.prototype:HideSections()

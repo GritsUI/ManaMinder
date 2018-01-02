@@ -54,9 +54,9 @@ end
 
 function ManaMinder:GetCooldownForSpellName(spellName)
   local _,_,offset,numSpells = GetSpellTabInfo(GetNumSpellTabs())
-  local numAllSpell = offset + numSpells;
+  local numAllSpell = offset + numSpells
   for i = numAllSpell, 1, -1 do
-    local name = GetSpellName(i, "BOOKTYPE_SPELL");
+    local name = GetSpellName(i, "BOOKTYPE_SPELL")
     if name == spellName then
       local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")
       return start, duration, i
@@ -110,9 +110,9 @@ function ManaMinder:ShowColorPicker(r, g, b, a, hasOpacity, callback)
     ColorPickerFrame.opacity = 1 - a
   end
 
-  ColorPickerFrame:Hide(); -- Need to run the OnShow handler.
-  ColorPickerFrame:Show();
-  ColorPickerFrame:SetColorRGB(r,g,b);
+  ColorPickerFrame:Hide() -- Need to run the OnShow handler.
+  ColorPickerFrame:Show()
+  ColorPickerFrame:SetColorRGB(r,g,b)
 end
 
 function ManaMinder:Splice(tbl, first, length)

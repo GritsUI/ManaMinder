@@ -25,9 +25,9 @@ function ConsumablesOptions.prototype:OnInitialize()
   self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
   self:RefreshAllFrames()
 
-  getglobal(POTIONS_CHECK_NAME):SetChecked(db.char.combinePotions);
-  getglobal(RUNES_CHECK_NAME):SetChecked(db.char.combineRunes);
-  getglobal(GEMS_CHECK_NAME):SetChecked(db.char.combineGems);
+  getglobal(POTIONS_CHECK_NAME):SetChecked(db.char.combinePotions)
+  getglobal(RUNES_CHECK_NAME):SetChecked(db.char.combineRunes)
+  getglobal(GEMS_CHECK_NAME):SetChecked(db.char.combineGems)
 end
 
 function ConsumablesOptions.prototype:RefreshAllFrames()
@@ -115,7 +115,7 @@ end
 
 function ConsumablesOptions.prototype:UpdateAvailableScroll()
   local consumableCount = table.getn(self.availableConsumables)
-  FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
+  FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT)
 
   for i = 1, table.getn(self.availableFrames), 1 do
     self.availableFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
@@ -177,7 +177,7 @@ end
 
 function ConsumablesOptions.prototype:UpdateTrackedScroll()
   local consumableCount = table.getn(db.char.consumables)
-  FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
+  FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT)
 
   for i = 1, table.getn(self.trackedFrames), 1 do
     self.trackedFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)

@@ -45,8 +45,8 @@ function BarsOptions.prototype:SetSwatchColor(pickerName, color)
 end
 
 function BarsOptions.prototype:OnWidthLoad()
-  getglobal(WIDTH_SLIDER_NAME):SetMinMaxValues(50, 300);
-  getglobal(WIDTH_SLIDER_NAME):SetValueStep(1);
+  getglobal(WIDTH_SLIDER_NAME):SetMinMaxValues(50, 300)
+  getglobal(WIDTH_SLIDER_NAME):SetValueStep(1)
 end
 
 function BarsOptions.prototype:OnWidthChange(value)
@@ -56,8 +56,8 @@ function BarsOptions.prototype:OnWidthChange(value)
 end
 
 function BarsOptions.prototype:OnHeightLoad()
-  getglobal(HEIGHT_SLIDER_NAME):SetMinMaxValues(10, 50);
-  getglobal(HEIGHT_SLIDER_NAME):SetValueStep(1);
+  getglobal(HEIGHT_SLIDER_NAME):SetMinMaxValues(10, 50)
+  getglobal(HEIGHT_SLIDER_NAME):SetValueStep(1)
 end
 
 function BarsOptions.prototype:OnHeightChange(value)
@@ -67,8 +67,8 @@ function BarsOptions.prototype:OnHeightChange(value)
 end
 
 function BarsOptions.prototype:OnFontSizeLoad()
-  getglobal(FONT_SIZE_SLIDER_NAME):SetMinMaxValues(6, 20);
-  getglobal(FONT_SIZE_SLIDER_NAME):SetValueStep(1);
+  getglobal(FONT_SIZE_SLIDER_NAME):SetMinMaxValues(6, 20)
+  getglobal(FONT_SIZE_SLIDER_NAME):SetValueStep(1)
 end
 
 function BarsOptions.prototype:OnFontSizeChange(value)
@@ -78,8 +78,8 @@ function BarsOptions.prototype:OnFontSizeChange(value)
 end
 
 function BarsOptions.prototype:OnMarginLoad()
-  getglobal(MARGIN_SLIDER_NAME):SetMinMaxValues(0, 20);
-  getglobal(MARGIN_SLIDER_NAME):SetValueStep(1);
+  getglobal(MARGIN_SLIDER_NAME):SetMinMaxValues(0, 20)
+  getglobal(MARGIN_SLIDER_NAME):SetValueStep(1)
 end
 
 function BarsOptions.prototype:OnMarginChange(value)
@@ -101,8 +101,8 @@ function BarsOptions.prototype:OnReadyFontLoad()
 end
 
 function BarsOptions.prototype:OnReadyAlphaLoad()
-  getglobal(READY_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1);
-  getglobal(READY_ALPHA_SLIDER_NAME):SetValueStep(0.01);
+  getglobal(READY_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1)
+  getglobal(READY_ALPHA_SLIDER_NAME):SetValueStep(0.01)
 end
 
 function BarsOptions.prototype:OnReadyAlphaChange(value)
@@ -123,8 +123,8 @@ function BarsOptions.prototype:OnDeficitFontLoad()
 end
 
 function BarsOptions.prototype:OnDeficitAlphaLoad()
-  getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1);
-  getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValueStep(0.01);
+  getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1)
+  getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValueStep(0.01)
 end
 
 function BarsOptions.prototype:OnDeficitAlphaChange(value)
@@ -145,8 +145,8 @@ function BarsOptions.prototype:OnCooldownFontLoad()
 end
 
 function BarsOptions.prototype:OnCooldownAlphaLoad()
-  getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1);
-  getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValueStep(0.01);
+  getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1)
+  getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValueStep(0.01)
 end
 
 function BarsOptions.prototype:OnCooldownAlphaChange(value)
@@ -177,7 +177,7 @@ function BarsOptions.prototype:OnTextureDropDownLoad()
       info.checked = false
       UIDropDownMenu_AddButton(info, 1)
     end
-  end);
+  end)
 end
 
 function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, hasOpacity, callback)

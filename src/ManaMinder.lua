@@ -34,28 +34,28 @@ end
 function ManaMinder:Hide()
   ManaMinder.mainFrame.frame:Hide()
   ManaMinder.db.char.mainFrame.hidden = true
-  ManaMinder_Options_General_Hide_Check:SetChecked(true);
+  ManaMinder_Options_General_Hide_Check:SetChecked(true)
   ManaMinder:SystemMessage("Frames hidden")
 end
 
 function ManaMinder:Show()
   ManaMinder.mainFrame.frame:Show()
   ManaMinder.db.char.mainFrame.hidden = false
-  ManaMinder_Options_General_Hide_Check:SetChecked(false);
+  ManaMinder_Options_General_Hide_Check:SetChecked(false)
   ManaMinder:SystemMessage("Frames shown")
 end
 
 function ManaMinder:Lock()
   ManaMinder.mainFrame.frame:SetMovable(false)
   ManaMinder.db.char.mainFrame.locked = true
-  ManaMinder_Options_General_Lock_Check:SetChecked(true);
+  ManaMinder_Options_General_Lock_Check:SetChecked(true)
   ManaMinder:SystemMessage("Frames locked")
 end
 
 function ManaMinder:Unlock()
   ManaMinder.mainFrame.frame:SetMovable(true)
   ManaMinder.db.char.mainFrame.locked = false
-  ManaMinder_Options_General_Lock_Check:SetChecked(false);
+  ManaMinder_Options_General_Lock_Check:SetChecked(false)
   ManaMinder:SystemMessage("Frames unlocked")
 end
 

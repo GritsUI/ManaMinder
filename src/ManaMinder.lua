@@ -1,9 +1,10 @@
 ManaMinder = AceLibrary("AceAddon-2.0"):new("AceDB-2.0", "AceConsole-2.0")
-ManaMinder:RegisterDB("ManaMinderDB")
+ManaMinder:RegisterDB("ManaMinderDB", "ManaMinderCharDB")
 
 function ManaMinder:OnInitialize()
     ManaMinder.controller = self
     ManaMinder:RegisterDefaults('profile', ManaMinder.defaults.profile)
+    ManaMinder:RegisterDefaults('char', ManaMinder.defaults.char)
 
     ManaMinder.mainFrame:OnInitialize()
     ManaMinder.optionsFrame:OnInitialize()
@@ -32,28 +33,28 @@ end
 
 function ManaMinder:Hide()
     ManaMinder.mainFrame.frame:Hide()
-    ManaMinder.db.profile.mainFrame.hidden = true
+    ManaMinder.db.char.mainFrame.hidden = true
     ManaMinder_Options_General_Hide_Check:SetChecked(true);
     ManaMinder:SystemMessage("Frames hidden")
 end
 
 function ManaMinder:Show()
     ManaMinder.mainFrame.frame:Show()
-    ManaMinder.db.profile.mainFrame.hidden = false
+    ManaMinder.db.char.mainFrame.hidden = false
     ManaMinder_Options_General_Hide_Check:SetChecked(false);
     ManaMinder:SystemMessage("Frames shown")
 end
 
 function ManaMinder:Lock()
     ManaMinder.mainFrame.frame:SetMovable(false)
-    ManaMinder.db.profile.mainFrame.locked = true
+    ManaMinder.db.char.mainFrame.locked = true
     ManaMinder_Options_General_Lock_Check:SetChecked(true);
     ManaMinder:SystemMessage("Frames locked")
 end
 
 function ManaMinder:Unlock()
     ManaMinder.mainFrame.frame:SetMovable(true)
-    ManaMinder.db.profile.mainFrame.locked = false
+    ManaMinder.db.char.mainFrame.locked = false
     ManaMinder_Options_General_Lock_Check:SetChecked(false);
     ManaMinder:SystemMessage("Frames unlocked")
 end

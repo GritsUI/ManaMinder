@@ -18,7 +18,7 @@ function MainFrame.prototype:OnInitialize()
 end
 
 function MainFrame.prototype:InitializeState()
-    local selfDB = db.profile.mainFrame
+    local selfDB = db.char.mainFrame
 
     self.frame:SetPoint("CENTER", "UIParent", "CENTER", selfDB.position.x, selfDB.position.y)
     self.frame:SetWidth(selfDB.width)
@@ -45,7 +45,7 @@ function MainFrame.prototype:InitializeEventHandlers()
 end
 
 function MainFrame.prototype:OnDragStart()
-    if db.profile.mainFrame.locked then
+    if db.char.mainFrame.locked then
         return
     end
 
@@ -53,15 +53,15 @@ function MainFrame.prototype:OnDragStart()
 end
 
 function MainFrame.prototype:OnDragStop()
-    if db.profile.mainFrame.locked then
+    if db.char.mainFrame.locked then
         return
     end
 
     self.frame:StopMovingOrSizing()
 
     local point, parent, relativePoint, x, y = self.frame:GetPoint(1)
-    db.profile.mainFrame.position.x = x
-    db.profile.mainFrame.position.y = y
+    db.char.mainFrame.position.x = x
+    db.char.mainFrame.position.y = y
 end
 
 function MainFrame.prototype:OnEvent(event)
@@ -76,14 +76,14 @@ end
 
 function MainFrame.prototype:OnEnterCombat()
     self.inCombat = true
-    if db.profile.mainFrame.hiddenOutOfCombat then
+    if db.char.mainFrame.hiddenOutOfCombat then
         self.frame:Show()
     end
 end
 
 function MainFrame.prototype:OnLeaveCombat()
     self.inCombat = false
-    if db.profile.mainFrame.hiddenOutOfCombat then
+    if db.char.mainFrame.hiddenOutOfCombat then
         self.frame:Hide()
     end
 end

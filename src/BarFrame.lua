@@ -23,13 +23,13 @@ function BarFrame.prototype:init(parentFrame, data)
 end
 
 function BarFrame.prototype:SetupFrame()
-    self.frame:SetWidth(db.profile.mainFrame.width)
-    self.frame:SetHeight(db.profile.bars.height)
+    self.frame:SetWidth(db.char.mainFrame.width)
+    self.frame:SetHeight(db.char.bars.height)
     self.frame:SetScript("OnUpdate", function() self:Update() end)
 end
 
 function BarFrame.prototype:SetupFrameBackground()
-    local color = db.profile.bars.backgroundColor
+    local color = db.char.bars.backgroundColor
     self.background = self.frame:CreateTexture(nil, "BACKGROUND")
     self.background:SetTexture(color[1], color[2], color[3], color[4])
     self.background:SetAllPoints()
@@ -37,11 +37,11 @@ end
 
 function BarFrame.prototype:SetupStatusBar()
     local font = GameFontHighlight:GetFont()
-    local fontColor = db.profile.bars.readyFontColor
-    local texture = ManaMinder.textures[db.profile.bars.texture]
+    local fontColor = db.char.bars.readyFontColor
+    local texture = ManaMinder.textures[db.char.bars.texture]
 
     self.statusBar = CreateFrame("StatusBar", nil, self.frame)
-    self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", db.profile.bars.height + 1, 0)
+    self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", db.char.bars.height + 1, 0)
     self.statusBar:SetPoint("BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
     self.statusBar:SetStatusBarTexture(texture.texture)
     self.statusBar:SetStatusBarColor(0.7, 0.7, 0.7, 0.7)
@@ -49,7 +49,7 @@ function BarFrame.prototype:SetupStatusBar()
     self.statusBar:SetValue(self:GetCurrentPercent())
 
     self.statusBarText = self.statusBar:CreateFontString(nil, "OVERLAY")
-    self.statusBarText:SetFont(font, db.profile.bars.fontSize)
+    self.statusBarText:SetFont(font, db.char.bars.fontSize)
     self.statusBarText:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
     self.statusBarText:SetPoint("TOPLEFT", self.statusBar, "TOPLEFT", 5, 0)
     self.statusBarText:SetPoint("BOTTOMRIGHT", self.statusBar, "BOTTOMRIGHT", 0, 0)
@@ -59,7 +59,7 @@ end
 
 function BarFrame.prototype:SetupIcon()
     local buttonName = self.frame:GetName() .. "_Button"
-    local buttonSize = db.profile.bars.height
+    local buttonSize = db.char.bars.height
     self.button = CreateFrame("Button", buttonName, self.frame, "ActionButtonTemplate")
     self.button:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 1)
     self.button:SetWidth(buttonSize)
@@ -74,13 +74,13 @@ function BarFrame.prototype:SetupIcon()
     normalTexture:SetWidth(buttonSize * NORMALTEX_RATIO)
     normalTexture:SetHeight(buttonSize * NORMALTEX_RATIO)
 
-    local color = db.profile.bars.iconFontColor
+    local color = db.char.bars.iconFontColor
     local font = NumberFontNormalSmall:GetFont()
     self.buttonText = self.button:CreateFontString(nil, "ARTWORK")
     self.buttonText:SetPoint("BOTTOMRIGHT", self.button, "BOTTOMRIGHT", -2, 2)
     self.buttonText:SetJustifyH("RIGHT")
-    self.buttonText:SetWidth(db.profile.bars.height)
-    self.buttonText:SetFont(font, db.profile.bars.iconFontSize)
+    self.buttonText:SetWidth(db.char.bars.height)
+    self.buttonText:SetFont(font, db.char.bars.iconFontSize)
     self.buttonText:SetShadowColor(0, 0, 0, 1.0)
     self.buttonText:SetShadowOffset(0.80, -0.80)
     self.buttonText:SetTextColor(color[1], color[2], color[3], color[4])
@@ -103,8 +103,8 @@ function BarFrame.prototype:ChangeIndex(index, animate)
 end
 
 function BarFrame.prototype:GetPositionForIndex(index)
-    local margin = db.profile.bars.margin
-    local height = db.profile.bars.height
+    local margin = db.char.bars.margin
+    local height = db.char.bars.height
     return (index - 1) * (height + margin) * -1
 end
 
@@ -118,7 +118,7 @@ function BarFrame.prototype:BeginPositionAnimation(y)
         startPosition = self.position,
         endPosition = y,
         startTime = GetTime(),
-        duration = db.profile.bars.animationDuration
+        duration = db.char.bars.animationDuration
     }
 end
 
@@ -153,13 +153,13 @@ end
 
 function BarFrame.prototype:UpdateAlpha()
     if self:GetCooldownRemaining() > 0 then
-        self.frame:SetAlpha(db.profile.bars.cooldownAlpha)
+        self.frame:SetAlpha(db.char.bars.cooldownAlpha)
     elseif self:GetDeficitRemaining() > 0 then
-        self.frame:SetAlpha(db.profile.bars.deficitAlpha)
+        self.frame:SetAlpha(db.char.bars.deficitAlpha)
     elseif self.index == 1 then
-        self.frame:SetAlpha(db.profile.bars.readyAlpha)
+        self.frame:SetAlpha(db.char.bars.readyAlpha)
     else
-        self.frame:SetAlpha(db.profile.bars.cooldownAlpha)
+        self.frame:SetAlpha(db.char.bars.cooldownAlpha)
     end
 end
 
@@ -210,18 +210,18 @@ end
 
 function BarFrame.prototype:GetCurrentColors()
     if self:GetCooldownRemaining() > 0 then
-        return db.profile.bars.cooldownColor, db.profile.bars.cooldownFontColor
+        return db.char.bars.cooldownColor, db.char.bars.cooldownFontColor
     end
 
     if self:GetDeficitRemaining() > 0 then
-        return db.profile.bars.deficitColor, db.profile.bars.deficitFontColor
+        return db.char.bars.deficitColor, db.char.bars.deficitFontColor
     end
 
     if self.index == 1 then
-        return db.profile.bars.readyColor, db.profile.bars.readyFontColor
+        return db.char.bars.readyColor, db.char.bars.readyFontColor
     end
 
-    return db.profile.bars.cooldownColor, db.profile.bars.cooldownFontColor
+    return db.char.bars.cooldownColor, db.char.bars.cooldownFontColor
 end
 
 function BarFrame.prototype:GetCurrentText()
@@ -251,11 +251,11 @@ function BarFrame.prototype:Consume(force)
 end
 
 function BarFrame.prototype:UpdateWidth()
-    self.frame:SetWidth(db.profile.mainFrame.width)
+    self.frame:SetWidth(db.char.mainFrame.width)
 end
 
 function BarFrame.prototype:UpdateHeight()
-    local height = db.profile.bars.height
+    local height = db.char.bars.height
     self.frame:SetHeight(height)
     self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", height + 1, 0)
     self.button:SetWidth(height)
@@ -270,7 +270,7 @@ function BarFrame.prototype:UpdateHeight()
 end
 
 function BarFrame.prototype:UpdateFontSize()
-    self.statusBarText:SetFont(GameFontHighlight:GetFont(), db.profile.bars.fontSize)
+    self.statusBarText:SetFont(GameFontHighlight:GetFont(), db.char.bars.fontSize)
 end
 
 function BarFrame.prototype:UpdatePosition()
@@ -279,12 +279,12 @@ function BarFrame.prototype:UpdatePosition()
 end
 
 function BarFrame.prototype:UpdateBackground()
-    local color = db.profile.bars.backgroundColor
+    local color = db.char.bars.backgroundColor
     self.background:SetTexture(color[1], color[2], color[3], color[4])
 end
 
 function BarFrame.prototype:UpdateTexture()
-    local texture = ManaMinder.textures[db.profile.bars.texture]
+    local texture = ManaMinder.textures[db.char.bars.texture]
     self.statusBar:SetStatusBarTexture(texture.texture)
 end
 

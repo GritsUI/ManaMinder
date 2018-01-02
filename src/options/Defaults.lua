@@ -1,5 +1,8 @@
 ManaMinder.defaults = {
     profile = {
+
+    },
+    char = {
         mainFrame = {
             position = {
                 x = 0,

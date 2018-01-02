@@ -23,21 +23,21 @@ function BarsOptions.prototype:init()
 end
 
 function BarsOptions.prototype:OnInitialize()
-    getglobal(WIDTH_SLIDER_NAME):SetValue(db.profile.mainFrame.width)
-    getglobal(HEIGHT_SLIDER_NAME):SetValue(db.profile.bars.height)
-    getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.profile.bars.fontSize)
-    getglobal(MARGIN_SLIDER_NAME):SetValue(db.profile.bars.margin)
-    getglobal(READY_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.readyAlpha)
-    getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.deficitAlpha)
-    getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.cooldownAlpha)
-    UIDropDownMenu_SetSelectedValue(getglobal(TEXTURE_DROPDOWN_NAME), db.profile.bars.texture)
-    self:SetSwatchColor(READY_BACKGROUND_PICKER_NAME, db.profile.bars.readyColor)
-    self:SetSwatchColor(READY_FONT_PICKER_NAME, db.profile.bars.readyFontColor)
-    self:SetSwatchColor(DEFICIT_BACKGROUND_PICKER_NAME, db.profile.bars.deficitColor)
-    self:SetSwatchColor(DEFICIT_FONT_PICKER_NAME, db.profile.bars.deficitFontColor)
-    self:SetSwatchColor(COOLDOWN_BACKGROUND_PICKER_NAME, db.profile.bars.cooldownColor)
-    self:SetSwatchColor(COOLDOWN_FONT_PICKER_NAME, db.profile.bars.cooldownFontColor)
-    self:SetSwatchColor(BACKGROUND_PICKER_NAME, db.profile.bars.backgroundColor)
+    getglobal(WIDTH_SLIDER_NAME):SetValue(db.char.mainFrame.width)
+    getglobal(HEIGHT_SLIDER_NAME):SetValue(db.char.bars.height)
+    getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.bars.fontSize)
+    getglobal(MARGIN_SLIDER_NAME):SetValue(db.char.bars.margin)
+    getglobal(READY_ALPHA_SLIDER_NAME):SetValue(db.char.bars.readyAlpha)
+    getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValue(db.char.bars.deficitAlpha)
+    getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValue(db.char.bars.cooldownAlpha)
+    UIDropDownMenu_SetSelectedValue(getglobal(TEXTURE_DROPDOWN_NAME), db.char.bars.texture)
+    self:SetSwatchColor(READY_BACKGROUND_PICKER_NAME, db.char.bars.readyColor)
+    self:SetSwatchColor(READY_FONT_PICKER_NAME, db.char.bars.readyFontColor)
+    self:SetSwatchColor(DEFICIT_BACKGROUND_PICKER_NAME, db.char.bars.deficitColor)
+    self:SetSwatchColor(DEFICIT_FONT_PICKER_NAME, db.char.bars.deficitFontColor)
+    self:SetSwatchColor(COOLDOWN_BACKGROUND_PICKER_NAME, db.char.bars.cooldownColor)
+    self:SetSwatchColor(COOLDOWN_FONT_PICKER_NAME, db.char.bars.cooldownFontColor)
+    self:SetSwatchColor(BACKGROUND_PICKER_NAME, db.char.bars.backgroundColor)
 end
 
 function BarsOptions.prototype:SetSwatchColor(pickerName, color)
@@ -50,9 +50,9 @@ function BarsOptions.prototype:OnWidthLoad()
 end
 
 function BarsOptions.prototype:OnWidthChange(value)
-    db.profile.mainFrame.width = value
+    db.char.mainFrame.width = value
     ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateWidth() end)
-    getglobal(WIDTH_SLIDER_NAME .. "Text"):SetText("Width: " .. db.profile.mainFrame.width)
+    getglobal(WIDTH_SLIDER_NAME .. "Text"):SetText("Width: " .. db.char.mainFrame.width)
 end
 
 function BarsOptions.prototype:OnHeightLoad()
@@ -61,9 +61,9 @@ function BarsOptions.prototype:OnHeightLoad()
 end
 
 function BarsOptions.prototype:OnHeightChange(value)
-    db.profile.bars.height = value
+    db.char.bars.height = value
     ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateHeight() end)
-    getglobal(HEIGHT_SLIDER_NAME .. "Text"):SetText("Height: " .. db.profile.bars.height)
+    getglobal(HEIGHT_SLIDER_NAME .. "Text"):SetText("Height: " .. db.char.bars.height)
 end
 
 function BarsOptions.prototype:OnFontSizeLoad()
@@ -72,9 +72,9 @@ function BarsOptions.prototype:OnFontSizeLoad()
 end
 
 function BarsOptions.prototype:OnFontSizeChange(value)
-    db.profile.bars.fontSize = value
+    db.char.bars.fontSize = value
     ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateFontSize() end)
-    getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText("Font Size: " .. db.profile.bars.fontSize)
+    getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText("Font Size: " .. db.char.bars.fontSize)
 end
 
 function BarsOptions.prototype:OnMarginLoad()
@@ -83,9 +83,9 @@ function BarsOptions.prototype:OnMarginLoad()
 end
 
 function BarsOptions.prototype:OnMarginChange(value)
-    db.profile.bars.margin = value
+    db.char.bars.margin = value
     ManaMinder.barManager:ForEachBar(function(bar) bar:UpdatePosition() end)
-    getglobal(MARGIN_SLIDER_NAME .. "Text"):SetText("Margin: " .. db.profile.bars.margin)
+    getglobal(MARGIN_SLIDER_NAME .. "Text"):SetText("Margin: " .. db.char.bars.margin)
 end
 
 function BarsOptions.prototype:OnReadyBackgroundLoad()
@@ -106,8 +106,8 @@ function BarsOptions.prototype:OnReadyAlphaLoad()
 end
 
 function BarsOptions.prototype:OnReadyAlphaChange(value)
-    db.profile.bars.readyAlpha = value
-    getglobal(READY_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.profile.bars.readyAlpha, 2))
+    db.char.bars.readyAlpha = value
+    getglobal(READY_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.readyAlpha, 2))
 end
 
 function BarsOptions.prototype:OnDeficitBackgroundLoad()
@@ -128,8 +128,8 @@ function BarsOptions.prototype:OnDeficitAlphaLoad()
 end
 
 function BarsOptions.prototype:OnDeficitAlphaChange(value)
-    db.profile.bars.deficitAlpha = value
-    getglobal(DEFICIT_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.profile.bars.deficitAlpha, 2))
+    db.char.bars.deficitAlpha = value
+    getglobal(DEFICIT_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.deficitAlpha, 2))
 end
 
 function BarsOptions.prototype:OnCooldownBackgroundLoad()
@@ -150,8 +150,8 @@ function BarsOptions.prototype:OnCooldownAlphaLoad()
 end
 
 function BarsOptions.prototype:OnCooldownAlphaChange(value)
-    db.profile.bars.cooldownAlpha = value
-    getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.profile.bars.cooldownAlpha, 2))
+    db.char.bars.cooldownAlpha = value
+    getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.cooldownAlpha, 2))
 end
 
 function BarsOptions.prototype:OnBackgroundPickerLoad()
@@ -171,7 +171,7 @@ function BarsOptions.prototype:OnTextureDropDownLoad()
             info.value = value.name
             info.func = function()
                 UIDropDownMenu_SetSelectedID(dropdown, this:GetID())
-                db.profile.bars.texture = UIDropDownMenu_GetText(dropdown)
+                db.char.bars.texture = UIDropDownMenu_GetText(dropdown)
                 ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateTexture() end)
             end
             info.checked = false
@@ -182,17 +182,17 @@ end
 
 function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, hasOpacity, callback)
     return function()
-        local color = db.profile.bars[optionName]
+        local color = db.char.bars[optionName]
         ManaMinder:ShowColorPicker(color[1], color[2], color[3], color[4], hasOpacity, function()
             if not ColorPickerFrame:IsVisible() then
                 local r, g, b = ColorPickerFrame:GetColorRGB()
                 if (hasOpacity) then
-                    db.profile.bars[optionName] = { r, g, b, 1 - OpacitySliderFrame:GetValue() }
+                    db.char.bars[optionName] = { r, g, b, 1 - OpacitySliderFrame:GetValue() }
                 else
-                    db.profile.bars[optionName] = { r, g, b }
+                    db.char.bars[optionName] = { r, g, b }
                 end
 
-                self:SetSwatchColor(pickerName, db.profile.bars[optionName])
+                self:SetSwatchColor(pickerName, db.char.bars[optionName])
                 if callback then
                     callback()
                 end

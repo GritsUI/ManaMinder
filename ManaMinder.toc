@@ -3,6 +3,7 @@
 ## Notes: A tool to help manage mana consumables
 ## Author: Grits
 ## SavedVariables: ManaMinderDB
+## SavedVariablesPerCharacter: ManaMinderCharDB
 
 lib\AceLibrary\AceLibrary.lua
 lib\AceOO-2.0\AceOO-2.0.lua

@@ -62,7 +62,7 @@ end
 
 function BarManager.prototype:UpdatePriorities()
     for i = table.getn(self.barFrames), 1, -1 do
-        for priority, consumable in db.profile.consumables do
+        for priority, consumable in db.char.consumables do
             if self.barFrames[i].data.key == consumable.key then
                 self.barFrames[i].data.priority = priority
             end

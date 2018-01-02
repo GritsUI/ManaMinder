@@ -6,7 +6,7 @@ function StateManager.prototype:init()
     StateManager.super.prototype.init(self)
 
     -- Tracks state of all consumable counts in bags and consumable/spell cooldowns. Only tracks those which are
-    -- present in db.profile.consumables/items/spells, currently enabled and with a bag count greater than 0.
+    -- present in db.char.consumables/items/spells, currently enabled and with a bag count greater than 0.
     -- Table index is equal to "key" in db consumables/items/spells config.
     -- All objects contain properties: key, priority, cooldown, cooldownStart, texture, type, requiredDeficit
     -- "ITEM" objects additionally contain: count, bag, slot
@@ -58,7 +58,7 @@ function StateManager.prototype:UpdateStateForConsumables(state)
 end
 
 function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
-    for index, consumableConfig in pairs(ManaMinder.db.profile.consumables) do
+    for index, consumableConfig in pairs(ManaMinder.db.char.consumables) do
         if consumableConfig.type == "ITEM" then
             local consumableData = ManaMinder.consumables[consumableConfig.key]
             if consumableData.itemId == itemId then
@@ -70,7 +70,7 @@ function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
 end
 
 function StateManager.prototype:UpdateStateForSpells(state)
-    for index, spellConfig in pairs(ManaMinder.db.profile.consumables) do
+    for index, spellConfig in pairs(ManaMinder.db.char.consumables) do
         if spellConfig.type == "SPELL" then
             local spellData = ManaMinder.spells[spellConfig.key]
             local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
@@ -94,7 +94,7 @@ end
 function StateManager.prototype:UpdateStateForEquippedItems(state)
     local equipped = {}
 
-    for index, itemConfig in pairs(ManaMinder.db.profile.consumables) do
+    for index, itemConfig in pairs(ManaMinder.db.char.consumables) do
         if itemConfig.type == "EQUIPPED" then
             local itemData = ManaMinder.items[itemConfig.key]
             for index2, slot in itemData.slots do
@@ -132,15 +132,15 @@ function StateManager.prototype:GetBarData()
     end
     table.sort(bars, function(barA, barB) return barA.priority < barB.priority end)
 
-    if db.profile.combinePotions then
+    if db.char.combinePotions then
         bars = self:FilterGroup(bars, "POTION")
     end
 
-    if db.profile.combineRunes then
+    if db.char.combineRunes then
         bars = self:FilterGroup(bars, "RUNE")
     end
 
-    if db.profile.combineGems then
+    if db.char.combineGems then
         bars = self:FilterGroup(bars, "GEM")
     end
 

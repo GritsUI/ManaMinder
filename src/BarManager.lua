@@ -29,7 +29,7 @@ function BarManager.prototype:Update()
 end
 
 function BarManager.prototype:CreateMissingBars(newData)
-  for index, newBar in ipairs(newData) do
+  for _, newBar in ipairs(newData) do
     if not self:IsBarInArray(self.barFrames, newBar.key) then
       table.insert(self.barFrames, self:CreateBar(newBar))
     end
@@ -37,7 +37,7 @@ function BarManager.prototype:CreateMissingBars(newData)
 end
 
 function BarManager.prototype:IsBarInArray(array, key)
-  for index, bar in ipairs(array) do
+  for _, bar in ipairs(array) do
     -- Handle either an array of bar data objects, or BarFrame objects
     local barKey = bar.data and bar.data.key or bar.key
     if barKey == key then
@@ -94,7 +94,7 @@ end
 function BarManager.prototype:UpdateBars(newData)
   for i = 1, table.getn(self.barFrames), 1 do
     local bar = self.barFrames[i]
-    for index, data in ipairs(newData) do
+    for _, data in ipairs(newData) do
       if bar.data.key == data.key then
         bar.data = data
 

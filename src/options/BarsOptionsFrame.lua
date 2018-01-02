@@ -165,7 +165,7 @@ end
 function BarsOptions.prototype:OnTextureDropDownLoad()
   local dropdown = this
   UIDropDownMenu_Initialize(this, function()
-    for key, value in ipairs(ManaMinder.texturesList) do
+    for _, value in ipairs(ManaMinder.texturesList) do
       local info = {}
       info.text = value.name
       info.value = value.name
@@ -186,8 +186,10 @@ function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName
     ManaMinder:ShowColorPicker(color[1], color[2], color[3], color[4], hasOpacity, function()
       if not ColorPickerFrame:IsVisible() then
         local r, g, b = ColorPickerFrame:GetColorRGB()
+        local a = 1 - OpacitySliderFrame:GetValue()
+
         if (hasOpacity) then
-          db.char.bars[optionName] = { r, g, b, 1 - OpacitySliderFrame:GetValue() }
+          db.char.bars[optionName] = { r, g, b, a }
         else
           db.char.bars[optionName] = { r, g, b }
         end

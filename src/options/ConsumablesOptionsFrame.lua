@@ -123,7 +123,7 @@ function ConsumablesOptions.prototype:UpdateAvailableScroll()
 end
 
 function ConsumablesOptions.prototype:IsConsumableTracked(consumableKey)
-  for i, consumable in pairs(db.char.consumables) do
+  for _, consumable in pairs(db.char.consumables) do
     if consumable.key == consumableKey then
       return true
     end

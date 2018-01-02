@@ -59,7 +59,7 @@ function StateManager.prototype:UpdateStateForConsumables(state)
 end
 
 function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
-  for index, consumableConfig in pairs(ManaMinder.db.char.consumables) do
+  for _, consumableConfig in pairs(ManaMinder.db.char.consumables) do
     if consumableConfig.type == "ITEM" then
       local consumableData = ManaMinder.consumables[consumableConfig.key]
       if consumableData.itemId == itemId then
@@ -71,7 +71,7 @@ function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
 end
 
 function StateManager.prototype:UpdateStateForSpells(state)
-  for index, spellConfig in pairs(ManaMinder.db.char.consumables) do
+  for _, spellConfig in pairs(ManaMinder.db.char.consumables) do
     if spellConfig.type == "SPELL" then
       local spellData = ManaMinder.spells[spellConfig.key]
       local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
@@ -95,10 +95,10 @@ end
 function StateManager.prototype:UpdateStateForEquippedItems(state)
   local equipped = {}
 
-  for index, itemConfig in pairs(ManaMinder.db.char.consumables) do
+  for _, itemConfig in pairs(ManaMinder.db.char.consumables) do
     if itemConfig.type == "EQUIPPED" then
       local itemData = ManaMinder.items[itemConfig.key]
-      for index2, slot in itemData.slots do
+      for _, slot in itemData.slots do
         local slotId = GetInventorySlotInfo(slot)
         if not equipped[slot] then
           equipped[slot] = ManaMinder:GetItemIdFromLink(GetInventoryItemLink("player", slotId))
@@ -126,7 +126,7 @@ end
 function StateManager.prototype:GetBarData()
   local bars = {}
 
-  for key, consumable in self.state do
+  for _, consumable in self.state do
     if consumable.type ~= "ITEM" or consumable.count > 0 then
       table.insert(bars, consumable)
     end
@@ -152,7 +152,7 @@ function StateManager.prototype:FilterGroup(bars, group)
   local filtered = {}
   local groupFound = false
 
-  for index, bar in bars do
+  for _, bar in bars do
     if bar.group == group then
       if not groupFound then
         table.insert(filtered, bar)

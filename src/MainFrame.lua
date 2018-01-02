@@ -59,7 +59,7 @@ function MainFrame.prototype:OnDragStop()
 
   self.frame:StopMovingOrSizing()
 
-  local point, parent, relativePoint, x, y = self.frame:GetPoint(1)
+  local _, _, _, x, y = self.frame:GetPoint(1)
   db.char.mainFrame.position.x = x
   db.char.mainFrame.position.y = y
 end

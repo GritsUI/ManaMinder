@@ -7,9 +7,14 @@ local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
 local POTIONS_CHECK_NAME = "ManaMinder_Options_Consumables_Potions_Check"
 local RUNES_CHECK_NAME = "ManaMinder_Options_Consumables_Runes_Check"
 local GEMS_CHECK_NAME = "ManaMinder_Options_Consumables_Gems_Check"
+local AVAILABLE_SCROLL_FRAME = "ManaMinder_Options_Consumables_Available_Section_Scroll"
+local TRACKED_SCROLL_FRAME = "ManaMinder_Options_Consumables_Tracked_Section_Scroll"
+
+local MAX_SCROLL_ITEMS = 12
 
 function ConsumablesOptions.prototype:init()
     ConsumablesOptions.super.prototype.init(self)
+    self.availableConsumables = {}
     self.availableFrames = {}
     self.trackedFrames = {}
 end
@@ -17,32 +22,47 @@ end
 function ConsumablesOptions.prototype:OnInitialize()
     self.availableSectionFrame = getglobal(AVAILABLE_SECTION_NAME)
     self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
-    self:RefreshFrames()
+    self:RefreshAllFrames()
 
     getglobal(POTIONS_CHECK_NAME):SetChecked(db.profile.combinePotions);
     getglobal(RUNES_CHECK_NAME):SetChecked(db.profile.combineRunes);
     getglobal(GEMS_CHECK_NAME):SetChecked(db.profile.combineGems);
 end
 
-function ConsumablesOptions.prototype:RefreshFrames()
-    self:RemoveCurrentFrames()
+function ConsumablesOptions.prototype:RefreshAllFrames()
+    self:RefreshAvailableFrames()
+    self:RefreshTrackedFrames()
+end
+
+function ConsumablesOptions.prototype:RefreshAvailableFrames()
+    self:RemoveCurrentAvailableFrames()
     self:AddAvailableFrames()
+end
+
+function ConsumablesOptions.prototype:RefreshTrackedFrames()
+    self:RemoveCurrentTrackedFrames()
     self:AddTrackedFrames()
 end
 
-function ConsumablesOptions.prototype:RemoveCurrentFrames()
+function ConsumablesOptions.prototype:RemoveCurrentAvailableFrames()
     for i = 1, table.getn(self.availableFrames), 1 do
         self.availableFrames[i]:Hide()
-    end
-
-    for i = 1, table.getn(self.trackedFrames), 1 do
-        self.trackedFrames[i]:Hide()
     end
 end
 
 function ConsumablesOptions.prototype:AddAvailableFrames()
-    for index, consumable in ipairs(self:GetAvailableConsumables()) do
-        self:AddAvailableFrame(index, consumable)
+    self.availableConsumables = self:GetAvailableConsumables()
+
+    local consumableCount = table.getn(self.availableConsumables)
+    local offset = FauxScrollFrame_GetOffset(getglobal(AVAILABLE_SCROLL_FRAME))
+    if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
+        offset = offset - 1
+        FauxScrollFrame_SetOffset(getglobal(AVAILABLE_SCROLL_FRAME), offset)
+    end
+
+    local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
+    for index = 1, itemCount, 1 do
+        self:AddAvailableFrame(index, self.availableConsumables[index + offset])
     end
 end
 
@@ -87,6 +107,20 @@ function ConsumablesOptions.prototype:GetAvailableConsumables()
     return consumables
 end
 
+function ConsumablesOptions.prototype:OnAvailableScroll()
+    self:UpdateAvailableScroll()
+    self:RefreshAvailableFrames()
+end
+
+function ConsumablesOptions.prototype:UpdateAvailableScroll()
+    local consumableCount = table.getn(self.availableConsumables)
+    FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, 20);
+
+    for i = 1, table.getn(self.availableFrames), 1 do
+        self.availableFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
+    end
+end
+
 function ConsumablesOptions.prototype:IsConsumableTracked(consumableKey)
     for i, consumable in pairs(db.profile.consumables) do
         if consumable.key == consumableKey then
@@ -100,9 +134,23 @@ function ConsumablesOptions.prototype:IsConsumableAvailableForClass(consumable)
     return not consumable.class or consumable.class == UnitClass("player")
 end
 
+function ConsumablesOptions.prototype:RemoveCurrentTrackedFrames()
+    for i = 1, table.getn(self.trackedFrames), 1 do
+        self.trackedFrames[i]:Hide()
+    end
+end
+
 function ConsumablesOptions.prototype:AddTrackedFrames()
-    for index, consumable in ipairs(db.profile.consumables) do
-        self:AddTrackedFrame(index, consumable)
+    local consumableCount = table.getn(db.profile.consumables)
+    local offset = FauxScrollFrame_GetOffset(getglobal(TRACKED_SCROLL_FRAME))
+    if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
+        offset = offset - 1
+        FauxScrollFrame_SetOffset(getglobal(TRACKED_SCROLL_FRAME), offset)
+    end
+
+    local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
+    for index = 1, itemCount, 1 do
+        self:AddTrackedFrame(index, db.profile.consumables[index + offset])
     end
 end
 
@@ -121,13 +169,29 @@ function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
     frame:Show()
 end
 
+function ConsumablesOptions.prototype:OnTrackedScroll()
+    self:UpdateTrackedScroll()
+    self:RefreshTrackedFrames()
+end
+
+function ConsumablesOptions.prototype:UpdateTrackedScroll()
+    local consumableCount = table.getn(db.profile.consumables)
+    FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, 20);
+
+    for i = 1, table.getn(self.trackedFrames), 1 do
+        self.trackedFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
+    end
+end
+
 function ConsumablesOptions.prototype:TrackConsumable(consumable)
     table.insert(db.profile.consumables, {
         key = consumable.key,
         priority = table.getn(db.profile.consumables) + 1,
         type = consumable.type
     })
-    self:RefreshFrames()
+    self:RefreshAllFrames()
+    self:UpdateAvailableScroll()
+    self:UpdateTrackedScroll()
     ManaMinder.mainFrame:UpdateAll()
 end
 
@@ -137,8 +201,9 @@ function ConsumablesOptions.prototype:UntrackConsumable(consumable)
     for i = 1, table.getn(db.profile.consumables), 1 do
         db.profile.consumables[i].priority = i
     end
-
-    self:RefreshFrames()
+    self:RefreshAllFrames()
+    self:UpdateAvailableScroll()
+    self:UpdateTrackedScroll()
     ManaMinder.mainFrame:UpdateAll()
 end
 
@@ -153,7 +218,7 @@ function ConsumablesOptions.prototype:IncreasePriority(index)
     db.profile.consumables[index] = old
     db.profile.consumables[index].priority = index
 
-    self:RefreshFrames()
+    self:RefreshAllFrames()
     ManaMinder.mainFrame:UpdateAll()
 end
 
@@ -168,7 +233,7 @@ function ConsumablesOptions.prototype:DecreasePriority(index)
     db.profile.consumables[index] = old
     db.profile.consumables[index].priority = index
 
-    self:RefreshFrames()
+    self:RefreshAllFrames()
     ManaMinder.mainFrame:UpdateAll()
 end
 

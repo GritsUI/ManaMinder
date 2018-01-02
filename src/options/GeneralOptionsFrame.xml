@@ -5,12 +5,12 @@
 
     <Frame name="ManaMinder_Options_General" parent="ManaMinder_Options" hidden="false" id="1">
         <Size>
-            <AbsDimension x="416" y="385"/>
+            <AbsDimension x="566" y="383"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
                 <Offset>
-                    <AbsDimension x="12" y="-36"/>
+                    <AbsDimension x="12" y="-38"/>
                 </Offset>
             </Anchor>
         </Anchors>
@@ -18,15 +18,10 @@
 
             <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="10" y="72"/>
+                    <AbsDimension x="281" y="72"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-                        <Offset>
-                            <AbsDimension x="0" y="0"/>
-                        </Offset>
-                    </Anchor>
-                    <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
                         <Offset>
                             <AbsDimension x="0" y="0"/>
                         </Offset>
@@ -65,9 +60,9 @@
                     </CheckButton>
                     <CheckButton name="ManaMinder_Options_General_Hide_OOC_Check" inherits="OptionsCheckButtonTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_General_Hide_Check" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="206" y="-6"/>
+                                    <AbsDimension x="0" y="4"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -80,11 +75,44 @@
                             </OnClick>
                         </Scripts>
                     </CheckButton>
+                </Frames>
+                <Scripts>
+                    <OnLoad>
+                            ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+
+            <Frame name="$parent_Positioning_Section" inherits="OptionFrameBoxTemplate">
+                <Size>
+                    <AbsDimension x="281" y="72"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Display_Section" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="4" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" inherits="GameFontHighlight" text="Positioning">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="6" y="12"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
                     <CheckButton name="ManaMinder_Options_General_Lock_Check" inherits="OptionsCheckButtonTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_General_Hide_Check" relativePoint="BOTTOMLEFT">
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
                                 <Offset>
-                                    <AbsDimension x="0" y="4"/>
+                                    <AbsDimension x="8" y="-6"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>

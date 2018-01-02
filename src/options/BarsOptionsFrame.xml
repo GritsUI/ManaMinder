@@ -5,20 +5,20 @@
 
     <Frame name="ManaMinder_Options_Bars" parent="ManaMinder_Options" hidden="true" id="2">
         <Size>
-            <AbsDimension x="416" y="385"/>
+            <AbsDimension x="566" y="383"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
                 <Offset>
-                    <AbsDimension x="12" y="-36"/>
+                    <AbsDimension x="12" y="-38"/>
                 </Offset>
             </Anchor>
         </Anchors>
         <Frames>
 
-            <Frame name="$parent_Size_Section" inherits="OptionFrameBoxTemplate">
+            <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="10" y="126"/>
+                    <AbsDimension x="0" y="95"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -49,7 +49,7 @@
 
                     <Slider name="ManaMinder_Options_Bars_Width_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="190" y="17"/>
+                            <AbsDimension x="174" y="17"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -70,12 +70,12 @@
 
                     <Slider name="ManaMinder_Options_Bars_Height_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="190" y="17"/>
+                            <AbsDimension x="174" y="17"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
                                 <Offset>
-                                    <AbsDimension x="214" y="-20" />
+                                    <AbsDimension x="197" y="-20" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -89,35 +89,14 @@
                         </Scripts>
                     </Slider>
 
-                    <Slider name="ManaMinder_Options_Bars_Font_Size_Slider" inherits="OptionsSliderTemplate">
-                        <Size>
-                            <AbsDimension x="190" y="17"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="0" y="-18" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Scripts>
-                            <OnValueChanged>
-                                ManaMinder.optionsFrame.barsFrame:OnFontSizeChange(this:GetValue())
-                            </OnValueChanged>
-                            <OnLoad>
-                                    ManaMinder.optionsFrame.barsFrame:OnFontSizeLoad()
-                            </OnLoad>
-                        </Scripts>
-                    </Slider>
-
                     <Slider name="ManaMinder_Options_Bars_Margin_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="190" y="17"/>
+                            <AbsDimension x="174" y="17"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Height_Slider" relativePoint="BOTTOMLEFT">
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
                                 <Offset>
-                                    <AbsDimension x="0" y="-18" />
+                                    <AbsDimension x="382" y="-20" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -131,32 +110,32 @@
                         </Scripts>
                     </Slider>
 
-                    <Slider name="ManaMinder_Options_Bars_Background_Alpha_Slider" inherits="OptionsSliderTemplate">
+                    <Slider name="ManaMinder_Options_Bars_Font_Size_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="190" y="17"/>
+                            <AbsDimension x="174" y="17"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="BOTTOMLEFT">
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="0" y="-18" />
+                                    <AbsDimension x="0" y="-20" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
                         <Scripts>
                             <OnValueChanged>
-                                ManaMinder.optionsFrame.barsFrame:OnBackgroundAlphaChange(this:GetValue())
+                                ManaMinder.optionsFrame.barsFrame:OnFontSizeChange(this:GetValue())
                             </OnValueChanged>
                             <OnLoad>
-                                    ManaMinder.optionsFrame.barsFrame:OnBackgroundAlphaLoad()
+                                    ManaMinder.optionsFrame.barsFrame:OnFontSizeLoad()
                             </OnLoad>
                         </Scripts>
                     </Slider>
 
                     <Frame name="ManaMinder_Options_Bars_Background_Picker" inherits="ManaMinder_ColorPicker">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Margin_Slider" relativePoint="BOTTOMLEFT">
+                            <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="TOPRIGHT">
                                 <Offset>
-                                    <AbsDimension x="2" y="-22" />
+                                    <AbsDimension x="16" y="-3" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -177,10 +156,10 @@
 
             <Frame name="$parent_Ready_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="206" y="100"/>
+                    <AbsDimension x="186" y="100"/>
                 </Size>
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="$parent_Size_Section" relativePoint="BOTTOMLEFT">
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Display_Section" relativePoint="BOTTOMLEFT">
                         <Offset>
                             <AbsDimension x="0" y="-18"/>
                         </Offset>
@@ -233,7 +212,7 @@
 
                     <Slider name="ManaMinder_Options_Bars_Ready_Alpha_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="180" y="17"/>
+                            <AbsDimension x="162" y="17"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Font_Picker" relativePoint="BOTTOMLEFT">
@@ -262,7 +241,7 @@
 
             <Frame name="$parent_Deficit_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="206" y="100"/>
+                    <AbsDimension x="186" y="100"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent_Ready_Section" relativePoint="TOPRIGHT">
@@ -318,7 +297,7 @@
 
                     <Slider name="ManaMinder_Options_Bars_Deficit_Alpha_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="180" y="17"/>
+                            <AbsDimension x="162" y="17"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Font_Picker" relativePoint="BOTTOMLEFT">
@@ -347,12 +326,12 @@
 
             <Frame name="$parent_Cooldown_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="206" y="100"/>
+                    <AbsDimension x="186" y="100"/>
                 </Size>
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="$parent_Ready_Section" relativePoint="BOTTOMLEFT">
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Deficit_Section" relativePoint="TOPRIGHT">
                         <Offset>
-                            <AbsDimension x="0" y="-18"/>
+                            <AbsDimension x="4" y="0"/>
                         </Offset>
                     </Anchor>
                 </Anchors>
@@ -403,7 +382,7 @@
 
                     <Slider name="ManaMinder_Options_Bars_Cooldown_Alpha_Slider" inherits="OptionsSliderTemplate">
                         <Size>
-                            <AbsDimension x="180" y="17"/>
+                            <AbsDimension x="162" y="17"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Font_Picker" relativePoint="BOTTOMLEFT">

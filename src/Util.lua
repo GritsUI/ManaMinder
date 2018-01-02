@@ -100,11 +100,16 @@ function ManaMinder:RoundTo(num, decimalPlaces)
     return tonumber(string.format("%." .. (decimalPlaces or 0) .. "f", num))
 end
 
-function ManaMinder:ShowColorPicker(r, g, b, callback, options)
-    ColorPickerFrame.hasOpacity = nil
+function ManaMinder:ShowColorPicker(r, g, b, a, hasOpacity, callback)
     ColorPickerFrame.func = callback
-    ColorPickerFrame.options = options
     ColorPickerFrame:SetFrameStrata("FULLSCREEN_DIALOG")
+
+    ColorPickerFrame.hasOpacity = hasOpacity
+    if hasOpacity then
+        ColorPickerFrame.opacityFunc = ColorPickerFrame.func
+        ColorPickerFrame.opacity = 1 - a
+    end
+
     ColorPickerFrame:Hide(); -- Need to run the OnShow handler.
     ColorPickerFrame:Show();
     ColorPickerFrame:SetColorRGB(r,g,b);

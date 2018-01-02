@@ -5,12 +5,12 @@
 
     <Frame name="ManaMinder_Options_Consumables" parent="ManaMinder_Options" hidden="true" id="3">
         <Size>
-            <AbsDimension x="416" y="385"/>
+            <AbsDimension x="566" y="383"/>
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
                 <Offset>
-                    <AbsDimension x="12" y="-36"/>
+                    <AbsDimension x="12" y="-38"/>
                 </Offset>
             </Anchor>
         </Anchors>
@@ -18,7 +18,7 @@
 
             <Frame name="$parent_Available_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="206" y="250"/>
+                    <AbsDimension x="281" y="250"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
@@ -36,6 +36,35 @@
                         </FontString>
                     </Layer>
                 </Layers>
+                <Frames>
+                    <ScrollFrame name="$parent_Scroll" hidden="false" inherits="FauxScrollFrameTemplate">
+                        <Size>
+                            <AbsDimension x="16" y="0" />
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-5" />
+                                </Offset>
+                            </Anchor>
+                            <Anchor point="BOTTOMRIGHT">
+                                <Offset>
+                                    <AbsDimension x="-27" y="4" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnShow>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnAvailableScroll()
+                            </OnShow>
+                            <OnVerticalScroll>
+                                FauxScrollFrame_OnVerticalScroll(20, function()
+                                    ManaMinder.optionsFrame.consumablesFrame:OnAvailableScroll()
+                                end)
+                            </OnVerticalScroll>
+                        </Scripts>
+                    </ScrollFrame>
+                </Frames>
                 <Scripts>
                     <OnLoad>
                             ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
@@ -45,7 +74,7 @@
 
             <Frame name="$parent_Tracked_Section" inherits="OptionFrameBoxTemplate">
                 <Size>
-                    <AbsDimension x="206" y="250"/>
+                    <AbsDimension x="281" y="250"/>
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent_Available_Section" relativePoint="TOPRIGHT">
@@ -67,6 +96,35 @@
                         </FontString>
                     </Layer>
                 </Layers>
+                <Frames>
+                    <ScrollFrame name="$parent_Scroll" hidden="false" inherits="FauxScrollFrameTemplate">
+                        <Size>
+                            <AbsDimension x="16" y="0" />
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-5" />
+                                </Offset>
+                            </Anchor>
+                            <Anchor point="BOTTOMRIGHT">
+                                <Offset>
+                                    <AbsDimension x="-27" y="4" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnShow>
+                                    ManaMinder.optionsFrame.consumablesFrame:OnTrackedScroll()
+                            </OnShow>
+                            <OnVerticalScroll>
+                                FauxScrollFrame_OnVerticalScroll(20, function()
+                                ManaMinder.optionsFrame.consumablesFrame:OnTrackedScroll()
+                                end)
+                            </OnVerticalScroll>
+                        </Scripts>
+                    </ScrollFrame>
+                </Frames>
                 <Scripts>
                     <OnLoad>
                             ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)

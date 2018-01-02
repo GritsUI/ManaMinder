@@ -30,7 +30,6 @@ function BarsOptions.prototype:OnInitialize()
     getglobal(READY_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.readyAlpha)
     getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.deficitAlpha)
     getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.cooldownAlpha)
-    getglobal(BACKGROUND_ALPHA_SLIDER_NAME):SetValue(db.profile.bars.backgroundAlpha)
     self:SetSwatchColor(READY_BACKGROUND_PICKER_NAME, db.profile.bars.readyColor)
     self:SetSwatchColor(READY_FONT_PICKER_NAME, db.profile.bars.readyFontColor)
     self:SetSwatchColor(DEFICIT_BACKGROUND_PICKER_NAME, db.profile.bars.deficitColor)
@@ -91,13 +90,13 @@ end
 function BarsOptions.prototype:OnReadyBackgroundLoad()
     getglobal(READY_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
     getglobal(READY_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(READY_BACKGROUND_PICKER_NAME, "readyColor"))
+        self:GetColorPickerClickHandler(READY_BACKGROUND_PICKER_NAME, "readyColor", false))
 end
 
 function BarsOptions.prototype:OnReadyFontLoad()
     getglobal(READY_FONT_PICKER_NAME .. "Text"):SetText("Font Color")
     getglobal(READY_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(READY_FONT_PICKER_NAME, "readyFontColor"))
+        self:GetColorPickerClickHandler(READY_FONT_PICKER_NAME, "readyFontColor", false))
 end
 
 function BarsOptions.prototype:OnReadyAlphaLoad()
@@ -113,13 +112,13 @@ end
 function BarsOptions.prototype:OnDeficitBackgroundLoad()
     getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
     getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(DEFICIT_BACKGROUND_PICKER_NAME, "deficitColor"))
+        self:GetColorPickerClickHandler(DEFICIT_BACKGROUND_PICKER_NAME, "deficitColor", false))
 end
 
 function BarsOptions.prototype:OnDeficitFontLoad()
     getglobal(DEFICIT_FONT_PICKER_NAME .. "Text"):SetText("Font Color")
     getglobal(DEFICIT_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(DEFICIT_FONT_PICKER_NAME, "deficitFontColor"))
+        self:GetColorPickerClickHandler(DEFICIT_FONT_PICKER_NAME, "deficitFontColor", false))
 end
 
 function BarsOptions.prototype:OnDeficitAlphaLoad()
@@ -135,13 +134,13 @@ end
 function BarsOptions.prototype:OnCooldownBackgroundLoad()
     getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
     getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(COOLDOWN_BACKGROUND_PICKER_NAME, "cooldownColor"))
+        self:GetColorPickerClickHandler(COOLDOWN_BACKGROUND_PICKER_NAME, "cooldownColor", false))
 end
 
 function BarsOptions.prototype:OnCooldownFontLoad()
     getglobal(COOLDOWN_FONT_PICKER_NAME .. "Text"):SetText("Font Color")
     getglobal(COOLDOWN_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(COOLDOWN_FONT_PICKER_NAME, "cooldownFontColor"))
+        self:GetColorPickerClickHandler(COOLDOWN_FONT_PICKER_NAME, "cooldownFontColor", false))
 end
 
 function BarsOptions.prototype:OnCooldownAlphaLoad()
@@ -157,7 +156,7 @@ end
 function BarsOptions.prototype:OnBackgroundPickerLoad()
     getglobal(BACKGROUND_PICKER_NAME .. "Text"):SetText("Background Color")
     getglobal(BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
-        self:GetColorPickerClickHandler(BACKGROUND_PICKER_NAME, "backgroundColor", function()
+        self:GetColorPickerClickHandler(BACKGROUND_PICKER_NAME, "backgroundColor", true, function()
             ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateBackground() end)
         end))
 end
@@ -173,13 +172,18 @@ function BarsOptions.prototype:OnBackgroundAlphaChange(value)
     getglobal(BACKGROUND_ALPHA_SLIDER_NAME .. "Text"):SetText("Background Alpha: " .. ManaMinder:RoundTo(db.profile.bars.backgroundAlpha, 2))
 end
 
-function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, callback)
+function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, hasOpacity, callback)
     return function()
         local color = db.profile.bars[optionName]
-        ManaMinder:ShowColorPicker(color[1], color[2], color[3], function()
+        ManaMinder:ShowColorPicker(color[1], color[2], color[3], color[4], hasOpacity, function()
             if not ColorPickerFrame:IsVisible() then
                 local r, g, b = ColorPickerFrame:GetColorRGB()
-                db.profile.bars[optionName] = { r, g, b }
+                if (hasOpacity) then
+                    db.profile.bars[optionName] = { r, g, b, 1 - OpacitySliderFrame:GetValue() }
+                else
+                    db.profile.bars[optionName] = { r, g, b }
+                end
+
                 self:SetSwatchColor(pickerName, db.profile.bars[optionName])
                 if callback then
                     callback()

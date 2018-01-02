@@ -9,7 +9,7 @@
         </Size>
         <Layers>
             <Layer level="OVERLAY">
-                <FontString name="$parent_Text" inherits="GameFontNormal" text="Major Mana Potion" justifyH="LEFT" justifyV="CENTER">
+                <FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Major Mana Potion" justifyH="LEFT" justifyV="CENTER">
                     <Anchors>
                         <Anchor point="TOPLEFT" />
                         <Anchor point="BOTTOMRIGHT">

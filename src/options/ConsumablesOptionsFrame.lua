@@ -11,6 +11,7 @@ local AVAILABLE_SCROLL_FRAME = "ManaMinder_Options_Consumables_Available_Section
 local TRACKED_SCROLL_FRAME = "ManaMinder_Options_Consumables_Tracked_Section_Scroll"
 
 local MAX_SCROLL_ITEMS = 12
+local SCROLL_ITEM_HEIGHT = 20
 
 function ConsumablesOptions.prototype:init()
     ConsumablesOptions.super.prototype.init(self)
@@ -114,7 +115,7 @@ end
 
 function ConsumablesOptions.prototype:UpdateAvailableScroll()
     local consumableCount = table.getn(self.availableConsumables)
-    FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, 20);
+    FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
 
     for i = 1, table.getn(self.availableFrames), 1 do
         self.availableFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)
@@ -176,7 +177,7 @@ end
 
 function ConsumablesOptions.prototype:UpdateTrackedScroll()
     local consumableCount = table.getn(db.profile.consumables)
-    FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, 20);
+    FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT);
 
     for i = 1, table.getn(self.trackedFrames), 1 do
         self.trackedFrames[i]:SetScrollVisibility(consumableCount > MAX_SCROLL_ITEMS)

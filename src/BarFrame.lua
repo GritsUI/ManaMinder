@@ -227,12 +227,17 @@ end
 function BarFrame.prototype:GetCurrentText()
   local remaining = self:GetCooldownRemaining()
   if remaining > 0 then
-    return ManaMinder:SecondsToRelativeTime(remaining)
+    local relative = ManaMinder:SecondsToRelativeTime(remaining)
+    return string.gsub(db.char.bars.cooldownText, "%%cooldown%%", relative)
   end
 
   local deficit = self:GetDeficitRemaining()
   if deficit > 0 then
-    return "+" .. deficit
+    return string.gsub(db.char.bars.deficitText, "%%deficit%%", deficit)
+  end
+
+  if self.index == 1 then
+    return db.char.bars.readyText
   end
 
   return ""

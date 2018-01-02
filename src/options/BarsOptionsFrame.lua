@@ -9,12 +9,15 @@ local MARGIN_SLIDER_NAME = "ManaMinder_Options_Bars_Margin_Slider"
 local READY_BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Ready_Background_Picker"
 local READY_FONT_PICKER_NAME = "ManaMinder_Options_Bars_Ready_Font_Picker"
 local READY_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Ready_Alpha_Slider"
+local READY_TEXT_BOX_NAME = "ManaMinder_Options_Bars_Ready_Text"
 local DEFICIT_BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Deficit_Background_Picker"
 local DEFICIT_FONT_PICKER_NAME = "ManaMinder_Options_Bars_Deficit_Font_Picker"
 local DEFICIT_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Deficit_Alpha_Slider"
+local DEFICIT_TEXT_BOX_NAME = "ManaMinder_Options_Bars_Deficit_Text"
 local COOLDOWN_BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Cooldown_Background_Picker"
 local COOLDOWN_FONT_PICKER_NAME = "ManaMinder_Options_Bars_Cooldown_Font_Picker"
 local COOLDOWN_ALPHA_SLIDER_NAME = "ManaMinder_Options_Bars_Cooldown_Alpha_Slider"
+local COOLDOWN_TEXT_BOX_NAME = "ManaMinder_Options_Bars_Cooldown_Text"
 local BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Background_Picker"
 local TEXTURE_DROPDOWN_NAME = "ManaMinder_Options_Bars_Texture_DropDown"
 
@@ -28,8 +31,11 @@ function BarsOptions.prototype:OnInitialize()
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.bars.fontSize)
   getglobal(MARGIN_SLIDER_NAME):SetValue(db.char.bars.margin)
   getglobal(READY_ALPHA_SLIDER_NAME):SetValue(db.char.bars.readyAlpha)
+  getglobal(READY_TEXT_BOX_NAME):SetText(db.char.bars.readyText)
   getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValue(db.char.bars.deficitAlpha)
+  getglobal(DEFICIT_TEXT_BOX_NAME):SetText(db.char.bars.deficitText)
   getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValue(db.char.bars.cooldownAlpha)
+  getglobal(COOLDOWN_TEXT_BOX_NAME):SetText(db.char.bars.cooldownText)
   UIDropDownMenu_SetSelectedValue(getglobal(TEXTURE_DROPDOWN_NAME), db.char.bars.texture)
   self:SetSwatchColor(READY_BACKGROUND_PICKER_NAME, db.char.bars.readyColor)
   self:SetSwatchColor(READY_FONT_PICKER_NAME, db.char.bars.readyFontColor)
@@ -110,6 +116,14 @@ function BarsOptions.prototype:OnReadyAlphaChange(value)
   getglobal(READY_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.readyAlpha, 2))
 end
 
+function BarsOptions.prototype:OnReadyTextLoad()
+  getglobal(READY_TEXT_BOX_NAME .. "Text"):SetText("Text")
+end
+
+function BarsOptions.prototype:OnReadyTextChange(value)
+  db.char.bars.readyText = value
+end
+
 function BarsOptions.prototype:OnDeficitBackgroundLoad()
   getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
   getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
@@ -132,6 +146,14 @@ function BarsOptions.prototype:OnDeficitAlphaChange(value)
   getglobal(DEFICIT_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.deficitAlpha, 2))
 end
 
+function BarsOptions.prototype:OnDeficitTextLoad()
+  getglobal(DEFICIT_TEXT_BOX_NAME .. "Text"):SetText("Text")
+end
+
+function BarsOptions.prototype:OnDeficitTextChange(value)
+  db.char.bars.deficitText = value
+end
+
 function BarsOptions.prototype:OnCooldownBackgroundLoad()
   getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
   getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
@@ -152,6 +174,14 @@ end
 function BarsOptions.prototype:OnCooldownAlphaChange(value)
   db.char.bars.cooldownAlpha = value
   getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.cooldownAlpha, 2))
+end
+
+function BarsOptions.prototype:OnCooldownTextLoad()
+  getglobal(COOLDOWN_TEXT_BOX_NAME .. "Text"):SetText("Text")
+end
+
+function BarsOptions.prototype:OnCooldownTextChange(value)
+  db.char.bars.cooldownText = value
 end
 
 function BarsOptions.prototype:OnBackgroundPickerLoad()

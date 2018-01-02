@@ -185,7 +185,7 @@
 
       <Frame name="$parent_Ready_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="186" y="100"/>
+          <AbsDimension x="186" y="140"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Display_Section" relativePoint="BOTTOMLEFT">
@@ -260,6 +260,39 @@
             </Scripts>
           </Slider>
 
+          <EditBox name="ManaMinder_Options_Bars_Ready_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="156" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-26"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnReadyTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                  this:ClearFocus()
+                  ManaMinder.optionsFrame.barsFrame:OnReadyTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                  this:ClearFocus()
+              </OnEscapePressed>
+            </Scripts>
+          </EditBox>
+
         </Frames>
         <Scripts>
           <OnLoad>
@@ -270,7 +303,7 @@
 
       <Frame name="$parent_Deficit_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="186" y="100"/>
+          <AbsDimension x="186" y="140"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Ready_Section" relativePoint="TOPRIGHT">
@@ -345,6 +378,39 @@
             </Scripts>
           </Slider>
 
+          <EditBox name="ManaMinder_Options_Bars_Deficit_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="156" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-26"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnDeficitTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                this:ClearFocus()
+                ManaMinder.optionsFrame.barsFrame:OnDeficitTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+            </Scripts>
+          </EditBox>
+
         </Frames>
         <Scripts>
           <OnLoad>
@@ -355,7 +421,7 @@
 
       <Frame name="$parent_Cooldown_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="186" y="100"/>
+          <AbsDimension x="186" y="140"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Deficit_Section" relativePoint="TOPRIGHT">
@@ -429,6 +495,39 @@
               </OnLoad>
             </Scripts>
           </Slider>
+
+          <EditBox name="ManaMinder_Options_Bars_Cooldown_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="156" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-26"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnCooldownTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                this:ClearFocus()
+                ManaMinder.optionsFrame.barsFrame:OnCooldownTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+            </Scripts>
+          </EditBox>
 
         </Frames>
         <Scripts>

@@ -16,17 +16,20 @@ src\ManaMinder.lua
 
 src\data\Consumables.lua
 src\data\Items.lua
+src\data\Sounds.lua
 src\data\Spells.lua
 src\data\Textures.lua
 src\options\Defaults.lua
 
-src\Frame.lua
-src\BarFrame.lua
-src\BarManager.lua
-src\MainFrame.lua
-src\MainFrame.xml
+src\util\Frame.lua
+src\util\Util.lua
+src\alerts\AlertFrame.lua
+src\alerts\AlertFrame.xml
+src\bars\BarFrame.lua
+src\bars\BarManager.lua
+src\bars\MainFrame.lua
+src\bars\MainFrame.xml
 src\StateManager.lua
-src\Util.lua
 
 src\options\AvailableConsumableFrame.lua
 src\options\AvailableConsumableFrame.xml
@@ -38,6 +41,8 @@ src\options\OptionsFrameTabTemplate.xml
 src\options\OptionsFrame.xml
 src\options\GeneralOptionsFrame.lua
 src\options\GeneralOptionsFrame.xml
+src\options\AlertsOptionsFrame.lua
+src\options\AlertsOptionsFrame.xml
 src\options\BarsOptionsFrame.lua
 src\options\BarsOptionsFrame.xml
 src\options\ConsumablesOptionsFrame.lua

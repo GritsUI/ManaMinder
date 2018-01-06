@@ -7,6 +7,7 @@ function ManaMinder:OnInitialize()
   ManaMinder:RegisterDefaults('char', ManaMinder.defaults.char)
 
   ManaMinder.mainFrame:OnInitialize()
+  ManaMinder.alertFrame:OnInitialize()
   ManaMinder.optionsFrame:OnInitialize()
 
   ManaMinder:RegisterChatCommand({'/mana'}, ManaMinder:GetChatCommandOptions())

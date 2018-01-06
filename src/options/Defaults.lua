@@ -35,6 +35,20 @@ ManaMinder.defaults = {
       animationDuration = 0.3,
       texture = "Smooth"
     },
+    alertFrame = {
+      enabled = true,
+      position = {
+        x = 0,
+        y = 250
+      },
+      size = 50,
+      fontSize = 20,
+      animationDuration = 0.3,
+      text = "%name% is Ready",
+      duration = 5,
+      soundEnabled = true,
+      soundType = "Bell",
+    },
     consumables = {
       {
         key = "MAJOR_MANA_POTION",

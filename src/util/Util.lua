@@ -127,6 +127,15 @@ function ManaMinder:Splice(tbl, first, length)
   return spliced
 end
 
+function ManaMinder:PlaySound(key)
+  local data = ManaMinder.sounds[key]
+  if data.type == "FILE" then
+    PlaySoundFile(data.path)
+  else
+    PlaySound(data.path)
+  end
+end
+
 function ManaMinder:SystemMessage(msg)
   DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

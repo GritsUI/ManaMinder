@@ -293,4 +293,8 @@ function BarFrame.prototype:UpdateTexture()
   self.statusBar:SetStatusBarTexture(texture.texture)
 end
 
+function BarFrame.prototype:IsReady()
+  return self:GetCooldownRemaining() == 0 and self:GetDeficitRemaining() == 0 and self.index == 1
+end
+
 ManaMinder.BarFrame = BarFrame

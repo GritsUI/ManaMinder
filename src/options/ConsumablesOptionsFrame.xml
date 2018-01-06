@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 
-  <Frame name="ManaMinder_Options_Consumables" parent="ManaMinder_Options" hidden="true" id="3">
+  <Frame name="ManaMinder_Options_Consumables" parent="ManaMinder_Options" hidden="true" id="2">
     <Size>
       <AbsDimension x="566" y="383"/>
     </Size>

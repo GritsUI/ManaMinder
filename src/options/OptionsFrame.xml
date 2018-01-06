@@ -61,7 +61,7 @@
           </Anchor>
         </Anchors>
       </Button>
-      <Button name="$parentTab2" inherits="ManaMinder_FrameTabButtonTemplate" id="2" text="Bars">
+      <Button name="$parentTab2" inherits="ManaMinder_FrameTabButtonTemplate" id="2" text="Consumables">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentTab1" relativePoint="TOPRIGHT">
             <Offset>
@@ -70,9 +70,18 @@
           </Anchor>
         </Anchors>
       </Button>
-      <Button name="$parentTab3" inherits="ManaMinder_FrameTabButtonTemplate" id="3" text="Consumables">
+      <Button name="$parentTab3" inherits="ManaMinder_FrameTabButtonTemplate" id="3" text="Bars">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentTab2" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="-15" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <Button name="$parentTab4" inherits="ManaMinder_FrameTabButtonTemplate" id="4" text="Alerts">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parentTab3" relativePoint="TOPRIGHT">
             <Offset>
               <AbsDimension x="-15" y="0"/>
             </Offset>

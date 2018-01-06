@@ -7,7 +7,7 @@ end
 
 function Options.prototype:OnLoad(frame)
   self.frame = frame
-  PanelTemplates_SetNumTabs(frame, 3)
+  PanelTemplates_SetNumTabs(frame, 4)
   PanelTemplates_SetTab(frame, 1)
 end
 
@@ -35,9 +35,11 @@ function Options.prototype:OnTabClick(tab)
   if tabName == "ManaMinder_OptionsTab1" then
     ManaMinder_Options_General:Show()
   elseif tabName == "ManaMinder_OptionsTab2" then
-    ManaMinder_Options_Bars:Show()
-  elseif tabName == "ManaMinder_OptionsTab3" then
     ManaMinder_Options_Consumables:Show()
+  elseif tabName == "ManaMinder_OptionsTab3" then
+    ManaMinder_Options_Bars:Show()
+  elseif tabName == "ManaMinder_OptionsTab4" then
+    ManaMinder_Options_Alerts:Show()
   end
 end
 
@@ -50,6 +52,7 @@ function Options.prototype:HideSections()
   ManaMinder_Options_General:Hide()
   ManaMinder_Options_Bars:Hide()
   ManaMinder_Options_Consumables:Hide()
+  ManaMinder_Options_Alerts:Hide()
 end
 
 function Options.prototype:Open()

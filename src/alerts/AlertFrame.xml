@@ -1,0 +1,51 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+
+  <Frame name="ManaMinder_Alert" parent="UIParent">
+    <Size>
+      <AbsDimension x="300" y="65"/>
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+        <Offset>
+          <AbsDimension x="0" y="200"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parent_Text" inherits="GameFontHighlight" justifyH="CENTER" justifyV="TOP" text="Major Mana Potion" wordWrap="true">
+          <Size>
+            <AbsDimension x="300" y="60"/>
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="0" y="-35" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_Icon">
+        <Size>
+          <AbsDimension x="30" y="30"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOP" />
+        </Anchors>
+        <NormalTexture name="$parent_NormalTexture" file="Interface\Icons\INV_Potion_76" />
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+          ManaMinder.alertFrame:OnLoad(this)
+      </OnLoad>
+    </Scripts>
+  </Frame>
+
+</Ui>

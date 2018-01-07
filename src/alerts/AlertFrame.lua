@@ -158,4 +158,14 @@ function AlertFrame.prototype:UpdateAlpha()
   self.frame:SetAlpha(alpha)
 end
 
+function AlertFrame.prototype:UpdateSize()
+  self.icon:SetWidth(db.char.alertFrame.size)
+  self.icon:SetHeight(db.char.alertFrame.size)
+  self.text:SetPoint("TOPLEFT", "$parent", "TOPLEFT", 0, -(db.char.alertFrame.size + ICON_BOTTOM_MARGIN))
+end
+
+function AlertFrame.prototype:UpdateFontSize()
+  self.text:SetFont(GameFontHighlight:GetFont(), db.char.alertFrame.fontSize)
+end
+
 ManaMinder.alertFrame = AlertFrame:new()

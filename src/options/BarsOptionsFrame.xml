@@ -21,16 +21,8 @@
           <AbsDimension x="0" y="97"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-            <Offset>
-              <AbsDimension x="0" y="0"/>
-            </Offset>
-          </Anchor>
-          <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
-            <Offset>
-              <AbsDimension x="0" y="0"/>
-            </Offset>
-          </Anchor>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="RIGHT" />
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">

@@ -256,6 +256,27 @@
             </Scripts>
           </Frame>
 
+          <Button name="ManaMinder_Options_Alerts_Sound_Test">
+            <Size>
+              <AbsDimension x="28" y="28"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Sound_DropDown" relativePoint="TOPRIGHT">
+                <Offset>
+                  <AbsDimension x="-14" y="1" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up" />
+            <PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down" />
+            <HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+            <Scripts>
+              <OnClick>
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundTestClick()
+              </OnClick>
+            </Scripts>
+          </Button>
+
         </Frames>
         <Scripts>
           <OnLoad>

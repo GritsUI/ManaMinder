@@ -111,4 +111,8 @@ function AlertsOptions.prototype:OnSoundDropDownLoad()
   UIDropDownMenu_SetWidth(150, dropdown)
 end
 
+function AlertsOptions.prototype:OnSoundTestClick()
+  ManaMinder:PlaySound(db.char.alertFrame.soundType)
+end
+
 ManaMinder.optionsFrame.alertsFrame = AlertsOptions:new()

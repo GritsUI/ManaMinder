@@ -176,6 +176,7 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckChange(this:GetChecked())
               </OnClick>
             </Scripts>
@@ -194,6 +195,7 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckChange(this:GetChecked())
               </OnClick>
             </Scripts>
@@ -212,6 +214,7 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckChange(this:GetChecked())
               </OnClick>
             </Scripts>

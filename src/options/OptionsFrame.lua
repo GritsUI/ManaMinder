@@ -57,10 +57,12 @@ function Options.prototype:HideSections()
 end
 
 function Options.prototype:Open()
+  PlaySound("gsTitleOptionOK");
   self.frame:Show()
 end
 
 function Options.prototype:Close()
+  PlaySound("gsTitleOptionOK");
   self.frame:Hide()
 end
 

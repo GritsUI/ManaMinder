@@ -51,6 +51,7 @@
                   ManaMinder.optionsFrame.alertsFrame:OnEnabledLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.alertsFrame:OnEnabledChange(this:GetChecked())
               </OnClick>
             </Scripts>
@@ -220,6 +221,7 @@
                   ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledChange(this:GetChecked())
               </OnClick>
             </Scripts>

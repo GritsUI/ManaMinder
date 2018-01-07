@@ -54,6 +54,7 @@
                   ManaMinder.optionsFrame.generalFrame:OnHideLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.generalFrame:OnHideChange(this:GetChecked())
               </OnClick>
             </Scripts>
@@ -71,6 +72,7 @@
                   ManaMinder.optionsFrame.generalFrame:OnHideOutOfCombatLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.generalFrame:OnHideOutOfCombatChange(this:GetChecked())
               </OnClick>
             </Scripts>
@@ -121,6 +123,7 @@
                   ManaMinder.optionsFrame.generalFrame:OnLockLoad()
               </OnLoad>
               <OnClick>
+                  ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.generalFrame:OnLockChange(this:GetChecked())
               </OnClick>
             </Scripts>

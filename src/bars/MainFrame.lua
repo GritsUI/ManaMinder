@@ -20,7 +20,7 @@ end
 function MainFrame.prototype:InitializeState()
   local selfDB = db.char.mainFrame
 
-  self.frame:SetPoint("CENTER", "UIParent", "CENTER", selfDB.position.x, selfDB.position.y)
+  self.frame:SetPoint(selfDB.position.point, "UIParent", selfDB.position.relativePoint, selfDB.position.x, selfDB.position.y)
   self.frame:SetWidth(selfDB.width)
   self.frame:SetMovable(not selfDB.locked)
   self.frame:RegisterForDrag("LeftButton")
@@ -56,7 +56,9 @@ function MainFrame.prototype:OnDragStop()
 
   self.frame:StopMovingOrSizing()
 
-  local _, _, _, x, y = self.frame:GetPoint(1)
+  local point, _, relativePoint, x, y = self.frame:GetPoint(1)
+  db.char.mainFrame.position.point = point
+  db.char.mainFrame.position.relativePoint = relativePoint
   db.char.mainFrame.position.x = x
   db.char.mainFrame.position.y = y
 end

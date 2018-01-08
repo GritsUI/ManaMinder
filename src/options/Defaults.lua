@@ -5,7 +5,9 @@ ManaMinder.defaults = {
   char = {
     mainFrame = {
       position = {
-        x = 0,
+        point = "CENTER",
+        relativePoint = "CENTER",
+        x = -300,
         y = 0
       },
       width = 200,

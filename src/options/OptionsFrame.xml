@@ -56,7 +56,7 @@
         <Anchors>
           <Anchor point="CENTER" relativePoint="BOTTOMLEFT">
             <Offset>
-              <AbsDimension x="50" y="-10"/>
+              <AbsDimension x="60" y="-10"/>
             </Offset>
           </Anchor>
         </Anchors>

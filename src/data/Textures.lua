@@ -19,10 +19,6 @@ local textures = {
     name = "Glaze",
     texture = "Interface\\Addons\\ManaMinder\\textures\\Glaze.tga"
   },
-  ["Perl"] = {
-    name = "Perl",
-    texture = "Interface\\Addons\\ManaMinder\\textures\\Perl.tga"
-  },
   ["Smooth"] = {
     name = "Smooth",
     texture = "Interface\\Addons\\ManaMinder\\textures\\Smooth.tga"
@@ -35,7 +31,6 @@ local texturesList = {
   textures["Charcoal"],
   textures["Cilo"],
   textures["Glaze"],
-  textures["Perl"],
   textures["Smooth"]
 }
 

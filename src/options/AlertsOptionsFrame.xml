@@ -263,7 +263,7 @@
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Sound_DropDown" relativePoint="TOPRIGHT">
                 <Offset>
-                  <AbsDimension x="-14" y="1" />
+                  <AbsDimension x="-14" y="0" />
                 </Offset>
               </Anchor>
             </Anchors>

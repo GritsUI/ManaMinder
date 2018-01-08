@@ -31,6 +31,8 @@ function MainFrame.prototype:InitializeEventHandlers()
   self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
   self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
 
+  self.frame:RegisterEvent("RAID_ROSTER_UPDATE")
+  self.frame:RegisterEvent("PARTY_MEMBERS_CHANGED")
   self.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
   self.frame:RegisterEvent("PLAYER_REGEN_DISABLED")
   self.frame:RegisterEvent("BAG_UPDATE")
@@ -68,6 +70,8 @@ function MainFrame.prototype:OnEvent(event)
     self:OnEnterCombat()
   elseif event == "PLAYER_REGEN_ENABLED" then
     self:OnLeaveCombat()
+  elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
+    self:UpdateVisibility()
   else
     self:UpdateAll()
   end

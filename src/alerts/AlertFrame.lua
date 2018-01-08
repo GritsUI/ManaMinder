@@ -134,9 +134,9 @@ function AlertFrame.prototype:UpdateScale()
   local beforeFadeOut = total - fadeDuration
 
   if elapsed < fadeDuration then
-    scale = ManaMinder:Lerp(0.95, 1, elapsed / fadeDuration)
+    scale = ManaMinder:Lerp(0.9, 1, elapsed / fadeDuration)
   elseif elapsed > beforeFadeOut then
-    scale = ManaMinder:Lerp(0.95, 1, 1 - ((elapsed - beforeFadeOut) / fadeDuration))
+    scale = ManaMinder:Lerp(0.9, 1, 1 - ((elapsed - beforeFadeOut) / fadeDuration))
   end
 
   self.frame:SetScale(scale)

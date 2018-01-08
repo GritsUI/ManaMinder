@@ -24,10 +24,7 @@ function MainFrame.prototype:InitializeState()
   self.frame:SetWidth(selfDB.width)
   self.frame:SetMovable(not selfDB.locked)
   self.frame:RegisterForDrag("LeftButton")
-
-  if selfDB.hidden or selfDB.hiddenOutOfCombat then
-    self.frame:Hide()
-  end
+  self:UpdateVisibility()
 end
 
 function MainFrame.prototype:InitializeEventHandlers()
@@ -76,15 +73,27 @@ end
 
 function MainFrame.prototype:OnEnterCombat()
   self.inCombat = true
-  if db.char.mainFrame.hiddenOutOfCombat then
-    self.frame:Show()
-  end
+  self:UpdateVisibility()
 end
 
 function MainFrame.prototype:OnLeaveCombat()
   self.inCombat = false
-  if db.char.mainFrame.hiddenOutOfCombat then
+  self:UpdateVisibility()
+end
+
+function MainFrame.prototype:UpdateVisibility()
+  local inRaid = GetNumRaidMembers() > 0
+  local inGroup = not inRaid and GetNumPartyMembers() > 0
+  local isSolo = not inRaid and not inGroup
+
+  if db.char.mainFrame.hidden
+    or (db.char.mainFrame.hiddenOutOfCombat and not self.inCombat)
+    or (db.char.mainFrame.hiddenRaid and inRaid)
+    or (db.char.mainFrame.hiddenGroup and inGroup)
+    or (db.char.mainFrame.hiddenSolo and isSolo) then
     self.frame:Hide()
+  else
+    self.frame:Show()
   end
 end
 

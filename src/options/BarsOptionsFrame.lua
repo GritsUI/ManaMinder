@@ -2,6 +2,12 @@ local AceOO = AceLibrary("AceOO-2.0")
 local BarsOptions = AceOO.Class()
 local db = ManaMinder.db
 
+local SHOW_CHECK_NAME = "ManaMinder_Options_Bars_Show_Check"
+local SHOW_OOC_CHECK_NAME = "ManaMinder_Options_Bars_Show_OOC_Check"
+local SHOW_SOLO_CHECK_NAME = "ManaMinder_Options_Bars_Show_Solo_Check"
+local SHOW_GROUP_CHECK_NAME = "ManaMinder_Options_Bars_Show_Group_Check"
+local SHOW_RAID_CHECK_NAME = "ManaMinder_Options_Bars_Show_Raid_Check"
+local LOCK_CHECK_NAME = "ManaMinder_Options_Bars_Lock_Check"
 local WIDTH_SLIDER_NAME = "ManaMinder_Options_Bars_Width_Slider"
 local HEIGHT_SLIDER_NAME = "ManaMinder_Options_Bars_Height_Slider"
 local FONT_SIZE_SLIDER_NAME = "ManaMinder_Options_Bars_Font_Size_Slider"
@@ -26,6 +32,12 @@ function BarsOptions.prototype:init()
 end
 
 function BarsOptions.prototype:OnInitialize()
+  getglobal(SHOW_CHECK_NAME):SetChecked(not db.char.mainFrame.hidden)
+  getglobal(SHOW_OOC_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenOutOfCombat)
+  getglobal(SHOW_SOLO_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenSolo)
+  getglobal(SHOW_GROUP_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenGroup)
+  getglobal(SHOW_RAID_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenRaid)
+  getglobal(LOCK_CHECK_NAME):SetChecked(db.char.mainFrame.locked)
   getglobal(WIDTH_SLIDER_NAME):SetValue(db.char.mainFrame.width)
   getglobal(HEIGHT_SLIDER_NAME):SetValue(db.char.bars.height)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.bars.fontSize)
@@ -44,10 +56,85 @@ function BarsOptions.prototype:OnInitialize()
   self:SetSwatchColor(COOLDOWN_BACKGROUND_PICKER_NAME, db.char.bars.cooldownColor)
   self:SetSwatchColor(COOLDOWN_FONT_PICKER_NAME, db.char.bars.cooldownFontColor)
   self:SetSwatchColor(BACKGROUND_PICKER_NAME, db.char.bars.backgroundColor)
+  self:UpdateShowChecksState()
 end
 
 function BarsOptions.prototype:SetSwatchColor(pickerName, color)
   getglobal(pickerName .. "ButtonSwatch"):SetVertexColor(color[1], color[2], color[3])
+end
+
+function BarsOptions.prototype:UpdateShowChecksState()
+  if db.char.mainFrame.hidden then
+    OptionsFrame_DisableCheckBox(getglobal(SHOW_OOC_CHECK_NAME))
+    OptionsFrame_DisableCheckBox(getglobal(SHOW_SOLO_CHECK_NAME))
+    OptionsFrame_DisableCheckBox(getglobal(SHOW_GROUP_CHECK_NAME))
+    OptionsFrame_DisableCheckBox(getglobal(SHOW_RAID_CHECK_NAME))
+  else
+    OptionsFrame_EnableCheckBox(getglobal(SHOW_OOC_CHECK_NAME))
+    OptionsFrame_EnableCheckBox(getglobal(SHOW_SOLO_CHECK_NAME))
+    OptionsFrame_EnableCheckBox(getglobal(SHOW_GROUP_CHECK_NAME))
+    OptionsFrame_EnableCheckBox(getglobal(SHOW_RAID_CHECK_NAME))
+  end
+end
+
+function BarsOptions.prototype:OnShowLoad()
+  getglobal(SHOW_CHECK_NAME .. "Text"):SetText("Show Bars")
+end
+
+function BarsOptions.prototype:OnShowChange(show)
+  db.char.mainFrame.hidden = not show
+  self:UpdateShowChecksState()
+  ManaMinder.mainFrame:UpdateVisibility()
+end
+
+function BarsOptions.prototype:OnShowOutOfCombatLoad()
+  getglobal(SHOW_OOC_CHECK_NAME .. "Text"):SetText("Show Bars Out of Combat")
+end
+
+function BarsOptions.prototype:OnShowOutOfCombatChange(show)
+  db.char.mainFrame.hiddenOutOfCombat = not show
+  ManaMinder.mainFrame:UpdateVisibility()
+end
+
+function BarsOptions.prototype:OnShowSoloLoad()
+  getglobal(SHOW_SOLO_CHECK_NAME .. "Text"):SetText("Show Bars Solo")
+end
+
+function BarsOptions.prototype:OnShowSoloChange(show)
+  db.char.mainFrame.hiddenSolo = not show
+  ManaMinder.mainFrame:UpdateVisibility()
+end
+
+function BarsOptions.prototype:OnShowGroupLoad()
+  getglobal(SHOW_GROUP_CHECK_NAME .. "Text"):SetText("Show Bars in Group")
+end
+
+function BarsOptions.prototype:OnShowGroupChange(show)
+  db.char.mainFrame.hiddenGroup = not show
+  ManaMinder.mainFrame:UpdateVisibility()
+end
+
+function BarsOptions.prototype:OnShowRaidLoad()
+  getglobal(SHOW_RAID_CHECK_NAME .. "Text"):SetText("Show Bars in Raid")
+end
+
+function BarsOptions.prototype:OnShowRaidChange(show)
+  db.char.mainFrame.hiddenRaid = not show
+  ManaMinder.mainFrame:UpdateVisibility()
+end
+
+function BarsOptions.prototype:OnLockLoad()
+  getglobal(LOCK_CHECK_NAME .. "Text"):SetText("Lock Bars")
+end
+
+function BarsOptions.prototype:OnLockChange(locked)
+  if locked then
+    db.char.mainFrame.locked = true
+    ManaMinder.mainFrame.frame:SetMovable(false)
+  else
+    db.char.mainFrame.locked = false
+    ManaMinder.mainFrame.frame:SetMovable(true)
+  end
 end
 
 function BarsOptions.prototype:OnWidthLoad()

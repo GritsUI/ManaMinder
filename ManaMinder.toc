@@ -39,8 +39,6 @@ src\options\ColorPickerButton.xml
 src\options\OptionsFrame.lua
 src\options\OptionsFrameTabTemplate.xml
 src\options\OptionsFrame.xml
-src\options\GeneralOptionsFrame.lua
-src\options\GeneralOptionsFrame.xml
 src\options\AlertsOptionsFrame.lua
 src\options\AlertsOptionsFrame.xml
 src\options\BarsOptionsFrame.lua

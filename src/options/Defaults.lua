@@ -11,6 +11,9 @@ ManaMinder.defaults = {
       width = 200,
       hidden = false,
       hiddenOutOfCombat = false,
+      hiddenSolo = false,
+      hiddenGroup = false,
+      hiddenRaid = false,
       locked = false
     },
     bars = {

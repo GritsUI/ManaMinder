@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 
-  <Frame name="ManaMinder_Options_Alerts" parent="ManaMinder_Options" hidden="true" id="4">
+  <Frame name="ManaMinder_Options_Alerts" parent="ManaMinder_Options" hidden="true" id="3">
     <Size>
       <AbsDimension x="566" y="383"/>
     </Size>

@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 
-  <Frame name="ManaMinder_Options_Bars" parent="ManaMinder_Options" hidden="true" id="3">
+  <Frame name="ManaMinder_Options_Bars" parent="ManaMinder_Options" hidden="true" id="2">
     <Size>
       <AbsDimension x="566" y="383"/>
     </Size>
@@ -16,13 +16,172 @@
     </Anchors>
     <Frames>
 
-      <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Visibility_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="0" y="97"/>
+          <AbsDimension x="281" y="210"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" />
-          <Anchor point="RIGHT" />
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Visibility">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="-6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_OOC_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Solo_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_OOC_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowSoloLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowSoloChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Group_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Solo_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowGroupLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowGroupChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Raid_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Group_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowRaidLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowRaidChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Lock_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Raid_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="-8" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnLockLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnLockChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="281" y="210"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Visibility_Section" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="4" y="0"/>
+            </Offset>
+          </Anchor>
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">
@@ -41,7 +200,7 @@
 
           <Slider name="ManaMinder_Options_Bars_Width_Slider" inherits="OptionsSliderTemplate">
             <Size>
-              <AbsDimension x="174" y="17"/>
+              <AbsDimension x="260" y="17"/>
             </Size>
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -62,12 +221,12 @@
 
           <Slider name="ManaMinder_Options_Bars_Height_Slider" inherits="OptionsSliderTemplate">
             <Size>
-              <AbsDimension x="174" y="17"/>
+              <AbsDimension x="260" y="17"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="197" y="-20" />
+                  <AbsDimension x="0" y="-21" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -83,12 +242,12 @@
 
           <Slider name="ManaMinder_Options_Bars_Margin_Slider" inherits="OptionsSliderTemplate">
             <Size>
-              <AbsDimension x="174" y="17"/>
+              <AbsDimension x="260" y="17"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Height_Slider" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="382" y="-20" />
+                  <AbsDimension x="0" y="-21" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -104,12 +263,12 @@
 
           <Slider name="ManaMinder_Options_Bars_Font_Size_Slider" inherits="OptionsSliderTemplate">
             <Size>
-              <AbsDimension x="174" y="17"/>
+              <AbsDimension x="260" y="17"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Margin_Slider" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="0" y="-22" />
+                  <AbsDimension x="0" y="-21" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -125,9 +284,9 @@
 
           <Frame name="ManaMinder_Options_Bars_Texture_DropDown" inherits="UIDropDownMenuTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="TOPRIGHT">
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="-4" y="0"/>
+                  <AbsDimension x="112" y="-22"/>
                 </Offset>
               </Anchor>
             </Anchors>
@@ -154,9 +313,9 @@
 
           <Frame name="ManaMinder_Options_Bars_Background_Picker" inherits="ManaMinder_ColorPicker">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Margin_Slider" relativePoint="BOTTOMLEFT">
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="2" y="-25" />
+                  <AbsDimension x="2" y="-28" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -180,7 +339,7 @@
           <AbsDimension x="186" y="140"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_Display_Section" relativePoint="BOTTOMLEFT">
+          <Anchor point="TOPLEFT" relativeTo="$parent_Visibility_Section" relativePoint="BOTTOMLEFT">
             <Offset>
               <AbsDimension x="0" y="-18"/>
             </Offset>

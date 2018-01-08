@@ -246,13 +246,33 @@ end
 function BarFrame.prototype:Consume(force)
   if force or (not self.onCooldown and self:GetDeficitRemaining() == 0) then
     if self.data.type == "ITEM" then
-      UseContainerItem(self.data.bag, self.data.slot)
+      self:ConsumeItem()
     elseif self.data.type == "SPELL" then
-      CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
+      self:ConsumeSpell()
     elseif self.data.type == "EQUIPPED" then
-      UseInventoryItem(self.data.slot)
+      self:ConsumeEquipped()
     end
   end
+end
+
+function BarFrame.prototype:ConsumeItem()
+  UseContainerItem(self.data.bag, self.data.slot)
+end
+
+function BarFrame.prototype:ConsumeSpell()
+  local hasTarget = UnitName("target")
+  TargetUnit("player");
+  CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
+
+  if hasTarget then
+    TargetUnit("playertarget");
+  else
+    ClearTarget()
+  end
+end
+
+function BarFrame.prototype:ConsumeEquipped()
+  UseInventoryItem(self.data.slot)
 end
 
 function BarFrame.prototype:UpdateWidth()

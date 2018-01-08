@@ -16,6 +16,15 @@ local spells = {
     requiredDeficit = 4000,
     type = "SPELL",
     class = "Mage"
+  },
+  ["INNERVATE"] = {
+    name = "Innervate",
+    key = "INNERVATE",
+    spellId = 29167,
+    iconTexture = "Interface\\Icons\\Spell_Nature_Lightning",
+    requiredDeficit = 3000,
+    type = "SPELL",
+    class = "Druid"
   }
 }
 

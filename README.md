@@ -11,7 +11,7 @@ A macro can be created to use the top priority consumable that is off cooldown a
 ### Installation ###
 
 * Download the [latest release](https://github.com/GritsUI/ManaMinder/releases)
-* Unzip the folder and move it to the /Interface/AddOns directory in your WoW installation. Ensure the directory is named "ManaMinder".
+* Unzip the folder and move it to the /Interface/AddOns directory in your WoW installation. Ensure the directory is named "ManaMinder"
 * Restart WoW
 * Click the minimap button or type "/mana config" to configure the addon
-* Create a macro with the content "/mana consume" if you want to bind consumable usage to your action bar.
+* Create a macro with the content "/mana consume" to bind consumable usage to your action bar

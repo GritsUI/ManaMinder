@@ -96,6 +96,39 @@
           </OnClick>
         </Scripts>
       </Button>
+      <Button name="$parent_Version_Button">
+        <Size>
+          <AbsDimension x="30" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="12" y="14" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString inherits="GameFontDisableSmall" text="1.0" nonspacewrap="true">
+              <Anchors>
+                <Anchor point="CENTER" />
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnEnter>
+              GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+              GameTooltip:AddLine("ManaMinder 1.0", 1, 1, 1)
+              GameTooltip:AddLine("Created by Grits &lt;Really Bad Players&gt;", 1, 0.82, 0)
+              GameTooltip:Show()
+          </OnEnter>
+          <OnLeave>
+              GameTooltip:Hide()
+          </OnLeave>
+        </Scripts>
+      </Button>
+
     </Frames>
     <Scripts>
       <OnLoad>

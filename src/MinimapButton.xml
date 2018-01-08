@@ -1,0 +1,68 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+
+  <Button name="ManaMinder_MiniMap" movable="true" parent="Minimap" enableMouse="true" toplevel="true" frameStrata="LOW">
+    <Size x="32" y="32" />
+    <Anchors>
+      <Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+        <Offset>
+          <AbsDimension x="6" y="0" />
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture file="Interface\Icons\INV_Potion_76">
+          <Size x="18" y="18"/>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset x="8" y="-7"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.075" right="0.925" top="0.075" bottom="0.925"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+          <Size x="56" y="56"/>
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+        </Texture>
+      </Layer>
+    </Layers>
+    <HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" />
+    <Scripts>
+      <OnLoad>
+          this:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+          this:RegisterForDrag("RightButton")
+          this:SetClampedToScreen(true)
+      </OnLoad>
+      <OnDragStart>
+          GameTooltip:Hide()
+          this:LockHighlight()
+          this:StartMoving()
+      </OnDragStart>
+      <OnDragStop>
+          this:UnlockHighlight()
+          this:StopMovingOrSizing()
+      </OnDragStop>
+      <OnEnter>
+          GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+          GameTooltip:AddLine("ManaMinder", 1, 1, 1)
+          GameTooltip:AddLine("Left-click to show options", 1, 0.82, 0)
+          GameTooltip:AddLine("Right-click to drag this button", 1, 0.82, 0)
+          GameTooltip:Show()
+      </OnEnter>
+      <OnLeave>
+          GameTooltip:Hide()
+      </OnLeave>
+      <OnClick>
+          ManaMinder.controller:Config()
+      </OnClick>
+    </Scripts>
+  </Button>
+
+</Ui>

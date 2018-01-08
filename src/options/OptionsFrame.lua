@@ -7,6 +7,7 @@ end
 
 function Options.prototype:OnLoad(frame)
   self.frame = frame
+  self.isOpen = false
   PanelTemplates_SetNumTabs(frame, 3)
   PanelTemplates_SetTab(frame, 1)
 end
@@ -53,13 +54,23 @@ function Options.prototype:HideSections()
 end
 
 function Options.prototype:Open()
-  PlaySound("gsTitleOptionOK");
+  PlaySound("igMainMenuOption");
   self.frame:Show()
+  self.isOpen = true
 end
 
 function Options.prototype:Close()
   PlaySound("gsTitleOptionOK");
   self.frame:Hide()
+  self.isOpen = false
+end
+
+function Options.prototype:Toggle()
+  if self.isOpen then
+    self:Close()
+  else
+    self:Open()
+  end
 end
 
 ManaMinder.optionsFrame = Options:new()

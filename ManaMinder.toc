@@ -45,3 +45,5 @@ src\options\BarsOptionsFrame.lua
 src\options\BarsOptionsFrame.xml
 src\options\ConsumablesOptionsFrame.lua
 src\options\ConsumablesOptionsFrame.xml
+
+src\MinimapButton.xml

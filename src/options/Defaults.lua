@@ -52,7 +52,7 @@ ManaMinder.defaults = {
       text = "%name% is Ready",
       duration = 5,
       soundEnabled = true,
-      soundType = "Bell",
+      soundType = "Wisp",
     },
     consumables = {
       {

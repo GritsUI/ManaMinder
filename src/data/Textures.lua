@@ -1,7 +1,7 @@
 local textures = {
   ["Banto"] = {
     name = "Banto",
-    texture = "Interface\\Addons\\ManaMinder\\textures\\Banto.tga"
+    texture = "Interface\\Addons\\ManaMinder\\assets\\textures\\Banto.tga"
   },
   ["Blizzard"] = {
     name = "Blizzard",
@@ -9,19 +9,19 @@ local textures = {
   },
   ["Charcoal"] = {
     name = "Charcoal",
-    texture = "Interface\\Addons\\ManaMinder\\textures\\Charcoal.tga"
+    texture = "Interface\\Addons\\ManaMinder\\assets\\textures\\Charcoal.tga"
   },
   ["Cilo"] = {
     name = "Cilo",
-    texture = "Interface\\Addons\\ManaMinder\\textures\\Cilo.tga"
+    texture = "Interface\\Addons\\ManaMinder\\assets\\textures\\Cilo.tga"
   },
   ["Glaze"] = {
     name = "Glaze",
-    texture = "Interface\\Addons\\ManaMinder\\textures\\Glaze.tga"
+    texture = "Interface\\Addons\\ManaMinder\\assets\\textures\\Glaze.tga"
   },
   ["Smooth"] = {
     name = "Smooth",
-    texture = "Interface\\Addons\\ManaMinder\\textures\\Smooth.tga"
+    texture = "Interface\\Addons\\ManaMinder\\assets\\textures\\Smooth.tga"
   }
 }
 

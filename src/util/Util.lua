@@ -21,7 +21,7 @@ function ManaMinder:GetCooldownRemaining(start, duration, isSpell)
   local finish = start + duration
   local remaining = now < finish and finish - now or 0
 
-  if isSpell and remaining < 1.5 then
+  if isSpell and remaining <= 1.5 then
     return 0
   end
   return remaining

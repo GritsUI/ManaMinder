@@ -197,7 +197,7 @@ function BarFrame.prototype:GetDeficitRemaining()
 end
 
 function BarFrame.prototype:GetCooldownRemaining()
-  return ManaMinder:GetCooldownRemaining(self.data.cooldownStart, self.data.cooldown, self.data.type == "SPELL")
+  return ManaMinder:GetCooldownRemaining(self.data.cooldownStart, self.data.cooldown)
 end
 
 function BarFrame.prototype:GetCurrentPercent()

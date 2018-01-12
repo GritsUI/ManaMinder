@@ -74,14 +74,12 @@ function BarManager.prototype:SortBars()
   table.sort(self.barFrames, function(barA, barB)
     local cooldownRemainingA = ManaMinder:GetCooldownRemaining(
       barA.data.cooldownStart,
-      barA.data.cooldown,
-      barA.data.type == "SPELL"
+      barA.data.cooldown
     )
 
     local cooldownRemainingB = ManaMinder:GetCooldownRemaining(
       barB.data.cooldownStart,
-      barB.data.cooldown,
-      barB.data.type == "SPELL"
+      barB.data.cooldown
     )
 
     if cooldownRemainingA == cooldownRemainingB then

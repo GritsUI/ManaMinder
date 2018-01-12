@@ -16,14 +16,15 @@ function ManaMinder:GetContainerItemCooldownRemaining(bagId, slot)
   return enabled and now < finish and finish - now or 0
 end
 
-function ManaMinder:GetCooldownRemaining(start, duration, isSpell)
+function ManaMinder:GetCooldownRemaining(start, duration)
+  if duration == 1.5 then
+    return 0
+  end
+
   local now = GetTime()
   local finish = start + duration
   local remaining = now < finish and finish - now or 0
 
-  if isSpell and remaining <= 1.5 then
-    return 0
-  end
   return remaining
 end
 
@@ -62,7 +63,7 @@ function ManaMinder:GetCooldownForSpellName(spellName)
       return start, duration, i
     end
   end
-  return 0, nil
+  return 0, 0, nil
 end
 
 function ManaMinder:SecondsToRelativeTime(seconds)

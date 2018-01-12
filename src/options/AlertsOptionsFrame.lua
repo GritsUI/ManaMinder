@@ -3,6 +3,7 @@ local AlertsOptions = AceOO.Class()
 local db = ManaMinder.db
 
 local ENABLED_CHECK_NAME = "ManaMinder_Options_Alerts_Enabled_Check"
+local ENABLED_WHEN_HIDDEN_CHECK_NAME = "ManaMinder_Options_Alerts_Enabled_When_Hidden_Check"
 local SOUNDS_ENABLED_CHECK_NAME = "ManaMinder_Options_Alerts_Sounds_Enabled_Check"
 local TEXT_INPUT_NAME = "ManaMinder_Options_Alerts_Text"
 local DURATION_SLIDER_NAME = "ManaMinder_Options_Alerts_Duration_Slider"
@@ -16,7 +17,8 @@ function AlertsOptions.prototype:init()
 end
 
 function AlertsOptions.prototype:OnInitialize()
-  getglobal(ENABLED_CHECK_NAME):SetChecked(db.char.alertFrame.enabled)
+  getglobal(ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.hidden)
+  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME):SetChecked(not db.char.alertFrame.hiddenWithBars)
   getglobal(SOUNDS_ENABLED_CHECK_NAME):SetChecked(db.char.alertFrame.soundEnabled)
   getglobal(TEXT_INPUT_NAME):SetText(db.char.alertFrame.text)
   getglobal(DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.duration)
@@ -25,6 +27,7 @@ function AlertsOptions.prototype:OnInitialize()
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.alertFrame.fontSize)
   UIDropDownMenu_SetSelectedValue(getglobal(SOUND_DROPDOWN_NAME), db.char.alertFrame.soundType)
   UIDropDownMenu_SetText(db.char.alertFrame.soundType, getglobal(SOUND_DROPDOWN_NAME))
+  self:UpdateEnabledChecksState()
 end
 
 function AlertsOptions.prototype:OnEnabledLoad()
@@ -32,7 +35,24 @@ function AlertsOptions.prototype:OnEnabledLoad()
 end
 
 function AlertsOptions.prototype:OnEnabledChange(enabled)
-  db.char.alertFrame.enabled = enabled
+  db.char.alertFrame.hidden = not enabled
+  self:UpdateEnabledChecksState()
+end
+
+function AlertsOptions.prototype:OnEnabledWhenHiddenLoad()
+  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME .. "Text"):SetText("Show Alerts When Bars Hidden")
+end
+
+function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
+  db.char.alertFrame.hiddenWithBars = not enabled
+end
+
+function AlertsOptions.prototype:UpdateEnabledChecksState()
+  if db.char.alertFrame.hidden then
+    OptionsFrame_DisableCheckBox(getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME))
+  else
+    OptionsFrame_EnableCheckBox(getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME))
+  end
 end
 
 function AlertsOptions.prototype:OnSoundsEnabledLoad()

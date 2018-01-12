@@ -9,6 +9,7 @@ end
 
 function MainFrame.prototype:OnLoad(frame)
   self.frame = frame
+  self.isVisible = true
 end
 
 function MainFrame.prototype:OnInitialize()
@@ -98,8 +99,10 @@ function MainFrame.prototype:UpdateVisibility()
     or (db.char.mainFrame.hiddenGroup and inGroup)
     or (db.char.mainFrame.hiddenSolo and isSolo) then
     self.frame:Hide()
+    self.isVisible =  false
   else
     self.frame:Show()
+    self.isVisible =  true
   end
 end
 

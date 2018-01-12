@@ -41,7 +41,8 @@ ManaMinder.defaults = {
       texture = "Smooth"
     },
     alertFrame = {
-      enabled = true,
+      hidden = false,
+      hiddenWithBars = true,
       position = {
         x = 0,
         y = 250

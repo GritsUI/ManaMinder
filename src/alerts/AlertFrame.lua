@@ -44,10 +44,6 @@ function AlertFrame.prototype:InitializeEventHandlers()
 end
 
 function AlertFrame.prototype:OnUpdate()
-  if not db.char.alertFrame.enabled then
-    return
-  end
-
   local readyConsumable = self:GetReadyConsumable()
 
   if self.isActive then
@@ -58,7 +54,7 @@ function AlertFrame.prototype:OnUpdate()
     end
   elseif not readyConsumable then
     self.lastActiveConsumable = nil
-  elseif self:NeedsActivation(readyConsumable) then
+  elseif self:IsEnabled() and self:NeedsActivation(readyConsumable) then
     self:Activate(readyConsumable)
   end
 
@@ -82,12 +78,16 @@ function AlertFrame.prototype:Deactivate()
 end
 
 function AlertFrame.prototype:ShouldFinishEarly(readyConsumable)
-  return (not readyConsumable or readyConsumable.key ~= self.lastActiveConsumable.key)
+  return (not self:IsEnabled() or not readyConsumable or readyConsumable.key ~= self.lastActiveConsumable.key)
     and self.startTime > self:GetFadeOutStartTime()
 end
 
 function AlertFrame.prototype:GetFadeOutStartTime()
   return GetTime() - (db.char.alertFrame.duration - db.char.alertFrame.animationDuration)
+end
+
+function AlertFrame.prototype:IsEnabled()
+  return not db.char.alertFrame.hidden and (ManaMinder.mainFrame.isVisible or not db.char.alertFrame.hiddenWithBars)
 end
 
 function AlertFrame.prototype:NeedsActivation(consumable)

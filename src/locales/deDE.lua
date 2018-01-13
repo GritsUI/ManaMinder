@@ -90,9 +90,9 @@ local function deDE()
     ["Warmth of Forgiveness"] = "Warmth of Forgiveness",
 
     -- Spells
-    ["Evocation"] = "Evocation",
-    ["Innervate"] = "Innervate",
-    ["Mana Tide Totem"] = "Mana Tide Totem",
+    ["Evocation"] = "Hervorrufung",
+    ["Innervate"] = "Anregen",
+    ["Mana Tide Totem"] = "Totem der Manaflut",
 
     -- Textures
     ["Banto"] = "Banto",

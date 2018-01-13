@@ -87,9 +87,9 @@ local function ruRU()
     ["Warmth of Forgiveness"] = "Warmth of Forgiveness",
 
     -- Spells
-    ["Evocation"] = "Evocation",
-    ["Innervate"] = "Innervate",
-    ["Mana Tide Totem"] = "Mana Tide Totem",
+    ["Evocation"] = "Прилив сил",
+    ["Innervate"] = "Озарение",
+    ["Mana Tide Totem"] = "Тотем прилива маны",
 
     -- Textures
     ["Banto"] = "Banto",

@@ -87,9 +87,9 @@ local function zhTW()
     ["Warmth of Forgiveness"] = "Warmth of Forgiveness",
 
     -- Spells
-    ["Evocation"] = "Evocation",
-    ["Innervate"] = "Innervate",
-    ["Mana Tide Totem"] = "Mana Tide Totem",
+    ["Evocation"] = "喚醒",
+    ["Innervate"] = "啟動",
+    ["Mana Tide Totem"] = "法力之潮圖騰",
 
     -- Textures
     ["Banto"] = "Banto",

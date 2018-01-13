@@ -87,9 +87,9 @@ local function zhCN()
     ["Warmth of Forgiveness"] = "Warmth of Forgiveness",
 
     -- Spells
-    ["Evocation"] = "Evocation",
-    ["Innervate"] = "Innervate",
-    ["Mana Tide Totem"] = "Mana Tide Totem",
+    ["Evocation"] = "唤醒",
+    ["Innervate"] = "激活",
+    ["Mana Tide Totem"] = "法力之潮图腾",
 
     -- Textures
     ["Banto"] = "Banto",

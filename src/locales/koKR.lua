@@ -87,9 +87,9 @@ local function koKR()
     ["Warmth of Forgiveness"] = "Warmth of Forgiveness",
 
     -- Spells
-    ["Evocation"] = "Evocation",
-    ["Innervate"] = "Innervate",
-    ["Mana Tide Totem"] = "Mana Tide Totem",
+    ["Evocation"] = "환기",
+    ["Innervate"] = "정신 자극",
+    ["Mana Tide Totem"] = "마나 해일 토템",
 
     -- Textures
     ["Banto"] = "Banto",

@@ -88,8 +88,8 @@ local function frFR()
 
     -- Spells
     ["Evocation"] = "Evocation",
-    ["Innervate"] = "Innervate",
-    ["Mana Tide Totem"] = "Mana Tide Totem",
+    ["Innervate"] = "Innervation",
+    ["Mana Tide Totem"] = "Totem de Vague de mana",
 
     -- Textures
     ["Banto"] = "Banto",

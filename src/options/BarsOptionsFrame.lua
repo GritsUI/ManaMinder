@@ -305,12 +305,13 @@ function BarsOptions.prototype:OnTextureDropDownLoad()
   local dropdown = this
   UIDropDownMenu_Initialize(this, function()
     for _, value in ipairs(ManaMinder.texturesList) do
+      local optionValue = value.name
       local info = {}
-      info.text = value.name
+      info.text = L[value.name]
       info.value = value.name
       info.func = function()
         UIDropDownMenu_SetSelectedID(dropdown, this:GetID())
-        db.char.bars.texture = UIDropDownMenu_GetText(dropdown)
+        db.char.bars.texture = optionValue
         ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateTexture() end)
       end
       info.checked = false

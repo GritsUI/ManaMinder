@@ -1,3 +1,5 @@
+local L = ManaMinder.L
+
 function ManaMinder:ForEachContainerSlot(func)
   for bag = 4, 0, -1 do
     local size = GetContainerNumSlots(bag)
@@ -58,7 +60,7 @@ function ManaMinder:GetCooldownForSpellName(spellName)
   local numAllSpell = offset + numSpells
   for i = numAllSpell, 1, -1 do
     local name = GetSpellName(i, "BOOKTYPE_SPELL")
-    if name == spellName then
+    if name == L[spellName] then
       local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")
       return start, duration, i
     end

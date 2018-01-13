@@ -1,5 +1,6 @@
 local function enUS()
   return {
+    -- UI Text
     ["Addon Loaded. Type /mana for slash commands"] = true,
     ["Alerts"] = true,
     ["Alpha: "] = true,
@@ -59,7 +60,44 @@ local function enUS()
     ["Uses highest priority consumable, if any available with proper mana deficit"] = true,
     ["Visibility"] = true,
     ["Width: "] = true,
-    ["SECONDS"] = "s"
+    ["SECONDS"] = "s",
+
+    -- Consumables
+    ["Dark Rune"] = true,
+    ["Demonic Rune"] = true,
+    ["Greater Mana Potion"] = true,
+    ["Lesser Mana Potion"] = true,
+    ["Lily Root"] = true,
+    ["Major Mana Potion"] = true,
+    ["Major Rejuvenation Potion"] = true,
+    ["Mana Agate"] = true,
+    ["Mana Citrine"] = true,
+    ["Mana Jade"] = true,
+    ["Mana Potion"] = true,
+    ["Mana Ruby"] = true,
+    ["Minor Mana Potion"] = true,
+    ["Superior Mana Potion"] = true,
+
+    -- Items
+    ["Enamored Water Spirit"] = true,
+    ["Fire Ruby"] = true,
+    ["Mar'li's Eye"] = true,
+    ["Robe of the Archmage"] = true,
+    ["Second Wind"] = true,
+    ["Warmth of Forgiveness"] = true,
+
+    -- Spells
+    ["Evocation"] = true,
+    ["Innervate"] = true,
+    ["Mana Tide Totem"] = true,
+
+    -- Textures
+    ["Banto"] = true,
+    ["Blizzard"] = true,
+    ["Charcoal"] = true,
+    ["Cilo"] = true,
+    ["Glaze"] = true,
+    ["Smooth"] = true
   }
 end
 

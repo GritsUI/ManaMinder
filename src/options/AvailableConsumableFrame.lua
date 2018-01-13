@@ -2,6 +2,7 @@ local AceOO = AceLibrary("AceOO-2.0")
 local AvailableConsumableFrame = AceOO.Class()
 AceOO.Class:init(AvailableConsumableFrame, ManaMinder.Frame)
 
+local L = ManaMinder.L
 local frameCount = 1
 
 local SECTION_LEFT_MARGIN = 10
@@ -46,7 +47,7 @@ function AvailableConsumableFrame.prototype:SetPosition(index)
 end
 
 function AvailableConsumableFrame.prototype:UpdateText()
-  getglobal(self.frameName .. "_Text"):SetText(self.consumable.name)
+  getglobal(self.frameName .. "_Text"):SetText(L[self.consumable.name])
 end
 
 function AvailableConsumableFrame.prototype:SetScrollVisibility(visible)

@@ -3,6 +3,7 @@
 -- \195\164 ä
 local function deDE()
   return {
+    -- UI Text
     ["Addon Loaded. Type /mana for slash commands"] = "Addon Loaded. Type /mana for slash commands",
     ["Alerts"] = "Alerts",
     ["Alpha: "] = "Alpha: ",
@@ -62,7 +63,44 @@ local function deDE()
     ["Uses highest priority consumable, if any available with proper mana deficit"] = "Uses highest priority consumable, if any available with proper mana deficit",
     ["Visibility"] = "Visibility",
     ["Width: "] = "Width: ",
-    ["SECONDS"] = "s"
+    ["SECONDS"] = "s",
+
+    -- Consumables
+    ["Dark Rune"] = "Dark Rune",
+    ["Demonic Rune"] = "Demonic Rune",
+    ["Greater Mana Potion"] = "Greater Mana Potion",
+    ["Lesser Mana Potion"] = "Lesser Mana Potion",
+    ["Lily Root"] = "Lily Root",
+    ["Major Mana Potion"] = "Major Mana Potion",
+    ["Major Rejuvenation Potion"] = "Major Rejuvenation Potion",
+    ["Mana Agate"] = "Mana Agate",
+    ["Mana Citrine"] = "Mana Citrine",
+    ["Mana Jade"] = "Mana Jade",
+    ["Mana Potion"] = "Mana Potion",
+    ["Mana Ruby"] = "Mana Ruby",
+    ["Minor Mana Potion"] = "Minor Mana Potion",
+    ["Superior Mana Potion"] = "Superior Mana Potion",
+
+    -- Items
+    ["Enamored Water Spirit"] = "Enamored Water Spirit",
+    ["Fire Ruby"] = "Fire Ruby",
+    ["Mar'li's Eye"] = "Mar'li's Eye",
+    ["Robe of the Archmage"] = "Robe of the Archmage",
+    ["Second Wind"] = "Second Wind",
+    ["Warmth of Forgiveness"] = "Warmth of Forgiveness",
+
+    -- Spells
+    ["Evocation"] = "Evocation",
+    ["Innervate"] = "Innervate",
+    ["Mana Tide Totem"] = "Mana Tide Totem",
+
+    -- Textures
+    ["Banto"] = "Banto",
+    ["Blizzard"] = "Blizzard",
+    ["Charcoal"] = "Charcoal",
+    ["Cilo"] = "Cilo",
+    ["Glaze"] = "Glaze",
+    ["Smooth"] = "Smooth"
   }
 end
 

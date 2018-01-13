@@ -2,6 +2,7 @@ local AceOO = AceLibrary("AceOO-2.0")
 local TrackedConsumableFrame = AceOO.Class()
 AceOO.Class:init(TrackedConsumableFrame, ManaMinder.Frame)
 
+local L = ManaMinder.L
 local frameCount = 1
 
 local SECTION_LEFT_MARGIN = 10
@@ -42,7 +43,7 @@ function TrackedConsumableFrame.prototype:SetPosition(index)
 end
 
 function TrackedConsumableFrame.prototype:UpdateText()
-  getglobal(self.frameName .. "_Text"):SetText(ManaMinder:GetConsumableNameForKey(self.consumable.key, self.consumable.type))
+  getglobal(self.frameName .. "_Text"):SetText(L[ManaMinder:GetConsumableNameForKey(self.consumable.key, self.consumable.type)])
 end
 
 function TrackedConsumableFrame.prototype:SetScrollVisibility(visible)

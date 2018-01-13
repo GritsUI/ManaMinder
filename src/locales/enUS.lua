@@ -31,6 +31,7 @@ local function enUS()
     ["Left-click to show options"] = true,
     ["Lock"] = true,
     ["Lock all frames"] = true,
+    ["Lock Alerts"] = true,
     ["Lock Bars"] = true,
     ["ManaMinder Options"] = true,
     ["Margin: "] = true,

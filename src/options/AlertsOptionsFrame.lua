@@ -8,6 +8,7 @@ local SOUND_SECTION_TEXT_NAME = "ManaMinder_Options_Alerts_Sounds_SectionText"
 
 local ENABLED_CHECK_NAME = "ManaMinder_Options_Alerts_Enabled_Check"
 local ENABLED_WHEN_HIDDEN_CHECK_NAME = "ManaMinder_Options_Alerts_Enabled_When_Hidden_Check"
+local LOCKED_CHECK_NAME = "ManaMinder_Options_Alerts_Locked_Check"
 local SOUNDS_ENABLED_CHECK_NAME = "ManaMinder_Options_Alerts_Sounds_Enabled_Check"
 local TEXT_INPUT_NAME = "ManaMinder_Options_Alerts_Text"
 local DURATION_SLIDER_NAME = "ManaMinder_Options_Alerts_Duration_Slider"
@@ -35,6 +36,7 @@ end
 function AlertsOptions.prototype:SetInitialValues()
   getglobal(ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.hidden)
   getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME):SetChecked(not db.char.alertFrame.hiddenWithBars)
+  getglobal(LOCKED_CHECK_NAME):SetChecked(db.char.alertFrame.locked)
   getglobal(SOUNDS_ENABLED_CHECK_NAME):SetChecked(db.char.alertFrame.soundEnabled)
   getglobal(TEXT_INPUT_NAME):SetText(db.char.alertFrame.text)
   getglobal(DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.duration)
@@ -68,6 +70,15 @@ end
 
 function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
   db.char.alertFrame.hiddenWithBars = not enabled
+end
+
+function AlertsOptions.prototype:OnLockedLoad()
+  getglobal(LOCKED_CHECK_NAME .. "Text"):SetText(L["Lock Alerts"])
+end
+
+function AlertsOptions.prototype:OnLockedChange(locked)
+  db.char.alertFrame.locked = locked
+  ManaMinder.alertFrame:OnLockChange(locked)
 end
 
 function AlertsOptions.prototype:OnSoundsEnabledLoad()

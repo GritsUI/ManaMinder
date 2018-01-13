@@ -28,15 +28,42 @@ end
 function AlertFrame.prototype:InitializeState()
   local selfDB = db.char.alertFrame
 
-  self.frame:SetPoint("CENTER", "UIParent", "CENTER", selfDB.position.x, selfDB.position.y)
+  self.frame:SetPoint(selfDB.position.point, "UIParent", selfDB.position.relativePoint, selfDB.position.x, selfDB.position.y)
   self.frame:SetHeight(selfDB.size + ICON_BOTTOM_MARGIN)
-  self.frame:SetAlpha(0)
+  self.frame:SetAlpha(not selfDB.locked and 1 or 0)
+  self.frame:SetMovable(not selfDB.locked)
+  self.frame:EnableMouse(not selfDB.locked)
+  self.frame:RegisterForDrag("LeftButton")
+  self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
+  self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
 
   self.icon:SetWidth(selfDB.size)
   self.icon:SetHeight(selfDB.size)
 
   self.text:SetFont(GameFontHighlight:GetFont(), selfDB.fontSize)
   self.text:SetPoint("TOPLEFT", "$parent", "TOPLEFT", 0, -(selfDB.size + ICON_BOTTOM_MARGIN))
+end
+
+function AlertFrame.prototype:OnDragStart()
+  if db.char.alertFrame.locked then
+    return
+  end
+
+  self.frame:StartMoving()
+end
+
+function AlertFrame.prototype:OnDragStop()
+  if db.char.alertFrame.locked then
+    return
+  end
+
+  self.frame:StopMovingOrSizing()
+
+  local point, _, relativePoint, x, y = self.frame:GetPoint(1)
+  db.char.alertFrame.position.point = point
+  db.char.alertFrame.position.relativePoint = relativePoint
+  db.char.alertFrame.position.x = x
+  db.char.alertFrame.position.y = y
 end
 
 function AlertFrame.prototype:InitializeEventHandlers()
@@ -74,7 +101,9 @@ end
 
 function AlertFrame.prototype:Deactivate()
   self.isActive = false
-  self.frame:SetAlpha(0)
+  if db.char.alertFrame.locked then
+    self.frame:SetAlpha(0)
+  end
 end
 
 function AlertFrame.prototype:ShouldFinishEarly(readyConsumable)
@@ -133,10 +162,12 @@ function AlertFrame.prototype:UpdateScale()
   local fadeDuration = db.char.alertFrame.animationDuration
   local beforeFadeOut = total - fadeDuration
 
-  if elapsed < fadeDuration then
-    scale = ManaMinder:Lerp(0.9, 1, elapsed / fadeDuration)
-  elseif elapsed > beforeFadeOut then
-    scale = ManaMinder:Lerp(0.9, 1, 1 - ((elapsed - beforeFadeOut) / fadeDuration))
+  if db.char.alertFrame.locked then
+    if elapsed < fadeDuration then
+      scale = ManaMinder:Lerp(0.9, 1, elapsed / fadeDuration)
+    elseif elapsed > beforeFadeOut then
+      scale = ManaMinder:Lerp(0.9, 1, 1 - ((elapsed - beforeFadeOut) / fadeDuration))
+    end
   end
 
   self.frame:SetScale(scale)
@@ -149,10 +180,12 @@ function AlertFrame.prototype:UpdateAlpha()
   local fadeDuration = db.char.alertFrame.animationDuration
   local beforeFadeOut = total - fadeDuration
 
-  if elapsed < fadeDuration then
-    alpha = elapsed / fadeDuration
-  elseif elapsed > beforeFadeOut then
-    alpha = 1 - ((elapsed - beforeFadeOut) / fadeDuration)
+  if db.char.alertFrame.locked then
+    if elapsed < fadeDuration then
+      alpha = elapsed / fadeDuration
+    elseif elapsed > beforeFadeOut then
+      alpha = 1 - ((elapsed - beforeFadeOut) / fadeDuration)
+    end
   end
 
   self.frame:SetAlpha(alpha)
@@ -166,6 +199,28 @@ end
 
 function AlertFrame.prototype:UpdateFontSize()
   self.text:SetFont(GameFontHighlight:GetFont(), db.char.alertFrame.fontSize)
+end
+
+function AlertFrame.prototype:OnLockChange(locked)
+  if locked then
+    self:OnLock()
+  else
+    self:OnUnlock()
+  end
+end
+
+function AlertFrame.prototype:OnLock()
+  if not self.isActive then
+    self.frame:SetAlpha(0)
+  end
+  self.frame:SetMovable(false)
+  self.frame:EnableMouse(false)
+end
+
+function AlertFrame.prototype:OnUnlock()
+  self.frame:SetAlpha(1)
+  self.frame:SetMovable(true)
+  self.frame:EnableMouse(true)
 end
 
 ManaMinder.alertFrame = AlertFrame:new()

@@ -45,6 +45,8 @@ ManaMinder.defaults = {
       hidden = false,
       hiddenWithBars = true,
       position = {
+        point = "CENTER",
+        relativePoint = "CENTER",
         x = 0,
         y = 250
       },
@@ -55,6 +57,7 @@ ManaMinder.defaults = {
       duration = 5,
       soundEnabled = true,
       soundType = "Wisp",
+      locked = true
     },
     consumables = {
       {

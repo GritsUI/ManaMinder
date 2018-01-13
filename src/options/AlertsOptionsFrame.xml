@@ -79,12 +79,31 @@
             </Scripts>
           </CheckButton>
 
-          <EditBox name="ManaMinder_Options_Alerts_Text" autoFocus="false" inherits="InputBoxTemplate">
-            <Size x="255" y="20" />
+          <CheckButton name="ManaMinder_Options_Alerts_Locked_Check" inherits="OptionsCheckButtonTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Enabled_When_Hidden_Check" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="-2" y="-22"/>
+                  <AbsDimension x="-8" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnLockedLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.alertsFrame:OnLockedChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <EditBox name="ManaMinder_Options_Alerts_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="255" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Locked_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-22"/>
                 </Offset>
               </Anchor>
             </Anchors>

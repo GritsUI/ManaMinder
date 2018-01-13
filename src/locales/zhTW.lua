@@ -30,6 +30,7 @@ local function zhTW()
     ["Icon Size: "] = "Icon Size: ",
     ["Left-click to show options"] = "Left-click to show options",
     ["Lock"] = "Lock",
+    ["Lock Alerts"] = "Lock Alerts",
     ["Lock all frames"] = "Lock all frames",
     ["Lock Bars"] = "Lock Bars",
     ["ManaMinder Options"] = "ManaMinder Options",

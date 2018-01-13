@@ -40,7 +40,7 @@
             </Anchor>
           </Anchors>
         </Texture>
-        <FontString inherits="GameFontNormal" text="ManaMinder Options" nonspacewrap="true">
+        <FontString name="$parent_Title" inherits="GameFontNormal" text="ManaMinder Options" nonspacewrap="true">
           <Anchors>
             <Anchor point="TOP" relativeTo="$parentHeader">
               <Offset>
@@ -120,7 +120,7 @@
           <OnEnter>
               GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
               GameTooltip:AddLine("ManaMinder 1.1", 1, 1, 1)
-              GameTooltip:AddLine("Created by Grits &lt;Really Bad Players&gt;", 1, 0.82, 0)
+              GameTooltip:AddLine(ManaMinder.L["Created by"] .. " Grits &lt;Really Bad Players&gt;", 1, 0.82, 0)
               GameTooltip:Show()
           </OnEnter>
           <OnLeave>

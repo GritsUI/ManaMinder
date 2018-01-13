@@ -11,8 +11,17 @@ lib\AceAddon-2.0\AceAddon-2.0.lua
 lib\AceEvent-2.0\AceEvent-2.0.lua
 lib\AceDB-2.0\AceDB-2.0.lua
 lib\AceConsole-2.0\AceConsole-2.0.lua
+lib\AceLocale-2.2\AceLocale-2.2.lua
 
 src\ManaMinder.lua
+
+src\locales\enUS.lua
+src\locales\deDE.lua
+src\locales\frFR.lua
+src\locales\koKR.lua
+src\locales\ruRU.lua
+src\locales\zhCN.lua
+src\locales\zhTW.lua
 
 src\data\Consumables.lua
 src\data\Items.lua

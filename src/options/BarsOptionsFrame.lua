@@ -1,6 +1,14 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local BarsOptions = AceOO.Class()
 local db = ManaMinder.db
+local L = ManaMinder.L
+
+local VISIBILITY_SECTION_TEXT_NAME = "ManaMinder_Options_Bars_Visibility_SectionText"
+local DISPLAY_SECTION_TEXT_NAME = "ManaMinder_Options_Bars_Display_SectionText"
+local READY_SECTION_TEXT_NAME = "ManaMinder_Options_Bars_Ready_SectionText"
+local DEFICIT_SECTION_TEXT_NAME = "ManaMinder_Options_Bars_Deficit_SectionText"
+local COOLDOWN_SECTION_TEXT_NAME = "ManaMinder_Options_Bars_Cooldown_SectionText"
+local TEXTURE_DROPDOWN_TEXT_NAME = "ManaMinder_Options_Bars_Texture_DropDown_Text"
 
 local SHOW_CHECK_NAME = "ManaMinder_Options_Bars_Show_Check"
 local SHOW_OOC_CHECK_NAME = "ManaMinder_Options_Bars_Show_OOC_Check"
@@ -32,6 +40,21 @@ function BarsOptions.prototype:init()
 end
 
 function BarsOptions.prototype:OnInitialize()
+  self:ApplyTranslations()
+  self:SetInitialValues()
+  self:UpdateShowChecksState()
+end
+
+function BarsOptions.prototype:ApplyTranslations()
+  getglobal(VISIBILITY_SECTION_TEXT_NAME):SetText(L["Visibility"])
+  getglobal(DISPLAY_SECTION_TEXT_NAME):SetText(L["Display"])
+  getglobal(READY_SECTION_TEXT_NAME):SetText(L["Ready State"])
+  getglobal(DEFICIT_SECTION_TEXT_NAME):SetText(L["Deficit State"])
+  getglobal(COOLDOWN_SECTION_TEXT_NAME):SetText(L["Cooldown State"])
+  getglobal(TEXTURE_DROPDOWN_TEXT_NAME):SetText(L["Texture"])
+end
+
+function BarsOptions.prototype:SetInitialValues()
   getglobal(SHOW_CHECK_NAME):SetChecked(not db.char.mainFrame.hidden)
   getglobal(SHOW_OOC_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenOutOfCombat)
   getglobal(SHOW_SOLO_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenSolo)
@@ -56,7 +79,6 @@ function BarsOptions.prototype:OnInitialize()
   self:SetSwatchColor(COOLDOWN_BACKGROUND_PICKER_NAME, db.char.bars.cooldownColor)
   self:SetSwatchColor(COOLDOWN_FONT_PICKER_NAME, db.char.bars.cooldownFontColor)
   self:SetSwatchColor(BACKGROUND_PICKER_NAME, db.char.bars.backgroundColor)
-  self:UpdateShowChecksState()
 end
 
 function BarsOptions.prototype:SetSwatchColor(pickerName, color)
@@ -78,7 +100,7 @@ function BarsOptions.prototype:UpdateShowChecksState()
 end
 
 function BarsOptions.prototype:OnShowLoad()
-  getglobal(SHOW_CHECK_NAME .. "Text"):SetText("Show Bars")
+  getglobal(SHOW_CHECK_NAME .. "Text"):SetText(L["Show Bars"])
 end
 
 function BarsOptions.prototype:OnShowChange(show)
@@ -88,7 +110,7 @@ function BarsOptions.prototype:OnShowChange(show)
 end
 
 function BarsOptions.prototype:OnShowOutOfCombatLoad()
-  getglobal(SHOW_OOC_CHECK_NAME .. "Text"):SetText("Show Bars Out of Combat")
+  getglobal(SHOW_OOC_CHECK_NAME .. "Text"):SetText(L["Show Bars Out of Combat"])
 end
 
 function BarsOptions.prototype:OnShowOutOfCombatChange(show)
@@ -97,7 +119,7 @@ function BarsOptions.prototype:OnShowOutOfCombatChange(show)
 end
 
 function BarsOptions.prototype:OnShowSoloLoad()
-  getglobal(SHOW_SOLO_CHECK_NAME .. "Text"):SetText("Show Bars Solo")
+  getglobal(SHOW_SOLO_CHECK_NAME .. "Text"):SetText(L["Show Bars Solo"])
 end
 
 function BarsOptions.prototype:OnShowSoloChange(show)
@@ -106,7 +128,7 @@ function BarsOptions.prototype:OnShowSoloChange(show)
 end
 
 function BarsOptions.prototype:OnShowGroupLoad()
-  getglobal(SHOW_GROUP_CHECK_NAME .. "Text"):SetText("Show Bars in Group")
+  getglobal(SHOW_GROUP_CHECK_NAME .. "Text"):SetText(L["Show Bars in Group"])
 end
 
 function BarsOptions.prototype:OnShowGroupChange(show)
@@ -115,7 +137,7 @@ function BarsOptions.prototype:OnShowGroupChange(show)
 end
 
 function BarsOptions.prototype:OnShowRaidLoad()
-  getglobal(SHOW_RAID_CHECK_NAME .. "Text"):SetText("Show Bars in Raid")
+  getglobal(SHOW_RAID_CHECK_NAME .. "Text"):SetText(L["Show Bars in Raid"])
 end
 
 function BarsOptions.prototype:OnShowRaidChange(show)
@@ -124,7 +146,7 @@ function BarsOptions.prototype:OnShowRaidChange(show)
 end
 
 function BarsOptions.prototype:OnLockLoad()
-  getglobal(LOCK_CHECK_NAME .. "Text"):SetText("Lock Bars")
+  getglobal(LOCK_CHECK_NAME .. "Text"):SetText(L["Lock Bars"])
 end
 
 function BarsOptions.prototype:OnLockChange(locked)
@@ -145,7 +167,7 @@ end
 function BarsOptions.prototype:OnWidthChange(value)
   db.char.mainFrame.width = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateWidth() end)
-  getglobal(WIDTH_SLIDER_NAME .. "Text"):SetText("Width: " .. db.char.mainFrame.width)
+  getglobal(WIDTH_SLIDER_NAME .. "Text"):SetText(L["Width: "] .. db.char.mainFrame.width)
 end
 
 function BarsOptions.prototype:OnHeightLoad()
@@ -156,7 +178,7 @@ end
 function BarsOptions.prototype:OnHeightChange(value)
   db.char.bars.height = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateHeight() end)
-  getglobal(HEIGHT_SLIDER_NAME .. "Text"):SetText("Height: " .. db.char.bars.height)
+  getglobal(HEIGHT_SLIDER_NAME .. "Text"):SetText(L["Height: "] .. db.char.bars.height)
 end
 
 function BarsOptions.prototype:OnFontSizeLoad()
@@ -167,7 +189,7 @@ end
 function BarsOptions.prototype:OnFontSizeChange(value)
   db.char.bars.fontSize = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateFontSize() end)
-  getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText("Font Size: " .. db.char.bars.fontSize)
+  getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText(L["Font Size: "] .. db.char.bars.fontSize)
 end
 
 function BarsOptions.prototype:OnMarginLoad()
@@ -178,17 +200,17 @@ end
 function BarsOptions.prototype:OnMarginChange(value)
   db.char.bars.margin = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdatePosition() end)
-  getglobal(MARGIN_SLIDER_NAME .. "Text"):SetText("Margin: " .. db.char.bars.margin)
+  getglobal(MARGIN_SLIDER_NAME .. "Text"):SetText(L["Margin: "] .. db.char.bars.margin)
 end
 
 function BarsOptions.prototype:OnReadyBackgroundLoad()
-  getglobal(READY_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
+  getglobal(READY_BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Bar Color"])
   getglobal(READY_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(READY_BACKGROUND_PICKER_NAME, "readyColor", false))
 end
 
 function BarsOptions.prototype:OnReadyFontLoad()
-  getglobal(READY_FONT_PICKER_NAME .. "Text"):SetText("Font Color")
+  getglobal(READY_FONT_PICKER_NAME .. "Text"):SetText(L["Font Color"])
   getglobal(READY_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(READY_FONT_PICKER_NAME, "readyFontColor", false))
 end
@@ -200,11 +222,11 @@ end
 
 function BarsOptions.prototype:OnReadyAlphaChange(value)
   db.char.bars.readyAlpha = value
-  getglobal(READY_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.readyAlpha, 2))
+  getglobal(READY_ALPHA_SLIDER_NAME .. "Text"):SetText(L["Alpha: "] .. ManaMinder:RoundTo(db.char.bars.readyAlpha, 2))
 end
 
 function BarsOptions.prototype:OnReadyTextLoad()
-  getglobal(READY_TEXT_BOX_NAME .. "Text"):SetText("Text")
+  getglobal(READY_TEXT_BOX_NAME .. "Text"):SetText(L["Text"])
 end
 
 function BarsOptions.prototype:OnReadyTextChange(value)
@@ -212,13 +234,13 @@ function BarsOptions.prototype:OnReadyTextChange(value)
 end
 
 function BarsOptions.prototype:OnDeficitBackgroundLoad()
-  getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
+  getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Bar Color"])
   getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(DEFICIT_BACKGROUND_PICKER_NAME, "deficitColor", false))
 end
 
 function BarsOptions.prototype:OnDeficitFontLoad()
-  getglobal(DEFICIT_FONT_PICKER_NAME .. "Text"):SetText("Font Color")
+  getglobal(DEFICIT_FONT_PICKER_NAME .. "Text"):SetText(L["Font Color"])
   getglobal(DEFICIT_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(DEFICIT_FONT_PICKER_NAME, "deficitFontColor", false))
 end
@@ -230,11 +252,11 @@ end
 
 function BarsOptions.prototype:OnDeficitAlphaChange(value)
   db.char.bars.deficitAlpha = value
-  getglobal(DEFICIT_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.deficitAlpha, 2))
+  getglobal(DEFICIT_ALPHA_SLIDER_NAME .. "Text"):SetText(L["Alpha: "] .. ManaMinder:RoundTo(db.char.bars.deficitAlpha, 2))
 end
 
 function BarsOptions.prototype:OnDeficitTextLoad()
-  getglobal(DEFICIT_TEXT_BOX_NAME .. "Text"):SetText("Text")
+  getglobal(DEFICIT_TEXT_BOX_NAME .. "Text"):SetText(L["Text"])
 end
 
 function BarsOptions.prototype:OnDeficitTextChange(value)
@@ -242,13 +264,13 @@ function BarsOptions.prototype:OnDeficitTextChange(value)
 end
 
 function BarsOptions.prototype:OnCooldownBackgroundLoad()
-  getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Text"):SetText("Bar Color")
+  getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Bar Color"])
   getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(COOLDOWN_BACKGROUND_PICKER_NAME, "cooldownColor", false))
 end
 
 function BarsOptions.prototype:OnCooldownFontLoad()
-  getglobal(COOLDOWN_FONT_PICKER_NAME .. "Text"):SetText("Font Color")
+  getglobal(COOLDOWN_FONT_PICKER_NAME .. "Text"):SetText(L["Font Color"])
   getglobal(COOLDOWN_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(COOLDOWN_FONT_PICKER_NAME, "cooldownFontColor", false))
 end
@@ -260,11 +282,11 @@ end
 
 function BarsOptions.prototype:OnCooldownAlphaChange(value)
   db.char.bars.cooldownAlpha = value
-  getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText("Alpha: " .. ManaMinder:RoundTo(db.char.bars.cooldownAlpha, 2))
+  getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText(L["Alpha: "] .. ManaMinder:RoundTo(db.char.bars.cooldownAlpha, 2))
 end
 
 function BarsOptions.prototype:OnCooldownTextLoad()
-  getglobal(COOLDOWN_TEXT_BOX_NAME .. "Text"):SetText("Text")
+  getglobal(COOLDOWN_TEXT_BOX_NAME .. "Text"):SetText(L["Text"])
 end
 
 function BarsOptions.prototype:OnCooldownTextChange(value)
@@ -272,7 +294,7 @@ function BarsOptions.prototype:OnCooldownTextChange(value)
 end
 
 function BarsOptions.prototype:OnBackgroundPickerLoad()
-  getglobal(BACKGROUND_PICKER_NAME .. "Text"):SetText("Background Color")
+  getglobal(BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Background Color"])
   getglobal(BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(BACKGROUND_PICKER_NAME, "backgroundColor", true, function()
       ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateBackground() end)

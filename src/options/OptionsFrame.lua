@@ -1,5 +1,12 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local Options = AceOO.Class()
+local L = ManaMinder.L
+
+local TITLE_NAME = "ManaMinder_Options_Title"
+local OKAY_BUTTON_NAME = "ManaMinder_Options_Okay_Button"
+local CONSUMABLES_TAB_NAME = "ManaMinder_OptionsTab1"
+local BARS_TAB_NAME = "ManaMinder_OptionsTab2"
+local ALERTS_TAB_NAME = "ManaMinder_OptionsTab3"
 
 function Options.prototype:init()
   Options.super.prototype.init(self)
@@ -13,9 +20,18 @@ function Options.prototype:OnLoad(frame)
 end
 
 function Options.prototype:OnInitialize()
+  self:ApplyTranslations()
   self.barsFrame:OnInitialize()
   self.consumablesFrame:OnInitialize()
   self.alertsFrame:OnInitialize()
+end
+
+function Options.prototype:ApplyTranslations()
+  getglobal(TITLE_NAME):SetText(L["ManaMinder Options"])
+  getglobal(OKAY_BUTTON_NAME):SetText(L["Okay"])
+  getglobal(CONSUMABLES_TAB_NAME):SetText(L["Consumables"])
+  getglobal(BARS_TAB_NAME):SetText(L["Bars"])
+  getglobal(ALERTS_TAB_NAME):SetText(L["Alerts"])
 end
 
 function Options.prototype:OnTabLoad(tab)

@@ -1,5 +1,7 @@
 ManaMinder = AceLibrary("AceAddon-2.0"):new("AceDB-2.0", "AceConsole-2.0")
 ManaMinder:RegisterDB("ManaMinderDB", "ManaMinderCharDB")
+ManaMinder.L = AceLibrary("AceLocale-2.2"):new("ManaMinder")
+local L = ManaMinder.L
 
 function ManaMinder:OnInitialize()
   ManaMinder.controller = self
@@ -11,19 +13,19 @@ function ManaMinder:OnInitialize()
   ManaMinder.optionsFrame:OnInitialize()
 
   ManaMinder:RegisterChatCommand({'/mana'}, ManaMinder:GetChatCommandOptions())
-  ManaMinder:SystemMessage("Addon Loaded. Type /mana for slash commands")
+  ManaMinder:SystemMessage(L["Addon Loaded. Type /mana for slash commands"])
 end
 
 function ManaMinder:GetChatCommandOptions()
   return {
     type = "group",
     args = {
-      config = {name = "Config", desc = "Open configuration window", type = "execute", func = "Config"},
-      hide = {name = "Hide", desc = "Hides all frames", type = "execute", func = "Hide"},
-      show = {name = "Show", desc = "Shows all frames", type = "execute", func = "Show"},
-      lock = {name = "Lock", desc = "Lock all frames", type = "execute", func = "Lock" },
-      unlock = {name = "Unlock", desc = "Unlock all frames", type = "execute", func = "Unlock"},
-      consume = {name = "Consume", desc = "Uses highest priority consumable, if any available with proper mana deficit", type = "execute", func = "Consume"}
+      config = {name = L["Config"], desc = L["Open configuration window"], type = "execute", func = "Config"},
+      hide = {name = L["Hide"], desc = L["Hides all frames"], type = "execute", func = "Hide"},
+      show = {name = L["Show"], desc = L["Shows all frames"], type = "execute", func = "Show"},
+      lock = {name = L["Lock"], desc = L["Lock all frames"], type = "execute", func = "Lock" },
+      unlock = {name = L["Unlock"], desc = L["Unlock all frames"], type = "execute", func = "Unlock"},
+      consume = {name = L["Consume"], desc = L["Uses highest priority consumable, if any available with proper mana deficit"], type = "execute", func = "Consume"}
     }
   }
 end
@@ -37,7 +39,7 @@ function ManaMinder:Hide()
   ManaMinder.db.char.mainFrame.hidden = true
   ManaMinder_Options_Bars_Show_Check:SetChecked(false)
   ManaMinder.optionsFrame.barsFrame:UpdateShowChecksState()
-  ManaMinder:SystemMessage("Frames hidden")
+  ManaMinder:SystemMessage(L["Frames hidden"])
 end
 
 function ManaMinder:Show()
@@ -45,21 +47,21 @@ function ManaMinder:Show()
   ManaMinder.db.char.mainFrame.hidden = false
   ManaMinder_Options_Bars_Show_Check:SetChecked(true)
   ManaMinder.optionsFrame.barsFrame:UpdateShowChecksState()
-  ManaMinder:SystemMessage("Frames shown")
+  ManaMinder:SystemMessage(L["Frames shown"])
 end
 
 function ManaMinder:Lock()
   ManaMinder.mainFrame.frame:SetMovable(false)
   ManaMinder.db.char.mainFrame.locked = true
   ManaMinder_Options_Bars_Lock_Check:SetChecked(true)
-  ManaMinder:SystemMessage("Frames locked")
+  ManaMinder:SystemMessage(L["Frames locked"])
 end
 
 function ManaMinder:Unlock()
   ManaMinder.mainFrame.frame:SetMovable(true)
   ManaMinder.db.char.mainFrame.locked = false
   ManaMinder_Options_Bars_Lock_Check:SetChecked(false)
-  ManaMinder:SystemMessage("Frames unlocked")
+  ManaMinder:SystemMessage(L["Frames unlocked"])
 end
 
 function ManaMinder:Consume()

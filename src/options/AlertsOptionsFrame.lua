@@ -1,6 +1,10 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local AlertsOptions = AceOO.Class()
 local db = ManaMinder.db
+local L = ManaMinder.L
+
+local DISPLAY_SECTION_TEXT_NAME = "ManaMinder_Options_Alerts_Display_SectionText"
+local SOUND_SECTION_TEXT_NAME = "ManaMinder_Options_Alerts_Sounds_SectionText"
 
 local ENABLED_CHECK_NAME = "ManaMinder_Options_Alerts_Enabled_Check"
 local ENABLED_WHEN_HIDDEN_CHECK_NAME = "ManaMinder_Options_Alerts_Enabled_When_Hidden_Check"
@@ -17,6 +21,18 @@ function AlertsOptions.prototype:init()
 end
 
 function AlertsOptions.prototype:OnInitialize()
+  self:ApplyTranslations()
+  self:SetInitialValues()
+  self:UpdateEnabledChecksState()
+end
+
+function AlertsOptions.prototype:ApplyTranslations()
+  getglobal(DISPLAY_SECTION_TEXT_NAME):SetText(L["Display"])
+  getglobal(SOUND_SECTION_TEXT_NAME):SetText(L["Sound"])
+  getglobal(SOUND_DROPDOWN_NAME .. "_Text"):SetText(L["Sound"])
+end
+
+function AlertsOptions.prototype:SetInitialValues()
   getglobal(ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.hidden)
   getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME):SetChecked(not db.char.alertFrame.hiddenWithBars)
   getglobal(SOUNDS_ENABLED_CHECK_NAME):SetChecked(db.char.alertFrame.soundEnabled)
@@ -27,24 +43,6 @@ function AlertsOptions.prototype:OnInitialize()
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.alertFrame.fontSize)
   UIDropDownMenu_SetSelectedValue(getglobal(SOUND_DROPDOWN_NAME), db.char.alertFrame.soundType)
   UIDropDownMenu_SetText(db.char.alertFrame.soundType, getglobal(SOUND_DROPDOWN_NAME))
-  self:UpdateEnabledChecksState()
-end
-
-function AlertsOptions.prototype:OnEnabledLoad()
-  getglobal(ENABLED_CHECK_NAME .. "Text"):SetText("Show Alerts")
-end
-
-function AlertsOptions.prototype:OnEnabledChange(enabled)
-  db.char.alertFrame.hidden = not enabled
-  self:UpdateEnabledChecksState()
-end
-
-function AlertsOptions.prototype:OnEnabledWhenHiddenLoad()
-  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME .. "Text"):SetText("Show Alerts When Bars Hidden")
-end
-
-function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
-  db.char.alertFrame.hiddenWithBars = not enabled
 end
 
 function AlertsOptions.prototype:UpdateEnabledChecksState()
@@ -55,8 +53,25 @@ function AlertsOptions.prototype:UpdateEnabledChecksState()
   end
 end
 
+function AlertsOptions.prototype:OnEnabledLoad()
+  getglobal(ENABLED_CHECK_NAME .. "Text"):SetText(L["Show Alerts"])
+end
+
+function AlertsOptions.prototype:OnEnabledChange(enabled)
+  db.char.alertFrame.hidden = not enabled
+  self:UpdateEnabledChecksState()
+end
+
+function AlertsOptions.prototype:OnEnabledWhenHiddenLoad()
+  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME .. "Text"):SetText(L["Show Alerts When Bars Hidden"])
+end
+
+function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
+  db.char.alertFrame.hiddenWithBars = not enabled
+end
+
 function AlertsOptions.prototype:OnSoundsEnabledLoad()
-  getglobal(SOUNDS_ENABLED_CHECK_NAME .. "Text"):SetText("Enable Alert Sound")
+  getglobal(SOUNDS_ENABLED_CHECK_NAME .. "Text"):SetText(L["Enable Alert Sound"])
 end
 
 function AlertsOptions.prototype:OnSoundsEnabledChange(enabled)
@@ -64,7 +79,7 @@ function AlertsOptions.prototype:OnSoundsEnabledChange(enabled)
 end
 
 function AlertsOptions.prototype:OnTextLoad()
-  getglobal(TEXT_INPUT_NAME .. "Text"):SetText("Text")
+  getglobal(TEXT_INPUT_NAME .. "Text"):SetText(L["Text"])
 end
 
 function AlertsOptions.prototype:OnTextChange(value)
@@ -78,7 +93,7 @@ end
 
 function AlertsOptions.prototype:OnDurationChange(value)
   db.char.alertFrame.duration = value
-  getglobal(DURATION_SLIDER_NAME .. "Text"):SetText("Duration: " ..db.char.alertFrame.duration .. "s")
+  getglobal(DURATION_SLIDER_NAME .. "Text"):SetText(L["Duration: "] ..db.char.alertFrame.duration .. L["SECONDS"])
 end
 
 function AlertsOptions.prototype:OnAnimationDurationLoad()
@@ -88,7 +103,7 @@ end
 
 function AlertsOptions.prototype:OnAnimationDurationChange(value)
   db.char.alertFrame.animationDuration = value
-  getglobal(ANIMATION_DURATION_SLIDER_NAME .. "Text"):SetText("Animation Duration: " .. ManaMinder:RoundTo(value, 2) .. "s")
+  getglobal(ANIMATION_DURATION_SLIDER_NAME .. "Text"):SetText(L["Animation Duration: "] .. ManaMinder:RoundTo(value, 2) .. L["SECONDS"])
 end
 
 function AlertsOptions.prototype:OnIconSizeLoad()
@@ -99,7 +114,7 @@ end
 function AlertsOptions.prototype:OnIconSizeChange(value)
   db.char.alertFrame.size = value
   ManaMinder.alertFrame:UpdateSize()
-  getglobal(ICON_SIZE_SLIDER_NAME .. "Text"):SetText("Icon Size: " .. value)
+  getglobal(ICON_SIZE_SLIDER_NAME .. "Text"):SetText(L["Icon Size: "] .. value)
 end
 
 function AlertsOptions.prototype:OnFontSizeLoad()
@@ -110,7 +125,7 @@ end
 function AlertsOptions.prototype:OnFontSizeChange(value)
   db.char.alertFrame.fontSize = value
   ManaMinder.alertFrame:UpdateFontSize()
-  getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText("Font Size: " .. value)
+  getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText(L["Font Size: "] .. value)
 end
 
 function AlertsOptions.prototype:OnSoundDropDownLoad()

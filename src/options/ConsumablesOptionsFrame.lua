@@ -1,9 +1,11 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local ConsumablesOptions = AceOO.Class()
 local db = ManaMinder.db
+local L = ManaMinder.L
 
 local AVAILABLE_SECTION_NAME = "ManaMinder_Options_Consumables_Available_Section"
 local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
+local COOLDOWN_SECTION_NAME = "ManaMinder_Options_Consumables_Options_Section"
 local POTIONS_CHECK_NAME = "ManaMinder_Options_Consumables_Potions_Check"
 local RUNES_CHECK_NAME = "ManaMinder_Options_Consumables_Runes_Check"
 local GEMS_CHECK_NAME = "ManaMinder_Options_Consumables_Gems_Check"
@@ -24,7 +26,17 @@ function ConsumablesOptions.prototype:OnInitialize()
   self.availableSectionFrame = getglobal(AVAILABLE_SECTION_NAME)
   self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
   self:RefreshAllFrames()
+  self:ApplyTranslations()
+  self:SetInitialValues()
+end
 
+function ConsumablesOptions.prototype:ApplyTranslations()
+  getglobal(AVAILABLE_SECTION_NAME .. "Text"):SetText(L["Available"])
+  getglobal(TRACKED_SECTION_NAME .. "Text"):SetText(L["Tracked"])
+  getglobal(COOLDOWN_SECTION_NAME .. "Text"):SetText(L["Shared Cooldowns"])
+end
+
+function ConsumablesOptions.prototype:SetInitialValues()
   getglobal(POTIONS_CHECK_NAME):SetChecked(db.char.combinePotions)
   getglobal(RUNES_CHECK_NAME):SetChecked(db.char.combineRunes)
   getglobal(GEMS_CHECK_NAME):SetChecked(db.char.combineGems)
@@ -239,7 +251,7 @@ function ConsumablesOptions.prototype:DecreasePriority(index)
 end
 
 function ConsumablesOptions.prototype:OnPotionsCheckLoad()
-  getglobal(POTIONS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Potion")
+  getglobal(POTIONS_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Potion"])
 end
 
 function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
@@ -248,7 +260,7 @@ function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckLoad()
-  getglobal(RUNES_CHECK_NAME .. "Text"):SetText("Only Show One of Demonic Rune/Dark Rune/Lily Root")
+  getglobal(RUNES_CHECK_NAME .. "Text"):SetText(L["Only Show One of Demonic Rune/Dark Rune/Lily Root"])
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckChange(value)
@@ -257,7 +269,7 @@ function ConsumablesOptions.prototype:OnRunesCheckChange(value)
 end
 
 function ConsumablesOptions.prototype:OnGemsCheckLoad()
-  getglobal(GEMS_CHECK_NAME .. "Text"):SetText("Only Show Highest Priority Mana Gem")
+  getglobal(GEMS_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Mana Gem"])
 end
 
 function ConsumablesOptions.prototype:OnGemsCheckChange(value)

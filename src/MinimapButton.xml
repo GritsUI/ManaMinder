@@ -50,10 +50,11 @@
           this:StopMovingOrSizing()
       </OnDragStop>
       <OnEnter>
+          local L = ManaMinder.L
           GameTooltip:SetOwner(this, "ANCHOR_LEFT")
           GameTooltip:AddLine("ManaMinder", 1, 1, 1)
-          GameTooltip:AddLine("Left-click to show options", 1, 0.82, 0)
-          GameTooltip:AddLine("Right-click to drag this button", 1, 0.82, 0)
+          GameTooltip:AddLine(L["Left-click to show options"], 1, 0.82, 0)
+          GameTooltip:AddLine(L["Right-click to drag this button"], 1, 0.82, 0)
           GameTooltip:Show()
       </OnEnter>
       <OnLeave>

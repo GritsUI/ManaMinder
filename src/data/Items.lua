@@ -34,7 +34,7 @@ local items = {
     requiredDeficit = 100,
     type = "EQUIPPED",
     slots = {"Trinket0Slot", "Trinket1Slot"},
-    class = "Shaman"
+    class = "SHAMAN"
   },
   ["FIRE_RUBY"] = {
     name = "Fire Ruby",
@@ -44,7 +44,7 @@ local items = {
     requiredDeficit = 500,
     type = "EQUIPPED",
     slots = {"Trinket0Slot", "Trinket1Slot"},
-    class = "Mage"
+    class = "MAGE"
   },
   ["ROBE_OF_THE_ARCHMAGE"] = {
     name = "Robe of the Archmage",
@@ -54,7 +54,7 @@ local items = {
     requiredDeficit = 626,
     type = "EQUIPPED",
     slots = {"ChestSlot"},
-    class = "Mage"
+    class = "MAGE"
   }
 }
 

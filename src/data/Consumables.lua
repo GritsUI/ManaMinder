@@ -96,7 +96,7 @@ local consumables = {
     iconTexture = "Interface\\Icons\\INV_Misc_Gem_Emerald_01",
     requiredDeficit = 426,
     type = "ITEM",
-    class = "Mage"
+    class = "MAGE"
   },
   ["MANA_JADE"] = {
     name = "Mana Jade",
@@ -106,7 +106,7 @@ local consumables = {
     iconTexture = "Interface\\Icons\\INV_Misc_Gem_Emerald_02",
     requiredDeficit = 651,
     type = "ITEM",
-    class = "Mage"
+    class = "MAGE"
   },
   ["MANA_CITRINE"] = {
     name = "Mana Citrine",
@@ -116,7 +116,7 @@ local consumables = {
     iconTexture = "Interface\\Icons\\INV_Misc_Gem_Opal_01",
     requiredDeficit = 926,
     type = "ITEM",
-    class = "Mage"
+    class = "MAGE"
   },
   ["MANA_RUBY"] = {
     name = "Mana Ruby",
@@ -126,7 +126,7 @@ local consumables = {
     iconTexture = "Interface\\Icons\\INV_Misc_Gem_Ruby_01",
     requiredDeficit = 1201,
     type = "ITEM",
-    class = "Mage"
+    class = "MAGE"
   }
 }
 

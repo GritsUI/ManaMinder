@@ -144,7 +144,8 @@ function ConsumablesOptions.prototype:IsConsumableTracked(consumableKey)
 end
 
 function ConsumablesOptions.prototype:IsConsumableAvailableForClass(consumable)
-  return not consumable.class or consumable.class == UnitClass("player")
+  local _, class = UnitClass("player")
+  return not consumable.class or consumable.class == class
 end
 
 function ConsumablesOptions.prototype:RemoveCurrentTrackedFrames()

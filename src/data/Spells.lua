@@ -6,7 +6,7 @@ local spells = {
     iconTexture = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
     requiredDeficit = 1000,
     type = "SPELL",
-    class = "Shaman"
+    class = "SHAMAN"
   },
   ["EVOCATION"] = {
     name = "Evocation",
@@ -15,7 +15,7 @@ local spells = {
     iconTexture = "Interface\\Icons\\Spell_Nature_Purge",
     requiredDeficit = 4000,
     type = "SPELL",
-    class = "Mage"
+    class = "MAGE"
   },
   ["INNERVATE"] = {
     name = "Innervate",
@@ -24,7 +24,7 @@ local spells = {
     iconTexture = "Interface\\Icons\\Spell_Nature_Lightning",
     requiredDeficit = 3000,
     type = "SPELL",
-    class = "Druid"
+    class = "DRUID"
   }
 }
 

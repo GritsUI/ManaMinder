@@ -111,6 +111,8 @@ function ManaMinder:ShowColorPicker(r, g, b, a, hasOpacity, callback)
   if hasOpacity then
     ColorPickerFrame.opacityFunc = ColorPickerFrame.func
     ColorPickerFrame.opacity = 1 - a
+  else
+    ColorPickerFrame.opacityFunc = nil
   end
 
   ColorPickerFrame:Hide() -- Need to run the OnShow handler.

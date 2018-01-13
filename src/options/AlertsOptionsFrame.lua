@@ -35,9 +35,9 @@ end
 
 function AlertsOptions.prototype:SetInitialValues()
   getglobal(ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.hidden)
-  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME):SetChecked(not db.char.alertFrame.hiddenWithBars)
-  getglobal(LOCKED_CHECK_NAME):SetChecked(db.char.alertFrame.locked)
-  getglobal(SOUNDS_ENABLED_CHECK_NAME):SetChecked(db.char.alertFrame.soundEnabled)
+  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME):SetChecked(db.char.alertFrame.showWithoutBars)
+  getglobal(LOCKED_CHECK_NAME):SetChecked(not db.char.alertFrame.unlocked)
+  getglobal(SOUNDS_ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.soundDisabled)
   getglobal(TEXT_INPUT_NAME):SetText(db.char.alertFrame.text)
   getglobal(DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.duration)
   getglobal(ANIMATION_DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.animationDuration)
@@ -69,7 +69,7 @@ function AlertsOptions.prototype:OnEnabledWhenHiddenLoad()
 end
 
 function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
-  db.char.alertFrame.hiddenWithBars = not enabled
+  db.char.alertFrame.showWithoutBars = enabled
 end
 
 function AlertsOptions.prototype:OnLockedLoad()
@@ -77,7 +77,7 @@ function AlertsOptions.prototype:OnLockedLoad()
 end
 
 function AlertsOptions.prototype:OnLockedChange(locked)
-  db.char.alertFrame.locked = locked
+  db.char.alertFrame.unlocked = not locked
   ManaMinder.alertFrame:OnLockChange(locked)
 end
 
@@ -86,7 +86,7 @@ function AlertsOptions.prototype:OnSoundsEnabledLoad()
 end
 
 function AlertsOptions.prototype:OnSoundsEnabledChange(enabled)
-  db.char.alertFrame.soundEnabled = enabled
+  db.char.alertFrame.soundDisabled = not enabled
 end
 
 function AlertsOptions.prototype:OnTextLoad()

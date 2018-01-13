@@ -2,6 +2,7 @@ local AceOO = AceLibrary("AceOO-2.0")
 local AlertFrame = AceOO.Class()
 
 local db = ManaMinder.db
+local L = ManaMinder.L
 
 local ICON_BOTTOM_MARGIN = 8
 
@@ -29,45 +30,25 @@ function AlertFrame.prototype:InitializeState()
   local selfDB = db.char.alertFrame
 
   self.frame:SetPoint(selfDB.position.point, "UIParent", selfDB.position.relativePoint, selfDB.position.x, selfDB.position.y)
-  self.frame:SetHeight(selfDB.size + ICON_BOTTOM_MARGIN)
-  self.frame:SetAlpha(not selfDB.locked and 1 or 0)
-  self.frame:SetMovable(not selfDB.locked)
-  self.frame:EnableMouse(not selfDB.locked)
+  self.frame:SetAlpha(selfDB.unlocked and 1 or 0)
+  self.frame:SetMovable(selfDB.unlocked)
+  self.frame:EnableMouse(selfDB.unlocked)
   self.frame:RegisterForDrag("LeftButton")
-  self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
-  self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
+  self.frame:SetHeight(selfDB.size + ICON_BOTTOM_MARGIN + 30)
 
   self.icon:SetWidth(selfDB.size)
   self.icon:SetHeight(selfDB.size)
+  self.icon:EnableMouse(false)
 
   self.text:SetFont(GameFontHighlight:GetFont(), selfDB.fontSize)
   self.text:SetPoint("TOPLEFT", "$parent", "TOPLEFT", 0, -(selfDB.size + ICON_BOTTOM_MARGIN))
-end
-
-function AlertFrame.prototype:OnDragStart()
-  if db.char.alertFrame.locked then
-    return
-  end
-
-  self.frame:StartMoving()
-end
-
-function AlertFrame.prototype:OnDragStop()
-  if db.char.alertFrame.locked then
-    return
-  end
-
-  self.frame:StopMovingOrSizing()
-
-  local point, _, relativePoint, x, y = self.frame:GetPoint(1)
-  db.char.alertFrame.position.point = point
-  db.char.alertFrame.position.relativePoint = relativePoint
-  db.char.alertFrame.position.x = x
-  db.char.alertFrame.position.y = y
+  self.text:SetText(self:GetText(ManaMinder.consumables["MAJOR_MANA_POTION"]))
 end
 
 function AlertFrame.prototype:InitializeEventHandlers()
   self.frame:SetScript("OnUpdate", function() self:OnUpdate() end)
+  self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
+  self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
 end
 
 function AlertFrame.prototype:OnUpdate()
@@ -101,7 +82,7 @@ end
 
 function AlertFrame.prototype:Deactivate()
   self.isActive = false
-  if db.char.alertFrame.locked then
+  if not db.char.alertFrame.unlocked then
     self.frame:SetAlpha(0)
   end
 end
@@ -116,7 +97,7 @@ function AlertFrame.prototype:GetFadeOutStartTime()
 end
 
 function AlertFrame.prototype:IsEnabled()
-  return not db.char.alertFrame.hidden and (ManaMinder.mainFrame.isVisible or not db.char.alertFrame.hiddenWithBars)
+  return not db.char.alertFrame.hidden and (ManaMinder.mainFrame.isVisible or db.char.alertFrame.showWithoutBars)
 end
 
 function AlertFrame.prototype:NeedsActivation(consumable)
@@ -136,14 +117,14 @@ function AlertFrame.prototype:Activate(consumable)
   self.iconTexture:SetTexture(consumable.texture)
   self.text:SetText(self:GetText(consumable))
 
-  if db.char.alertFrame.soundEnabled then
+  if not db.char.alertFrame.soundDisabled then
     ManaMinder:PlaySound(db.char.alertFrame.soundType)
   end
 end
 
 function AlertFrame.prototype:GetText(consumable)
   local name = ManaMinder:GetConsumableNameForKey(consumable.key, consumable.type)
-  return string.gsub(db.char.alertFrame.text, "%%name%%", name)
+  return string.gsub(db.char.alertFrame.text, "%%name%%", L[name])
 end
 
 function AlertFrame.prototype:UpdateState()
@@ -151,26 +132,7 @@ function AlertFrame.prototype:UpdateState()
     return
   end
 
-  self:UpdateScale()
   self:UpdateAlpha()
-end
-
-function AlertFrame.prototype:UpdateScale()
-  local scale = 1
-  local elapsed = GetTime() - self.startTime
-  local total = db.char.alertFrame.duration
-  local fadeDuration = db.char.alertFrame.animationDuration
-  local beforeFadeOut = total - fadeDuration
-
-  if db.char.alertFrame.locked then
-    if elapsed < fadeDuration then
-      scale = ManaMinder:Lerp(0.9, 1, elapsed / fadeDuration)
-    elseif elapsed > beforeFadeOut then
-      scale = ManaMinder:Lerp(0.9, 1, 1 - ((elapsed - beforeFadeOut) / fadeDuration))
-    end
-  end
-
-  self.frame:SetScale(scale)
 end
 
 function AlertFrame.prototype:UpdateAlpha()
@@ -180,7 +142,7 @@ function AlertFrame.prototype:UpdateAlpha()
   local fadeDuration = db.char.alertFrame.animationDuration
   local beforeFadeOut = total - fadeDuration
 
-  if db.char.alertFrame.locked then
+  if not db.char.alertFrame.unlocked then
     if elapsed < fadeDuration then
       alpha = elapsed / fadeDuration
     elseif elapsed > beforeFadeOut then
@@ -221,6 +183,28 @@ function AlertFrame.prototype:OnUnlock()
   self.frame:SetAlpha(1)
   self.frame:SetMovable(true)
   self.frame:EnableMouse(true)
+end
+
+function AlertFrame.prototype:OnDragStart()
+  if not db.char.alertFrame.unlocked then
+    return
+  end
+
+  self.frame:StartMoving()
+end
+
+function AlertFrame.prototype:OnDragStop()
+  if not db.char.alertFrame.unlocked then
+    return
+  end
+
+  self.frame:StopMovingOrSizing()
+
+  local point, _, relativePoint, x, y = self.frame:GetPoint(1)
+  db.char.alertFrame.position.point = point
+  db.char.alertFrame.position.relativePoint = relativePoint
+  db.char.alertFrame.position.x = x
+  db.char.alertFrame.position.y = y
 end
 
 ManaMinder.alertFrame = AlertFrame:new()

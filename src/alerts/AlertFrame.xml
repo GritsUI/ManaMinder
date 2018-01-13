@@ -18,7 +18,7 @@
       <Layer level="ARTWORK">
         <FontString name="$parent_Text" inherits="GameFontHighlight" justifyH="CENTER" justifyV="TOP" text="Major Mana Potion" wordWrap="true">
           <Size>
-            <AbsDimension x="300" y="60"/>
+            <AbsDimension x="300" y="70"/>
           </Size>
           <Anchors>
             <Anchor point="TOPLEFT">

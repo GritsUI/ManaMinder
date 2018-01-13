@@ -39,11 +39,11 @@ ManaMinder.defaults = {
       iconFontColor = { 1, 1, 1 },
       animationDuration = 0.3,
       texture = "Smooth",
-      tooltips = true
+      tooltipsDisabled = false
     },
     alertFrame = {
       hidden = false,
-      hiddenWithBars = true,
+      showWithoutBars = false,
       position = {
         point = "CENTER",
         relativePoint = "CENTER",
@@ -55,9 +55,9 @@ ManaMinder.defaults = {
       animationDuration = 0.3,
       text = "%name% is Ready",
       duration = 5,
-      soundEnabled = true,
+      soundDisabled = false,
       soundType = "Wisp",
-      locked = true
+      unlocked = false
     },
     consumables = {
       {
@@ -74,8 +74,8 @@ ManaMinder.defaults = {
         type = "ITEM"
       }
     },
-    combinePotions = true,
-    combineRunes = true,
-    combineGems = true
+    showAllPotions = false,
+    showAllRunes = false,
+    showAllGems = false
   }
 }

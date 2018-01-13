@@ -37,9 +37,9 @@ function ConsumablesOptions.prototype:ApplyTranslations()
 end
 
 function ConsumablesOptions.prototype:SetInitialValues()
-  getglobal(POTIONS_CHECK_NAME):SetChecked(db.char.combinePotions)
-  getglobal(RUNES_CHECK_NAME):SetChecked(db.char.combineRunes)
-  getglobal(GEMS_CHECK_NAME):SetChecked(db.char.combineGems)
+  getglobal(POTIONS_CHECK_NAME):SetChecked(not db.char.showAllPotions)
+  getglobal(RUNES_CHECK_NAME):SetChecked(not db.char.showAllRunes)
+  getglobal(GEMS_CHECK_NAME):SetChecked(not db.char.showAllGems)
 end
 
 function ConsumablesOptions.prototype:RefreshAllFrames()
@@ -255,7 +255,7 @@ function ConsumablesOptions.prototype:OnPotionsCheckLoad()
 end
 
 function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
-  db.char.combinePotions = value
+  db.char.showAllPotions = not value
   ManaMinder.mainFrame:UpdateAll()
 end
 
@@ -264,7 +264,7 @@ function ConsumablesOptions.prototype:OnRunesCheckLoad()
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckChange(value)
-  db.char.combineRunes = value
+  db.char.showAllRunes = not value
   ManaMinder.mainFrame:UpdateAll()
 end
 
@@ -273,7 +273,7 @@ function ConsumablesOptions.prototype:OnGemsCheckLoad()
 end
 
 function ConsumablesOptions.prototype:OnGemsCheckChange(value)
-  db.char.combineGems = value
+  db.char.showAllGems = not value
   ManaMinder.mainFrame:UpdateAll()
 end
 

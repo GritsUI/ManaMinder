@@ -278,7 +278,7 @@ function BarFrame.prototype:ConsumeEquipped()
 end
 
 function BarFrame.prototype:ShowTooltip()
-  if not db.char.bars.tooltips then
+  if db.char.bars.tooltipsDisabled then
     return
   end
 
@@ -296,7 +296,7 @@ function BarFrame.prototype:ShowTooltip()
 end
 
 function BarFrame.prototype:HideTooltip()
-  if not db.char.bars.tooltips then
+  if db.char.bars.tooltipsDisabled then
     return
   end
 

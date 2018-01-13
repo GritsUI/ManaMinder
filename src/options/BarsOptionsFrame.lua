@@ -62,7 +62,7 @@ function BarsOptions.prototype:SetInitialValues()
   getglobal(SHOW_GROUP_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenGroup)
   getglobal(SHOW_RAID_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenRaid)
   getglobal(LOCK_CHECK_NAME):SetChecked(db.char.mainFrame.locked)
-  getglobal(TOOLTIPS_CHECK_NAME):SetChecked(db.char.bars.tooltips)
+  getglobal(TOOLTIPS_CHECK_NAME):SetChecked(not db.char.bars.tooltipsDisabled)
   getglobal(WIDTH_SLIDER_NAME):SetValue(db.char.mainFrame.width)
   getglobal(HEIGHT_SLIDER_NAME):SetValue(db.char.bars.height)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.bars.fontSize)
@@ -166,7 +166,7 @@ function BarsOptions.prototype:OnTooltipsLoad()
 end
 
 function BarsOptions.prototype:OnTooltipsChange(enabled)
-  db.char.bars.tooltips = enabled
+  db.char.bars.tooltipsDisabled = not enabled
 end
 
 function BarsOptions.prototype:OnWidthLoad()

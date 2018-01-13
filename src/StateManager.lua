@@ -134,15 +134,15 @@ function StateManager.prototype:GetBarData()
 
   table.sort(bars, function(barA, barB) return barA.priority < barB.priority end)
 
-  if db.char.combinePotions then
+  if not db.char.showAllPotions then
     bars = self:FilterGroup(bars, "POTION")
   end
 
-  if db.char.combineRunes then
+  if not db.char.showAllRunes then
     bars = self:FilterGroup(bars, "RUNE")
   end
 
-  if db.char.combineGems then
+  if not db.char.showAllGems then
     bars = self:FilterGroup(bars, "GEM")
   end
 

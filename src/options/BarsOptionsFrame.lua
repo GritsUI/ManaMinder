@@ -16,6 +16,7 @@ local SHOW_SOLO_CHECK_NAME = "ManaMinder_Options_Bars_Show_Solo_Check"
 local SHOW_GROUP_CHECK_NAME = "ManaMinder_Options_Bars_Show_Group_Check"
 local SHOW_RAID_CHECK_NAME = "ManaMinder_Options_Bars_Show_Raid_Check"
 local LOCK_CHECK_NAME = "ManaMinder_Options_Bars_Lock_Check"
+local TOOLTIPS_CHECK_NAME = "ManaMinder_Options_Bars_Tooltips_Check"
 local WIDTH_SLIDER_NAME = "ManaMinder_Options_Bars_Width_Slider"
 local HEIGHT_SLIDER_NAME = "ManaMinder_Options_Bars_Height_Slider"
 local FONT_SIZE_SLIDER_NAME = "ManaMinder_Options_Bars_Font_Size_Slider"
@@ -61,6 +62,7 @@ function BarsOptions.prototype:SetInitialValues()
   getglobal(SHOW_GROUP_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenGroup)
   getglobal(SHOW_RAID_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenRaid)
   getglobal(LOCK_CHECK_NAME):SetChecked(db.char.mainFrame.locked)
+  getglobal(TOOLTIPS_CHECK_NAME):SetChecked(db.char.bars.tooltips)
   getglobal(WIDTH_SLIDER_NAME):SetValue(db.char.mainFrame.width)
   getglobal(HEIGHT_SLIDER_NAME):SetValue(db.char.bars.height)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.bars.fontSize)
@@ -157,6 +159,14 @@ function BarsOptions.prototype:OnLockChange(locked)
     db.char.mainFrame.locked = false
     ManaMinder.mainFrame.frame:SetMovable(true)
   end
+end
+
+function BarsOptions.prototype:OnTooltipsLoad()
+  getglobal(TOOLTIPS_CHECK_NAME .. "Text"):SetText(L["Show Tooltips"])
+end
+
+function BarsOptions.prototype:OnTooltipsChange(enabled)
+  db.char.bars.tooltips = enabled
 end
 
 function BarsOptions.prototype:OnWidthLoad()

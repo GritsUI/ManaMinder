@@ -164,6 +164,25 @@
             </Scripts>
           </CheckButton>
 
+          <CheckButton name="ManaMinder_Options_Bars_Tooltips_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Lock_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnTooltipsLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnTooltipsChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
         </Frames>
         <Scripts>
           <OnLoad>

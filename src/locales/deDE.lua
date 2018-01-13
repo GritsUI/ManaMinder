@@ -53,6 +53,7 @@ local function deDE()
     ["Show Bars in Raid"] = "Show Bars in Raid",
     ["Show Bars Out of Combat"] = "Show Bars Out of Combat",
     ["Show Bars Solo"] = "Show Bars Solo",
+    ["Show Tooltips"] = "Show Tooltips",
     ["Shows all frames"] = "Shows all frames",
     ["Sound"] = "Sound",
     ["Text"] = "Text",

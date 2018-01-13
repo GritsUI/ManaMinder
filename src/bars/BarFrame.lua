@@ -67,6 +67,8 @@ function BarFrame.prototype:SetupIcon()
   self.button:EnableMouse(true)
   self.button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
   self.button:SetScript("OnClick", function() self:Consume(true) end)
+  self.button:SetScript("OnEnter", function() self:ShowTooltip() end)
+  self.button:SetScript("OnLeave", function() self:HideTooltip() end)
 
   local buttonIcon = getglobal(buttonName .. "Icon")
   local normalTexture = getglobal(buttonName .. "NormalTexture")
@@ -273,6 +275,32 @@ end
 
 function BarFrame.prototype:ConsumeEquipped()
   UseInventoryItem(self.data.slot)
+end
+
+function BarFrame.prototype:ShowTooltip()
+  if not db.char.bars.tooltips then
+    return
+  end
+
+  GameTooltip:SetOwner(self.button, "ANCHOR_RIGHT")
+
+  if self.data.type == "ITEM" then
+    GameTooltip:SetBagItem(self.data.bag, self.data.slot)
+  elseif self.data.type == "SPELL" then
+    GameTooltip:SetSpell(self.data.spellId, "BOOKTYPE_SPELL")
+  elseif self.data.type == "EQUIPPED" then
+    GameTooltip:SetInventoryItem("player", self.data.slot)
+  end
+
+  GameTooltip:Show()
+end
+
+function BarFrame.prototype:HideTooltip()
+  if not db.char.bars.tooltips then
+    return
+  end
+
+  GameTooltip:Hide()
 end
 
 function BarFrame.prototype:UpdateWidth()

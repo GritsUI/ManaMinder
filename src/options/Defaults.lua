@@ -38,7 +38,8 @@ ManaMinder.defaults = {
       iconFontSize = 10,
       iconFontColor = { 1, 1, 1 },
       animationDuration = 0.3,
-      texture = "Smooth"
+      texture = "Smooth",
+      tooltips = true
     },
     alertFrame = {
       hidden = false,

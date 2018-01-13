@@ -50,6 +50,7 @@ local function enUS()
     ["Show Bars in Raid"] = true,
     ["Show Bars Out of Combat"] = true,
     ["Show Bars Solo"] = true,
+    ["Show Tooltips"] = true,
     ["Shows all frames"] = true,
     ["Sound"] = true,
     ["Text"] = true,

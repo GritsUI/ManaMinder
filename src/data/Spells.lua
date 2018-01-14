@@ -13,7 +13,7 @@ local spells = {
     key = "EVOCATION",
     spellId = 12051,
     iconTexture = "Interface\\Icons\\Spell_Nature_Purge",
-    requiredDeficit = 4000,
+    requiredDeficit = {1500, 8},
     type = "SPELL",
     class = "MAGE"
   },
@@ -22,7 +22,7 @@ local spells = {
     key = "INNERVATE",
     spellId = 29167,
     iconTexture = "Interface\\Icons\\Spell_Nature_Lightning",
-    requiredDeficit = 3000,
+    requiredDeficit = {400, 10},
     type = "SPELL",
     class = "DRUID"
   }

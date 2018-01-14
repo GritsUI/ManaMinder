@@ -195,7 +195,19 @@ function BarFrame.prototype:GetDeficitRemaining()
   local mana = UnitMana("player")
   local manaMax = UnitManaMax("player")
   local deficit = manaMax - mana
-  return math.max(0, self.data.requiredDeficit - deficit)
+  local requiredDeficit = self:ResolveDeficit(self.data.requiredDeficit)
+  return math.max(0, requiredDeficit - deficit)
+end
+
+function BarFrame.prototype:ResolveDeficit(deficit)
+  if type(deficit) == "table" then
+    local normalRegen = ManaMinder:GetSpiritRegenRate()
+    local increasedRegen = normalRegen + normalRegen * (deficit[1] / 100)
+    local ticks = deficit[2] / 2
+    return increasedRegen * ticks
+  else
+    return deficit
+  end
 end
 
 function BarFrame.prototype:GetCooldownRemaining()

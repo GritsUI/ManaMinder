@@ -149,6 +149,32 @@ function ManaMinder:OnCheckBoxClick()
   end
 end
 
+function ManaMinder:GetSpiritRegenRate()
+  -- Taken from Lightshope calculations:
+  -- https://github.com/LightsHope/server/blob/6dfb67c785206410a4d3030fd28f3d1ced462e5e/src/game/Objects/Player.cpp#L5124-L5157
+
+  local spirit = UnitStat("player", 5)
+  local _, class = UnitClass("player")
+
+  if class == "DRUID" then
+    return (spirit / 5) + 15
+  elseif class == "HUNTER" then
+    return (spirit / 5) + 15
+  elseif class == "MAGE" then
+    return (spirit / 4) + 12.5
+  elseif class == "PALADIN" then
+    return (spirit / 5) + 15
+  elseif class == "PRIEST" then
+    return (spirit / 4) + 12.5
+  elseif class == "SHAMAN" then
+    return (spirit / 5) + 17
+  elseif class == "WARLOCK" then
+    return (spirit / 5) + 15
+  end
+
+  return 0
+end
+
 function ManaMinder:SystemMessage(msg)
   DEFAULT_CHAT_FRAME:AddMessage("|cFF2150C2ManaMinder|cFFFFFFFF: " .. msg)
 end

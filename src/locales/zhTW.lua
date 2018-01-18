@@ -41,6 +41,7 @@ local function zhTW()
     ["Only Show One of Demonic Rune/Dark Rune/Lily Root"] = "Only Show One of Demonic Rune/Dark Rune/Lily Root",
     ["Open configuration window"] = "Open configuration window",
     ["Ready State"] = "Ready State",
+    ["Repeat Delay: "] = "Repeat Delay: ",
     ["Right-click to drag this button"] = "Right-click to drag this button",
     ["Shared Cooldowns"] = "Shared Cooldowns",
     ["Show"] = "Show",

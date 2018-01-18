@@ -11,6 +11,7 @@ function AlertFrame.prototype:init()
   self.isActive = false
   self.startTime = nil
   self.lastActiveConsumable = nil
+  self.lastReady = {}
 end
 
 function AlertFrame.prototype:OnLoad(frame)
@@ -54,15 +55,19 @@ end
 function AlertFrame.prototype:OnUpdate()
   local readyConsumable = self:GetReadyConsumable()
 
+  if readyConsumable then
+    self.lastReady[readyConsumable.key] = GetTime()
+  end
+
   if self.isActive then
     if self:HasDurationExpired() then
       self:Deactivate()
     elseif self:ShouldFinishEarly(readyConsumable) then
       self.startTime = self:GetFadeOutStartTime()
     end
-  elseif not readyConsumable then
+  elseif not readyConsumable and self:CanRealert(self.lastActiveConsumable) then
     self.lastActiveConsumable = nil
-  elseif self:IsEnabled() and self:NeedsActivation(readyConsumable) then
+  elseif readyConsumable and self:IsEnabled() and self:NeedsActivation(readyConsumable) then
     self:Activate(readyConsumable)
   end
 
@@ -94,6 +99,23 @@ end
 
 function AlertFrame.prototype:GetFadeOutStartTime()
   return GetTime() - (db.char.alertFrame.duration - db.char.alertFrame.animationDuration)
+end
+
+function AlertFrame.prototype:CanRealert(consumable)
+  if not consumable then
+    return true
+  end
+  local sinceReady = self:TimeSinceLastReady(consumable)
+  return sinceReady == nil or sinceReady > db.char.alertFrame.repeatDelay
+end
+
+function AlertFrame.prototype:TimeSinceLastReady(consumable)
+  local lastReady = self.lastReady[consumable.key]
+  if not lastReady then
+    return nil
+  end
+
+  return GetTime() - lastReady
 end
 
 function AlertFrame.prototype:IsEnabled()

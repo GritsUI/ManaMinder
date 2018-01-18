@@ -15,6 +15,7 @@ local DURATION_SLIDER_NAME = "ManaMinder_Options_Alerts_Duration_Slider"
 local ANIMATION_DURATION_SLIDER_NAME = "ManaMinder_Options_Alerts_Animation_Duration_Slider"
 local ICON_SIZE_SLIDER_NAME = "ManaMinder_Options_Alerts_Icon_Size_Slider"
 local FONT_SIZE_SLIDER_NAME = "ManaMinder_Options_Alerts_Font_Size_Slider"
+local REPEAT_DELAY_SLIDER_NAME = "ManaMinder_Options_Alerts_Repeat_Delay_Slider"
 local SOUND_DROPDOWN_NAME = "ManaMinder_Options_Alerts_Sound_DropDown"
 
 function AlertsOptions.prototype:init()
@@ -43,6 +44,7 @@ function AlertsOptions.prototype:SetInitialValues()
   getglobal(ANIMATION_DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.animationDuration)
   getglobal(ICON_SIZE_SLIDER_NAME):SetValue(db.char.alertFrame.size)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.alertFrame.fontSize)
+  getglobal(REPEAT_DELAY_SLIDER_NAME):SetValue(db.char.alertFrame.repeatDelay)
   UIDropDownMenu_SetSelectedValue(getglobal(SOUND_DROPDOWN_NAME), db.char.alertFrame.soundType)
   UIDropDownMenu_SetText(db.char.alertFrame.soundType, getglobal(SOUND_DROPDOWN_NAME))
 end
@@ -104,7 +106,7 @@ end
 
 function AlertsOptions.prototype:OnDurationChange(value)
   db.char.alertFrame.duration = value
-  getglobal(DURATION_SLIDER_NAME .. "Text"):SetText(L["Duration: "] ..db.char.alertFrame.duration .. L["SECONDS"])
+  getglobal(DURATION_SLIDER_NAME .. "Text"):SetText(L["Duration: "] .. value .. L["SECONDS"])
 end
 
 function AlertsOptions.prototype:OnAnimationDurationLoad()
@@ -137,6 +139,16 @@ function AlertsOptions.prototype:OnFontSizeChange(value)
   db.char.alertFrame.fontSize = value
   ManaMinder.alertFrame:UpdateFontSize()
   getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText(L["Font Size: "] .. value)
+end
+
+function AlertsOptions.prototype:OnRepeatDelayLoad()
+  getglobal(REPEAT_DELAY_SLIDER_NAME):SetMinMaxValues(0, 20)
+  getglobal(REPEAT_DELAY_SLIDER_NAME):SetValueStep(1)
+end
+
+function AlertsOptions.prototype:OnRepeatDelayChange(value)
+  db.char.alertFrame.repeatDelay = value
+  getglobal(REPEAT_DELAY_SLIDER_NAME .. "Text"):SetText(L["Repeat Delay: "] .. value .. L["SECONDS"])
 end
 
 function AlertsOptions.prototype:OnSoundDropDownLoad()

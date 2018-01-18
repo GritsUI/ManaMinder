@@ -57,7 +57,8 @@ ManaMinder.defaults = {
       duration = 5,
       soundDisabled = false,
       soundType = "Wisp",
-      unlocked = false
+      unlocked = false,
+      repeatDelay = 5
     },
     consumables = {
       {

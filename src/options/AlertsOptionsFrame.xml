@@ -215,6 +215,27 @@
             </Scripts>
           </Slider>
 
+          <Slider name="ManaMinder_Options_Alerts_Repeat_Delay_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Font_Size_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-22" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
         </Frames>
         <Scripts>
           <OnLoad>

@@ -41,6 +41,7 @@ local function enUS()
     ["Only Show One of Demonic Rune/Dark Rune/Lily Root"] = true,
     ["Open configuration window"] = true,
     ["Ready State"] = true,
+    ["Repeat Delay: "] = true,
     ["Right-click to drag this button"] = true,
     ["Shared Cooldowns"] = true,
     ["Show"] = true,

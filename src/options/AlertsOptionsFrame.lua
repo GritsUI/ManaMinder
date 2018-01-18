@@ -59,6 +59,7 @@ end
 
 function AlertsOptions.prototype:OnEnabledLoad()
   getglobal(ENABLED_CHECK_NAME .. "Text"):SetText(L["Show Alerts"])
+  getglobal(ENABLED_CHECK_NAME).tooltipText = L["Uncheck to disable alerts at all times."]
 end
 
 function AlertsOptions.prototype:OnEnabledChange(enabled)
@@ -68,6 +69,7 @@ end
 
 function AlertsOptions.prototype:OnEnabledWhenHiddenLoad()
   getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME .. "Text"):SetText(L["Show Alerts When Bars Hidden"])
+  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME).tooltipText = L["Check to continue showing alerts when bars are hidden."]
 end
 
 function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
@@ -76,6 +78,7 @@ end
 
 function AlertsOptions.prototype:OnLockedLoad()
   getglobal(LOCKED_CHECK_NAME .. "Text"):SetText(L["Lock Alerts"])
+  getglobal(LOCKED_CHECK_NAME).tooltipText = L["Uncheck to make the alert frame draggable."]
 end
 
 function AlertsOptions.prototype:OnLockedChange(locked)
@@ -85,6 +88,7 @@ end
 
 function AlertsOptions.prototype:OnSoundsEnabledLoad()
   getglobal(SOUNDS_ENABLED_CHECK_NAME .. "Text"):SetText(L["Enable Alert Sound"])
+  getglobal(SOUNDS_ENABLED_CHECK_NAME).tooltipText = L["Uncheck to disable alert sounds."]
 end
 
 function AlertsOptions.prototype:OnSoundsEnabledChange(enabled)
@@ -93,6 +97,7 @@ end
 
 function AlertsOptions.prototype:OnTextLoad()
   getglobal(TEXT_INPUT_NAME .. "Text"):SetText(L["Text"])
+  getglobal(TEXT_INPUT_NAME).tooltipText = L["Change the text displayed with alerts. Use \"%name%\" to insert the name of the consumable."]
 end
 
 function AlertsOptions.prototype:OnTextChange(value)
@@ -102,6 +107,7 @@ end
 function AlertsOptions.prototype:OnDurationLoad()
   getglobal(DURATION_SLIDER_NAME):SetMinMaxValues(1, 10)
   getglobal(DURATION_SLIDER_NAME):SetValueStep(1)
+  getglobal(DURATION_SLIDER_NAME).tooltipText = L["Adjust the length of time an alert is displayed."]
 end
 
 function AlertsOptions.prototype:OnDurationChange(value)
@@ -112,6 +118,7 @@ end
 function AlertsOptions.prototype:OnAnimationDurationLoad()
   getglobal(ANIMATION_DURATION_SLIDER_NAME):SetMinMaxValues(0, 1)
   getglobal(ANIMATION_DURATION_SLIDER_NAME):SetValueStep(0.01)
+  getglobal(ANIMATION_DURATION_SLIDER_NAME).tooltipText = L["Adjust the speed at which an alert fades in and out."]
 end
 
 function AlertsOptions.prototype:OnAnimationDurationChange(value)
@@ -122,6 +129,7 @@ end
 function AlertsOptions.prototype:OnIconSizeLoad()
   getglobal(ICON_SIZE_SLIDER_NAME):SetMinMaxValues(20, 60)
   getglobal(ICON_SIZE_SLIDER_NAME):SetValueStep(1)
+  getglobal(ICON_SIZE_SLIDER_NAME).tooltipText = L["Adjust the size of the icon displayed in an alert."]
 end
 
 function AlertsOptions.prototype:OnIconSizeChange(value)
@@ -133,6 +141,7 @@ end
 function AlertsOptions.prototype:OnFontSizeLoad()
   getglobal(FONT_SIZE_SLIDER_NAME):SetMinMaxValues(10, 40)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValueStep(1)
+  getglobal(FONT_SIZE_SLIDER_NAME).tooltipText = L["Adjust the font size of the text displayed in an alert."]
 end
 
 function AlertsOptions.prototype:OnFontSizeChange(value)
@@ -144,6 +153,7 @@ end
 function AlertsOptions.prototype:OnRepeatDelayLoad()
   getglobal(REPEAT_DELAY_SLIDER_NAME):SetMinMaxValues(0, 20)
   getglobal(REPEAT_DELAY_SLIDER_NAME):SetValueStep(1)
+  getglobal(REPEAT_DELAY_SLIDER_NAME).tooltipText = L["Adjust the length of time a consumable needs to be not ready before a new alert is shown again. This prevents multiple alerts when hovering around the required deficit for a consumable."]
 end
 
 function AlertsOptions.prototype:OnRepeatDelayChange(value)
@@ -153,6 +163,8 @@ end
 
 function AlertsOptions.prototype:OnSoundDropDownLoad()
   local dropdown = getglobal(SOUND_DROPDOWN_NAME)
+  dropdown.tooltipText = L["Change the sound played when an alert occurs."]
+
   UIDropDownMenu_Initialize(this, function()
     for _, value in ipairs(ManaMinder.soundsList) do
       local info = {}

@@ -128,6 +128,15 @@
               <OnEscapePressed>
                 this:ClearFocus()
               </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
             </Scripts>
           </EditBox>
 
@@ -315,6 +324,13 @@
               <OnLoad>
                   ManaMinder.optionsFrame.alertsFrame:OnSoundDropDownLoad()
               </OnLoad>
+              <OnEnter>
+                  GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                  GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Frame>
 
@@ -325,7 +341,7 @@
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Sound_DropDown" relativePoint="TOPRIGHT">
                 <Offset>
-                  <AbsDimension x="-14" y="0" />
+                  <AbsDimension x="-12" y="0" />
                 </Offset>
               </Anchor>
             </Anchors>

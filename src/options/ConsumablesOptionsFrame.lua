@@ -253,6 +253,7 @@ end
 
 function ConsumablesOptions.prototype:OnPotionsCheckLoad()
   getglobal(POTIONS_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Potion"])
+  getglobal(POTIONS_CHECK_NAME).tooltipText = L["When multiple potions are tracked, only show a bar for that with the highest priority."]
 end
 
 function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
@@ -262,6 +263,7 @@ end
 
 function ConsumablesOptions.prototype:OnRunesCheckLoad()
   getglobal(RUNES_CHECK_NAME .. "Text"):SetText(L["Only Show One of Demonic Rune/Dark Rune/Lily Root"])
+  getglobal(RUNES_CHECK_NAME).tooltipText = L["When multiple runes are tracked, only show a bar for that with the highest priority."]
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckChange(value)
@@ -271,6 +273,7 @@ end
 
 function ConsumablesOptions.prototype:OnGemsCheckLoad()
   getglobal(GEMS_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Mana Gem"])
+  getglobal(GEMS_CHECK_NAME).tooltipText = L["When multiple mana gems are tracked, only show a bar for that with the highest priority."]
 end
 
 function ConsumablesOptions.prototype:OnGemsCheckChange(value)

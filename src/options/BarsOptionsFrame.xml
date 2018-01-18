@@ -301,7 +301,7 @@
             </Scripts>
           </Slider>
 
-          <Frame name="ManaMinder_Options_Bars_Texture_DropDown" inherits="UIDropDownMenuTemplate">
+          <Frame name="ManaMinder_Options_Bars_Texture_DropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -327,6 +327,13 @@
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnTextureDropDownLoad()
               </OnLoad>
+              <OnEnter>
+                  GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                  GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Frame>
 
@@ -460,6 +467,15 @@
               <OnEscapePressed>
                   this:ClearFocus()
               </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
             </Scripts>
           </EditBox>
 
@@ -578,6 +594,15 @@
               <OnEscapePressed>
                 this:ClearFocus()
               </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
             </Scripts>
           </EditBox>
 
@@ -696,6 +721,15 @@
               <OnEscapePressed>
                 this:ClearFocus()
               </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
             </Scripts>
           </EditBox>
 

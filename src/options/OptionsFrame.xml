@@ -109,7 +109,7 @@
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">
-            <FontString inherits="GameFontDisableSmall" text="1.4" nonspacewrap="true">
+            <FontString inherits="GameFontDisableSmall" text="1.5" nonspacewrap="true">
               <Anchors>
                 <Anchor point="CENTER" />
               </Anchors>
@@ -119,7 +119,7 @@
         <Scripts>
           <OnEnter>
               GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-              GameTooltip:AddLine("ManaMinder 1.4", 1, 1, 1)
+              GameTooltip:AddLine("ManaMinder 1.5", 1, 1, 1)
               GameTooltip:AddLine(ManaMinder.L["Created by"] .. " Grits &lt;Really Bad Players&gt;", 1, 0.82, 0)
               GameTooltip:Show()
           </OnEnter>

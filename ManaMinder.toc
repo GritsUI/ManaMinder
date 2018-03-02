@@ -28,6 +28,7 @@ src\data\Items.lua
 src\data\Sounds.lua
 src\data\Spells.lua
 src\data\Textures.lua
+src\data\Test.lua
 src\options\Defaults.lua
 
 src\util\Frame.lua

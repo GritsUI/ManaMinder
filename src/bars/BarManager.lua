@@ -8,7 +8,10 @@ function BarManager.prototype:init()
 end
 
 function BarManager.prototype:Update()
-  local newData = ManaMinder.stateManager:GetBarData()
+  local newData = ManaMinder.testBarData
+  if not db.char.bars.testMode then
+    newData = ManaMinder.stateManager:GetBarData()
+  end
 
   -- Create bars that don't already exist for tracked items
   -- eg. On Initial setup, on going from item count 0 to > 0, on enabling of an item in settings
@@ -61,6 +64,10 @@ function BarManager.prototype:RemoveStaleBars(newData)
 end
 
 function BarManager.prototype:UpdatePriorities()
+  if db.char.bars.testMode then
+    return
+  end
+
   for i = table.getn(self.barFrames), 1, -1 do
     for priority, consumable in db.char.consumables do
       if self.barFrames[i].data.key == consumable.key then
@@ -72,21 +79,21 @@ end
 
 function BarManager.prototype:SortBars()
   table.sort(self.barFrames, function(barA, barB)
-    local cooldownRemainingA = ManaMinder:GetCooldownRemaining(
-      barA.data.cooldownStart,
-      barA.data.cooldown
-    )
-
-    local cooldownRemainingB = ManaMinder:GetCooldownRemaining(
-      barB.data.cooldownStart,
-      barB.data.cooldown
-    )
+    local cooldownRemainingA = self:GetCooldownRemaining(barA)
+    local cooldownRemainingB = self:GetCooldownRemaining(barB)
 
     if cooldownRemainingA == cooldownRemainingB then
       return barA.data.priority < barB.data.priority
     end
     return cooldownRemainingA < cooldownRemainingB
   end)
+end
+
+function BarManager.prototype:GetCooldownRemaining(bar)
+  if db.char.bars.testMode then
+    return bar.data.cooldownRemaining
+  end
+  return ManaMinder:GetCooldownRemaining(bar.data.cooldownStart, bar.data.cooldown)
 end
 
 function BarManager.prototype:UpdateBars(newData)
@@ -110,6 +117,11 @@ function BarManager.prototype:ForEachBar(func)
   for i = 1, table.getn(self.barFrames), 1 do
     func(self.barFrames[i])
   end
+end
+
+function BarManager.prototype:ClearBars()
+  self:ForEachBar(function(bar) bar:Hide() end)
+  self.barFrames = {}
 end
 
 ManaMinder.barManager = BarManager:new()

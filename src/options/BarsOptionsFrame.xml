@@ -18,7 +18,7 @@
 
       <Frame name="$parent_Visibility_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="281" y="210"/>
+          <AbsDimension x="281" y="212"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" />
@@ -183,6 +183,25 @@
             </Scripts>
           </CheckButton>
 
+          <CheckButton name="ManaMinder_Options_Bars_Test_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Tooltips_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnTestLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnTestChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
         </Frames>
         <Scripts>
           <OnLoad>
@@ -193,7 +212,7 @@
 
       <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="281" y="210"/>
+          <AbsDimension x="281" y="212"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Visibility_Section" relativePoint="TOPRIGHT">

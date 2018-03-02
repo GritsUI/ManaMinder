@@ -17,6 +17,7 @@ local SHOW_GROUP_CHECK_NAME = "ManaMinder_Options_Bars_Show_Group_Check"
 local SHOW_RAID_CHECK_NAME = "ManaMinder_Options_Bars_Show_Raid_Check"
 local LOCK_CHECK_NAME = "ManaMinder_Options_Bars_Lock_Check"
 local TOOLTIPS_CHECK_NAME = "ManaMinder_Options_Bars_Tooltips_Check"
+local TEST_CHECK_NAME = "ManaMinder_Options_Bars_Test_Check"
 local WIDTH_SLIDER_NAME = "ManaMinder_Options_Bars_Width_Slider"
 local HEIGHT_SLIDER_NAME = "ManaMinder_Options_Bars_Height_Slider"
 local FONT_SIZE_SLIDER_NAME = "ManaMinder_Options_Bars_Font_Size_Slider"
@@ -63,6 +64,7 @@ function BarsOptions.prototype:SetInitialValues()
   getglobal(SHOW_RAID_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenRaid)
   getglobal(LOCK_CHECK_NAME):SetChecked(db.char.mainFrame.locked)
   getglobal(TOOLTIPS_CHECK_NAME):SetChecked(not db.char.bars.tooltipsDisabled)
+  getglobal(TEST_CHECK_NAME):SetChecked(db.char.bars.testMode)
   getglobal(WIDTH_SLIDER_NAME):SetValue(db.char.mainFrame.width)
   getglobal(HEIGHT_SLIDER_NAME):SetValue(db.char.bars.height)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.bars.fontSize)
@@ -174,6 +176,17 @@ end
 
 function BarsOptions.prototype:OnTooltipsChange(enabled)
   db.char.bars.tooltipsDisabled = not enabled
+end
+
+function BarsOptions.prototype:OnTestLoad()
+  getglobal(TEST_CHECK_NAME .. "Text"):SetText(L["Show Test Bars"])
+  getglobal(TEST_CHECK_NAME).tooltipText = L["Check to show test bars for easier configuration"]
+end
+
+function BarsOptions.prototype:OnTestChange(checked)
+  db.char.bars.testMode = checked
+  ManaMinder.barManager:ClearBars()
+  ManaMinder.barManager:Update()
 end
 
 function BarsOptions.prototype:OnWidthLoad()

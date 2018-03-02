@@ -188,6 +188,10 @@ function BarFrame.prototype:UpdateConsumableCount()
 end
 
 function BarFrame.prototype:GetDeficitRemaining()
+  if db.char.bars.testMode then
+    return self.data.deficitRemaining
+  end
+
   if not self.data.requiredDeficit then
     return 0
   end
@@ -211,6 +215,9 @@ function BarFrame.prototype:ResolveDeficit(deficit)
 end
 
 function BarFrame.prototype:GetCooldownRemaining()
+  if db.char.bars.testMode then
+    return self.data.cooldownRemaining
+  end
   return ManaMinder:GetCooldownRemaining(self.data.cooldownStart, self.data.cooldown)
 end
 
@@ -258,6 +265,10 @@ function BarFrame.prototype:GetCurrentText()
 end
 
 function BarFrame.prototype:Consume(force)
+  if db.char.bars.testMode then
+    return
+  end
+
   if force or (not self.onCooldown and self:GetDeficitRemaining() == 0) then
     if self.data.type == "ITEM" then
       self:ConsumeItem()
@@ -290,7 +301,7 @@ function BarFrame.prototype:ConsumeEquipped()
 end
 
 function BarFrame.prototype:ShowTooltip()
-  if db.char.bars.tooltipsDisabled then
+  if db.char.bars.testMode or db.char.bars.tooltipsDisabled then
     return
   end
 

@@ -5,6 +5,7 @@ local spells = {
     spellId = 17359,
     iconTexture = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
     requiredDeficit = 1000,
+    targeted = false,
     type = "SPELL",
     class = "SHAMAN"
   },
@@ -14,6 +15,7 @@ local spells = {
     spellId = 12051,
     iconTexture = "Interface\\Icons\\Spell_Nature_Purge",
     requiredDeficit = {1500, 8},
+    targeted = false,
     type = "SPELL",
     class = "MAGE"
   },
@@ -23,6 +25,7 @@ local spells = {
     spellId = 29167,
     iconTexture = "Interface\\Icons\\Spell_Nature_Lightning",
     requiredDeficit = {400, 10},
+    targeted = true,
     type = "SPELL",
     class = "DRUID"
   }

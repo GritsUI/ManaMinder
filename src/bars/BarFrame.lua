@@ -285,14 +285,18 @@ function BarFrame.prototype:ConsumeItem()
 end
 
 function BarFrame.prototype:ConsumeSpell()
-  local hasTarget = UnitName("target")
-  TargetUnit("player");
-  CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
+  if self.data.targeted then
+    local hasTarget = UnitName("target")
+    TargetUnit("player");
+    CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
 
-  if hasTarget then
-    TargetUnit("playertarget");
+    if hasTarget then
+      TargetUnit("playertarget");
+    else
+      ClearTarget()
+    end
   else
-    ClearTarget()
+    CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
   end
 end
 

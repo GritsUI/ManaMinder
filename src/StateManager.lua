@@ -84,6 +84,7 @@ function StateManager.prototype:UpdateStateForSpells(state)
           cooldownStart = cooldownStart,
           texture = spellData.iconTexture,
           requiredDeficit = spellData.requiredDeficit,
+          targeted = spellData.targeted,
           type = "SPELL",
           spellId = spellId
         }

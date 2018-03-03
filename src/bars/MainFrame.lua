@@ -109,6 +109,15 @@ end
 function MainFrame.prototype:UpdateAll()
   ManaMinder.stateManager:Update()
   ManaMinder.barManager:Update()
+  self:UpdateHeight()
+end
+
+function MainFrame.prototype:UpdateHeight()
+  self.frame:SetHeight(ManaMinder.barManager:GetTotalHeight())
+end
+
+function MainFrame.prototype:UpdateWidth()
+  self.frame:SetWidth(db.char.mainFrame.width)
 end
 
 ManaMinder.mainFrame = MainFrame:new()

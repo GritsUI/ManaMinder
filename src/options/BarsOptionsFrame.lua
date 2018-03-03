@@ -198,6 +198,7 @@ end
 function BarsOptions.prototype:OnWidthChange(value)
   db.char.mainFrame.width = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateWidth() end)
+  ManaMinder.mainFrame:UpdateWidth()
   getglobal(WIDTH_SLIDER_NAME .. "Text"):SetText(L["Width: "] .. db.char.mainFrame.width)
 end
 
@@ -210,6 +211,7 @@ end
 function BarsOptions.prototype:OnHeightChange(value)
   db.char.bars.height = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateHeight() end)
+  ManaMinder.mainFrame:UpdateHeight()
   getglobal(HEIGHT_SLIDER_NAME .. "Text"):SetText(L["Height: "] .. db.char.bars.height)
 end
 
@@ -234,6 +236,7 @@ end
 function BarsOptions.prototype:OnMarginChange(value)
   db.char.bars.margin = value
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdatePosition() end)
+  ManaMinder.mainFrame:UpdateHeight()
   getglobal(MARGIN_SLIDER_NAME .. "Text"):SetText(L["Margin: "] .. db.char.bars.margin)
 end
 

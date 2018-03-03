@@ -113,6 +113,13 @@ function BarManager.prototype:UpdateBars(newData)
   end
 end
 
+function BarManager.prototype:GetTotalHeight()
+  local barMargin = db.char.bars.margin
+  local barHeight = db.char.bars.height
+  local count =  table.getn(self.barFrames)
+  return count * barHeight + (count - 1) * barMargin
+end
+
 function BarManager.prototype:ForEachBar(func)
   for i = 1, table.getn(self.barFrames), 1 do
     func(self.barFrames[i])

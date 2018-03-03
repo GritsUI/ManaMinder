@@ -40,16 +40,24 @@ function ManaMinder:GetItemIdFromLink(itemLink)
 end
 
 function ManaMinder:GetConsumableNameForKey(key, type)
+  return ManaMinder:GetConsumablePropertyForKey(key, type, "name")
+end
+
+function ManaMinder:GetConsumableTextureForKey(key, type)
+  return ManaMinder:GetConsumablePropertyForKey(key, type, "iconTexture")
+end
+
+function ManaMinder:GetConsumablePropertyForKey(key, type, property)
   if type == "SPELL" and ManaMinder.spells[key] then
-    return ManaMinder.spells[key].name
+    return ManaMinder.spells[key][property]
   end
 
   if type == "ITEM" and ManaMinder.consumables[key] then
-    return ManaMinder.consumables[key].name
+    return ManaMinder.consumables[key][property]
   end
 
   if type == "EQUIPPED" and ManaMinder.items[key] then
-    return ManaMinder.items[key].name
+    return ManaMinder.items[key][property]
   end
 
   return nil

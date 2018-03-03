@@ -88,7 +88,7 @@ function ConsumablesOptions.prototype:AddAvailableFrame(index, consumable)
   frame.consumable = consumable
   frame.onClick = function() self:TrackConsumable(consumable) end
   frame:SetPosition(index)
-  frame:UpdateText()
+  frame:Update()
   frame.frame:Show()
 end
 
@@ -179,7 +179,7 @@ function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
   frame.onUpClick = function() self:IncreasePriority(index) end
   frame.onDownClick = function() self:DecreasePriority(index) end
   frame:SetPosition(index)
-  frame:UpdateText()
+  frame:Update()
   frame.frame:Show()
 end
 

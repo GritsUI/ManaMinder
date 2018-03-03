@@ -11,7 +11,11 @@
       <Layer level="OVERLAY">
         <FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Major Mana Potion" justifyH="LEFT" justifyV="CENTER">
           <Anchors>
-            <Anchor point="TOPLEFT" />
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="0" />
+              </Offset>
+            </Anchor>
             <Anchor point="BOTTOMRIGHT">
               <Offset>
                 <AbsDimension x="-65" y="0" />
@@ -22,6 +26,12 @@
       </Layer>
     </Layers>
     <Frames>
+
+      <Button name="$parent_Icon" inherits="ActionButtonTemplate">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT" />
+        </Anchors>
+      </Button>
 
       <Button name="$parent_Remove">
         <Size>

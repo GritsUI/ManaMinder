@@ -1,17 +1,14 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local BarFrame = AceOO.Class()
-AceOO.Class:init(BarFrame, ManaMinder.Frame)
 
 local db = ManaMinder.db
 local frameCount = 1
 local NORMALTEX_RATIO = 1.7
 
 function BarFrame.prototype:init(parentFrame, data)
-  BarFrame.super.prototype.init(self, {
-    frameType = "Frame",
-    frameName = "ManaMinder_Bar_" .. frameCount,
-    parentFrame = parentFrame
-  })
+  BarFrame.super.prototype.init(self)
+  self.frame = CreateFrame("Frame", "ManaMinder_Bar_" .. frameCount, parentFrame)
+  self.parentFrame = parentFrame
 
   frameCount = frameCount + 1
 
@@ -271,37 +268,13 @@ function BarFrame.prototype:Consume(force)
 
   if force or (not self.onCooldown and self:GetDeficitRemaining() == 0) then
     if self.data.type == "ITEM" then
-      self:ConsumeItem()
+      ManaMinder:UseContainerItem(self.data.bag, self.data.slot)
     elseif self.data.type == "SPELL" then
-      self:ConsumeSpell()
+      ManaMinder:CastSpell(self.data.spellId, self.data.targeted)
     elseif self.data.type == "EQUIPPED" then
-      self:ConsumeEquipped()
+      ManaMinder:UseInventoryItem(self.data.slot)
     end
   end
-end
-
-function BarFrame.prototype:ConsumeItem()
-  UseContainerItem(self.data.bag, self.data.slot)
-end
-
-function BarFrame.prototype:ConsumeSpell()
-  if self.data.targeted then
-    local hasTarget = UnitName("target")
-    TargetUnit("player");
-    CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
-
-    if hasTarget then
-      TargetUnit("playertarget");
-    else
-      ClearTarget()
-    end
-  else
-    CastSpell(self.data.spellId, "BOOKTYPE_SPELL")
-  end
-end
-
-function BarFrame.prototype:ConsumeEquipped()
-  UseInventoryItem(self.data.slot)
 end
 
 function BarFrame.prototype:ShowTooltip()

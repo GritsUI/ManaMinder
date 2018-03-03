@@ -57,7 +57,7 @@ end
 function BarManager.prototype:RemoveStaleBars(newData)
   for i = table.getn(self.barFrames), 1, -1 do
     if not self:IsBarInArray(newData, self.barFrames[i].data.key) then
-      self.barFrames[i]:Hide()
+      self.barFrames[i].frame:Hide()
       table.remove(self.barFrames, i)
     end
   end
@@ -127,7 +127,7 @@ function BarManager.prototype:ForEachBar(func)
 end
 
 function BarManager.prototype:ClearBars()
-  self:ForEachBar(function(bar) bar:Hide() end)
+  self:ForEachBar(function(bar) bar.frame:Hide() end)
   self.barFrames = {}
 end
 

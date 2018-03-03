@@ -1,6 +1,5 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local TrackedConsumableFrame = AceOO.Class()
-AceOO.Class:init(TrackedConsumableFrame, ManaMinder.Frame)
 
 local L = ManaMinder.L
 local frameCount = 1
@@ -12,12 +11,11 @@ local SECTION_TOP_MARGIN = -6
 local ITEM_HEIGHT = 20
 
 function TrackedConsumableFrame.prototype:init(parentFrame, consumable)
-  TrackedConsumableFrame.super.prototype.init(self, {
-    frameType = "Frame",
-    frameName = "ManaMinder_Tracked_Consumable_" .. frameCount,
-    parentFrame = parentFrame,
-    inheritsFrame = "ManaMinder_Tracked_Consumable"
-  })
+  TrackedConsumableFrame.super.prototype.init(self)
+
+  self.parentFrame = parentFrame
+  self.frameName = "ManaMinder_Tracked_Consumable_" .. frameCount
+  self.frame = CreateFrame("Frame", self.frameName, parentFrame, "ManaMinder_Tracked_Consumable")
 
   frameCount = frameCount + 1
 

@@ -59,7 +59,7 @@ end
 
 function ConsumablesOptions.prototype:RemoveCurrentAvailableFrames()
   for i = 1, table.getn(self.availableFrames), 1 do
-    self.availableFrames[i]:Hide()
+    self.availableFrames[i].frame:Hide()
   end
 end
 
@@ -89,7 +89,7 @@ function ConsumablesOptions.prototype:AddAvailableFrame(index, consumable)
   frame.onClick = function() self:TrackConsumable(consumable) end
   frame:SetPosition(index)
   frame:UpdateText()
-  frame:Show()
+  frame.frame:Show()
 end
 
 function ConsumablesOptions.prototype:GetAvailableConsumables()
@@ -150,7 +150,7 @@ end
 
 function ConsumablesOptions.prototype:RemoveCurrentTrackedFrames()
   for i = 1, table.getn(self.trackedFrames), 1 do
-    self.trackedFrames[i]:Hide()
+    self.trackedFrames[i].frame:Hide()
   end
 end
 
@@ -180,7 +180,7 @@ function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
   frame.onDownClick = function() self:DecreasePriority(index) end
   frame:SetPosition(index)
   frame:UpdateText()
-  frame:Show()
+  frame.frame:Show()
 end
 
 function ConsumablesOptions.prototype:OnTrackedScroll()

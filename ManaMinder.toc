@@ -31,8 +31,10 @@ src\data\Textures.lua
 src\data\Test.lua
 src\options\Defaults.lua
 
-src\util\Frame.lua
-src\util\Util.lua
+src\util\Chat.lua
+src\util\Func.lua
+src\util\Game.lua
+src\util\Options.lua
 src\alerts\AlertFrame.lua
 src\alerts\AlertFrame.xml
 src\bars\BarFrame.lua

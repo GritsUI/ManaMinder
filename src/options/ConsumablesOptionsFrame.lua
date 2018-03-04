@@ -5,12 +5,14 @@ local L = ManaMinder.L
 
 local AVAILABLE_SECTION_NAME = "ManaMinder_Options_Consumables_Available_Section"
 local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
-local COOLDOWN_SECTION_NAME = "ManaMinder_Options_Consumables_Options_Section"
+local SHARED_SECTION_NAME = "ManaMinder_Options_Consumables_Shared_Section"
+local USAGE_SECTION_NAME = "ManaMinder_Options_Consumables_Usage_Section"
 local POTIONS_CHECK_NAME = "ManaMinder_Options_Consumables_Potions_Check"
 local RUNES_CHECK_NAME = "ManaMinder_Options_Consumables_Runes_Check"
 local GEMS_CHECK_NAME = "ManaMinder_Options_Consumables_Gems_Check"
 local AVAILABLE_SCROLL_FRAME = "ManaMinder_Options_Consumables_Available_Section_Scroll"
 local TRACKED_SCROLL_FRAME = "ManaMinder_Options_Consumables_Tracked_Section_Scroll"
+local OOC_CHECK_NAME = "ManaMinder_Options_Consumables_OOC_Check"
 
 local MAX_SCROLL_ITEMS = 12
 local SCROLL_ITEM_HEIGHT = 20
@@ -33,13 +35,15 @@ end
 function ConsumablesOptions.prototype:ApplyTranslations()
   getglobal(AVAILABLE_SECTION_NAME .. "Text"):SetText(L["Available"])
   getglobal(TRACKED_SECTION_NAME .. "Text"):SetText(L["Tracked"])
-  getglobal(COOLDOWN_SECTION_NAME .. "Text"):SetText(L["Shared Cooldowns"])
+  getglobal(SHARED_SECTION_NAME .. "Text"):SetText(L["Shared Cooldowns"])
+  getglobal(USAGE_SECTION_NAME .. "Text"):SetText(L["Usage"])
 end
 
 function ConsumablesOptions.prototype:SetInitialValues()
   getglobal(POTIONS_CHECK_NAME):SetChecked(not db.char.showAllPotions)
   getglobal(RUNES_CHECK_NAME):SetChecked(not db.char.showAllRunes)
   getglobal(GEMS_CHECK_NAME):SetChecked(not db.char.showAllGems)
+  getglobal(OOC_CHECK_NAME):SetChecked(db.char.onlyUseInCombat)
 end
 
 function ConsumablesOptions.prototype:RefreshAllFrames()
@@ -262,7 +266,7 @@ function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
 end
 
 function ConsumablesOptions.prototype:OnRunesCheckLoad()
-  getglobal(RUNES_CHECK_NAME .. "Text"):SetText(L["Only Show One of Demonic Rune/Dark Rune/Lily Root"])
+  getglobal(RUNES_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Rune"])
   getglobal(RUNES_CHECK_NAME).tooltipText = L["When multiple runes are tracked, only show a bar for that with the highest priority."]
 end
 
@@ -279,6 +283,15 @@ end
 function ConsumablesOptions.prototype:OnGemsCheckChange(value)
   db.char.showAllGems = not value
   ManaMinder.mainFrame:UpdateAll()
+end
+
+function ConsumablesOptions.prototype:OnOOCCheckLoad()
+  getglobal(OOC_CHECK_NAME .. "Text"):SetText(L["Only use consumables in combat"])
+  getglobal(OOC_CHECK_NAME).tooltipText = L["When checked, macro will not use the next available consumable when out of combat."]
+end
+
+function ConsumablesOptions.prototype:OnOOCCheckChange(value)
+  db.char.onlyUseInCombat = value
 end
 
 ManaMinder.optionsFrame.consumablesFrame = ConsumablesOptions:new()

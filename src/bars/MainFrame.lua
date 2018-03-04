@@ -80,12 +80,20 @@ end
 
 function MainFrame.prototype:OnEnterCombat()
   self.inCombat = true
+  self.combatEnterTime = GetTime()
   self:UpdateVisibility()
 end
 
 function MainFrame.prototype:OnLeaveCombat()
   self.inCombat = false
   self:UpdateVisibility()
+end
+
+function MainFrame.prototype:GetTimeInCombat()
+  if self.combatEnterTime == nil then
+    return 0
+  end
+  return GetTime() - self.combatEnterTime
 end
 
 function MainFrame.prototype:UpdateVisibility()

@@ -132,19 +132,14 @@
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Options_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Shared_Section" inherits="OptionFrameBoxTemplate">
         <Size>
-          <AbsDimension x="10" y="98"/>
+          <AbsDimension x="281" y="98"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Available_Section" relativePoint="BOTTOMLEFT">
             <Offset>
               <AbsDimension x="0" y="-20"/>
-            </Offset>
-          </Anchor>
-          <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
-            <Offset>
-              <AbsDimension x="0" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -216,6 +211,59 @@
               <OnClick>
                   ManaMinder:OnCheckBoxClick()
                   ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Usage_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="281" y="98"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Shared_Section" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="4" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Usage">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <CheckButton name="ManaMinder_Options_Consumables_OOC_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="-6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.consumablesFrame:OnOOCCheckLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.consumablesFrame:OnOOCCheckChange(this:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>

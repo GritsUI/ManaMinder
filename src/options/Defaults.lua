@@ -78,6 +78,7 @@ ManaMinder.defaults = {
     },
     showAllPotions = false,
     showAllRunes = false,
-    showAllGems = false
+    showAllGems = false,
+    onlyUseInCombat = false
   }
 }

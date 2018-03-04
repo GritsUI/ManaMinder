@@ -65,7 +65,10 @@ function ManaMinder:Unlock()
 end
 
 function ManaMinder:Consume()
-  if ManaMinder.barManager.barFrames[1] then
+  local combatCheck = not ManaMinder.db.char.onlyUseInCombat
+    or (ManaMinder.mainFrame.inCombat and ManaMinder.mainFrame:GetTimeInCombat() >= 3)
+
+  if combatCheck and ManaMinder.barManager.barFrames[1] then
     ManaMinder.barManager.barFrames[1]:Consume()
   end
 end

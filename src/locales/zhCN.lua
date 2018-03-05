@@ -63,7 +63,7 @@ local function zhCN()
     ["ManaMinder Options"] = "ManaMinder 设置",
     ["Margin: "] = "盈余: ",
     ["Okay"] = "确定",
-    ["Only use consumables in combat"] = "Only use consumables in combat",
+    ["Only Use Consumables in Combat"] = "Only Use Consumables in Combat",
     ["Only Show Highest Priority Mana Gem"] = "只显示最高优先级的法力宝石",
     ["Only Show Highest Priority Potion"] = "只显示最高优先级的法力药水",
     ["Only Show Highest Priority Rune"] = "恶魔符文/黑暗符文/百合根里只显示一个",

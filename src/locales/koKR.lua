@@ -63,7 +63,7 @@ local function koKR()
     ["ManaMinder Options"] = "ManaMinder Options",
     ["Margin: "] = "Margin: ",
     ["Okay"] = "Okay",
-    ["Only use consumables in combat"] = "Only use consumables in combat",
+    ["Only Use Consumables in Combat"] = "Only Use Consumables in Combat",
     ["Only Show Highest Priority Mana Gem"] = "Only Show Highest Priority Mana Gem",
     ["Only Show Highest Priority Potion"] = "Only Show Highest Priority Potion",
     ["Only Show Highest Priority Rune"] = "Only Show Highest Priority Rune",

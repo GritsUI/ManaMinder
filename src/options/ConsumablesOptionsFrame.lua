@@ -286,7 +286,7 @@ function ConsumablesOptions.prototype:OnGemsCheckChange(value)
 end
 
 function ConsumablesOptions.prototype:OnOOCCheckLoad()
-  getglobal(OOC_CHECK_NAME .. "Text"):SetText(L["Only use consumables in combat"])
+  getglobal(OOC_CHECK_NAME .. "Text"):SetText(L["Only Use Consumables in Combat"])
   getglobal(OOC_CHECK_NAME).tooltipText = L["When checked, macro will not use the next available consumable when out of combat."]
 end
 

@@ -63,7 +63,7 @@ local function enUS()
     ["ManaMinder Options"] = true,
     ["Margin: "] = true,
     ["Okay"] = true,
-    ["Only use consumables in combat"] = true,
+    ["Only Use Consumables in Combat"] = true,
     ["Only Show Highest Priority Mana Gem"] = true,
     ["Only Show Highest Priority Potion"] = true,
     ["Only Show Highest Priority Rune"] = true,

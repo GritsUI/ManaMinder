@@ -3,7 +3,12 @@ ManaMinder:RegisterDB("ManaMinderDB", "ManaMinderCharDB")
 ManaMinder.L = AceLibrary("AceLocale-2.2"):new("ManaMinder")
 local L = ManaMinder.L
 
+BINDING_HEADER_MANAMINDER = "ManaMinder";
+BINDING_NAME_MANAMINDER_CONSUME = "Use next consumable";
+
 function ManaMinder:OnInitialize()
+  self:LocalizeKeyBindings()
+
   ManaMinder.controller = self
   ManaMinder:RegisterDefaults('profile', ManaMinder.defaults.profile)
   ManaMinder:RegisterDefaults('char', ManaMinder.defaults.char)
@@ -14,6 +19,11 @@ function ManaMinder:OnInitialize()
 
   ManaMinder:RegisterChatCommand({'/mana'}, ManaMinder:GetChatCommandOptions())
   ManaMinder:SystemMessage(L["Addon Loaded. Type /mana for slash commands"])
+end
+
+function ManaMinder:LocalizeKeyBindings()
+  BINDING_HEADER_MANAMINDER = L["ManaMinder"];
+  BINDING_NAME_MANAMINDER_CONSUME = L["Use next consumable"];
 end
 
 function ManaMinder:GetChatCommandOptions()

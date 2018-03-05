@@ -1,0 +1,5 @@
+<Bindings>
+  <Binding name="MANAMINDER_CONSUME" header="MANAMINDER">
+    ManaMinder.controller:Consume()
+  </Binding>
+</Bindings>

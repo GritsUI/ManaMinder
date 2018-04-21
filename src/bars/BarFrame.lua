@@ -65,8 +65,8 @@ function BarFrame.prototype:SetupIcon()
   self.button:EnableMouse(true)
   self.button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
   self.button:SetScript("OnClick", function() self:Consume(true) end)
-  self.button:SetScript("OnEnter", function() self:ShowTooltip() end)
-  self.button:SetScript("OnLeave", function() self:HideTooltip() end)
+  self.button:SetScript("OnEnter", function() self:OnButtonEnter() end)
+  self.button:SetScript("OnLeave", function() self:OnButtonLeave() end)
 
   local buttonIcon = getglobal(buttonName .. "Icon")
   local normalTexture = getglobal(buttonName .. "NormalTexture")
@@ -278,6 +278,11 @@ function BarFrame.prototype:Consume(force)
   end
 end
 
+function BarFrame.prototype:OnButtonEnter()
+  ManaMinder.mainFrame:OnEnter()
+  self:ShowTooltip()
+end
+
 function BarFrame.prototype:ShowTooltip()
   if db.char.bars.testMode or db.char.bars.tooltipsDisabled then
     return
@@ -294,6 +299,11 @@ function BarFrame.prototype:ShowTooltip()
   end
 
   GameTooltip:Show()
+end
+
+function BarFrame.prototype:OnButtonLeave()
+  ManaMinder.mainFrame:OnLeave()
+  self:HideTooltip()
 end
 
 function BarFrame.prototype:HideTooltip()

@@ -26,7 +26,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Frame name="$parent_Header">
+      <Frame name="$parent_Header" hidden="true">
         <Size>
           <AbsDimension x="100" y="20"/>
         </Size>
@@ -54,9 +54,11 @@
                   ManaMinder.mainFrame:OnCloseClick()
               </OnClick>
               <OnEnter>
+                  ManaMinder.mainFrame:OnEnter()
                   ManaMinder.mainFrame:OnCloseEnter()
               </OnEnter>
               <OnLeave>
+                  ManaMinder.mainFrame:OnLeave()
                   GameTooltip:Hide()
               </OnLeave>
             </Scripts>
@@ -80,9 +82,11 @@
                   ManaMinder.mainFrame:OnLockClick()
               </OnClick>
               <OnEnter>
+                  ManaMinder.mainFrame:OnEnter()
                   ManaMinder.mainFrame:OnLockEnter()
               </OnEnter>
               <OnLeave>
+                  ManaMinder.mainFrame:OnLeave()
                   GameTooltip:Hide()
               </OnLeave>
             </Scripts>
@@ -106,9 +110,11 @@
                   ManaMinder.mainFrame:OnUnlockClick()
               </OnClick>
               <OnEnter>
+                  ManaMinder.mainFrame:OnEnter()
                   ManaMinder.mainFrame:OnUnlockEnter()
               </OnEnter>
               <OnLeave>
+                  ManaMinder.mainFrame:OnLeave()
                   GameTooltip:Hide()
               </OnLeave>
             </Scripts>
@@ -132,9 +138,11 @@
                   ManaMinder.mainFrame:OnConfigClick()
               </OnClick>
               <OnEnter>
+                  ManaMinder.mainFrame:OnEnter()
                   ManaMinder.mainFrame:OnConfigEnter()
               </OnEnter>
               <OnLeave>
+                  ManaMinder.mainFrame:OnLeave()
                   GameTooltip:Hide()
               </OnLeave>
             </Scripts>
@@ -146,6 +154,12 @@
       <OnLoad>
           ManaMinder.mainFrame:OnLoad(this)
       </OnLoad>
+      <OnEnter>
+          ManaMinder.mainFrame:OnEnter()
+      </OnEnter>
+      <OnLeave>
+          ManaMinder.mainFrame:OnLeave()
+      </OnLeave>
     </Scripts>
   </Frame>
 

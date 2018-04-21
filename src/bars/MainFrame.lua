@@ -5,6 +5,7 @@ local L = ManaMinder.L
 
 local CLOSE_BUTTON_NAME = "ManaMinder_Main_Header_Close"
 local CONFIG_BUTTON_NAME = "ManaMinder_Main_Header_Config"
+local HEADER_NAME = "ManaMinder_Main_Header"
 local LOCK_BUTTON_NAME = "ManaMinder_Main_Header_Lock"
 local UNLOCK_BUTTON_NAME = "ManaMinder_Main_Header_Unlock"
 
@@ -75,6 +76,14 @@ function MainFrame.prototype:OnDragStop()
   db.char.mainFrame.position.relativePoint = relativePoint
   db.char.mainFrame.position.x = x
   db.char.mainFrame.position.y = y
+end
+
+function MainFrame.prototype:OnEnter()
+  getglobal(HEADER_NAME):Show()
+end
+
+function MainFrame.prototype:OnLeave()
+  getglobal(HEADER_NAME):Hide()
 end
 
 function MainFrame.prototype:OnEvent(event)

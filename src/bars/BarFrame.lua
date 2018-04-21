@@ -4,6 +4,7 @@ local BarFrame = AceOO.Class()
 local db = ManaMinder.db
 local frameCount = 1
 local NORMALTEX_RATIO = 1.7
+local HEADER_HEIGHT = 20
 
 function BarFrame.prototype:init(parentFrame, data)
   BarFrame.super.prototype.init(self)
@@ -104,7 +105,7 @@ end
 function BarFrame.prototype:GetPositionForIndex(index)
   local margin = db.char.bars.margin
   local height = db.char.bars.height
-  return (index - 1) * (height + margin) * -1
+  return (HEADER_HEIGHT + (index - 1) * (height + margin)) * -1
 end
 
 function BarFrame.prototype:SetPosition(y)

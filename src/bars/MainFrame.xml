@@ -25,6 +25,123 @@
         </Texture>
       </Layer>
     </Layers>
+    <Frames>
+      <Frame name="$parent_Header">
+        <Size>
+          <AbsDimension x="100" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="RIGHT" />
+        </Anchors>
+        <Frames>
+          <Button name="$parent_Close">
+            <Size>
+              <AbsDimension x="12" y="12"/>
+            </Size>
+            <Anchors>
+              <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <NormalTexture file="Interface\Addons\ManaMinder\assets\icons\Close" />
+            <PushedTexture file="Interface\Addons\ManaMinder\assets\icons\Close" />
+            <HighlightTexture file="Interface\Addons\ManaMinder\assets\icons\Close" alphaMode="ADD" />
+            <Scripts>
+              <OnClick>
+                  ManaMinder.mainFrame:OnCloseClick()
+              </OnClick>
+              <OnEnter>
+                  ManaMinder.mainFrame:OnCloseEnter()
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Lock">
+            <Size>
+              <AbsDimension x="12" y="12"/>
+            </Size>
+            <Anchors>
+              <Anchor point="RIGHT" relativeTo="$parent_Close" relativePoint="LEFT">
+                <Offset>
+                  <AbsDimension x="-3" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <NormalTexture file="Interface\Addons\ManaMinder\assets\icons\Unlocked" />
+            <PushedTexture file="Interface\Addons\ManaMinder\assets\icons\Unlocked" />
+            <HighlightTexture file="Interface\Addons\ManaMinder\assets\icons\Unlocked" alphaMode="ADD" />
+            <Scripts>
+              <OnClick>
+                  ManaMinder.mainFrame:OnLockClick()
+              </OnClick>
+              <OnEnter>
+                  ManaMinder.mainFrame:OnLockEnter()
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Unlock">
+            <Size>
+              <AbsDimension x="12" y="12"/>
+            </Size>
+            <Anchors>
+              <Anchor point="RIGHT" relativeTo="$parent_Close" relativePoint="LEFT">
+                <Offset>
+                  <AbsDimension x="-3" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <NormalTexture file="Interface\Addons\ManaMinder\assets\icons\Locked" />
+            <PushedTexture file="Interface\Addons\ManaMinder\assets\icons\Locked" />
+            <HighlightTexture file="Interface\Addons\ManaMinder\assets\icons\Unlocked" alphaMode="ADD" />
+            <Scripts>
+              <OnClick>
+                  ManaMinder.mainFrame:OnUnlockClick()
+              </OnClick>
+              <OnEnter>
+                  ManaMinder.mainFrame:OnUnlockEnter()
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Config">
+            <Size>
+              <AbsDimension x="13" y="13"/>
+            </Size>
+            <Anchors>
+              <Anchor point="RIGHT" relativeTo="$parent_Lock" relativePoint="LEFT">
+                <Offset>
+                  <AbsDimension x="-3" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <NormalTexture file="Interface\Addons\ManaMinder\assets\icons\Cog" />
+            <PushedTexture file="Interface\Addons\ManaMinder\assets\icons\Cog" />
+            <HighlightTexture file="Interface\Addons\ManaMinder\assets\icons\Cog" alphaMode="ADD" />
+            <Scripts>
+              <OnClick>
+                  ManaMinder.mainFrame:OnConfigClick()
+              </OnClick>
+              <OnEnter>
+                  ManaMinder.mainFrame:OnConfigEnter()
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </Button>
+        </Frames>
+      </Frame>
+    </Frames>
     <Scripts>
       <OnLoad>
           ManaMinder.mainFrame:OnLoad(this)

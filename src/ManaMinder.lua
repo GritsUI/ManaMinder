@@ -44,34 +44,46 @@ function ManaMinder:Config()
   ManaMinder.optionsFrame:Toggle()
 end
 
-function ManaMinder:Hide()
+function ManaMinder:Hide(noMessage)
   ManaMinder.mainFrame.frame:Hide()
   ManaMinder.db.char.mainFrame.hidden = true
   ManaMinder_Options_Bars_Show_Check:SetChecked(false)
   ManaMinder.optionsFrame.barsFrame:UpdateShowChecksState()
-  ManaMinder:SystemMessage(L["Frames hidden"])
+
+  if not noMessage then
+    ManaMinder:SystemMessage(L["Frames hidden"])
+  end
 end
 
-function ManaMinder:Show()
+function ManaMinder:Show(noMessage)
   ManaMinder.mainFrame.frame:Show()
   ManaMinder.db.char.mainFrame.hidden = false
   ManaMinder_Options_Bars_Show_Check:SetChecked(true)
   ManaMinder.optionsFrame.barsFrame:UpdateShowChecksState()
-  ManaMinder:SystemMessage(L["Frames shown"])
+
+  if not noMessage then
+    ManaMinder:SystemMessage(L["Frames shown"])
+  end
 end
 
-function ManaMinder:Lock()
+function ManaMinder:Lock(noMessage)
   ManaMinder.mainFrame.frame:SetMovable(false)
   ManaMinder.db.char.mainFrame.locked = true
   ManaMinder_Options_Bars_Lock_Check:SetChecked(true)
-  ManaMinder:SystemMessage(L["Frames locked"])
+
+  if not noMessage then
+    ManaMinder:SystemMessage(L["Frames locked"])
+  end
 end
 
-function ManaMinder:Unlock()
+function ManaMinder:Unlock(noMessage)
   ManaMinder.mainFrame.frame:SetMovable(true)
   ManaMinder.db.char.mainFrame.locked = false
   ManaMinder_Options_Bars_Lock_Check:SetChecked(false)
-  ManaMinder:SystemMessage(L["Frames unlocked"])
+
+  if not noMessage then
+    ManaMinder:SystemMessage(L["Frames unlocked"])
+  end
 end
 
 function ManaMinder:Consume()

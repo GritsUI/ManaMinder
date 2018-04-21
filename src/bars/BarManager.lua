@@ -2,6 +2,8 @@ local AceOO = AceLibrary("AceOO-2.0")
 local BarManager = AceOO.Class()
 local db = ManaMinder.db
 
+local HEADER_HEIGHT = 20
+
 function BarManager.prototype:init()
   BarManager.super.prototype.init(self)
   self.barFrames = {}
@@ -117,7 +119,7 @@ function BarManager.prototype:GetTotalHeight()
   local barMargin = db.char.bars.margin
   local barHeight = db.char.bars.height
   local count =  table.getn(self.barFrames)
-  return count * barHeight + (count - 1) * barMargin
+  return HEADER_HEIGHT + count * barHeight + (count - 1) * barMargin
 end
 
 function BarManager.prototype:ForEachBar(func)

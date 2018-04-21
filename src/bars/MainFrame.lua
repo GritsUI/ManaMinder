@@ -1,7 +1,12 @@
 local AceOO = AceLibrary("AceOO-2.0")
 local MainFrame = AceOO.Class()
-
 local db = ManaMinder.db
+local L = ManaMinder.L
+
+local CLOSE_BUTTON_NAME = "ManaMinder_Main_Header_Close"
+local CONFIG_BUTTON_NAME = "ManaMinder_Main_Header_Config"
+local LOCK_BUTTON_NAME = "ManaMinder_Main_Header_Lock"
+local UNLOCK_BUTTON_NAME = "ManaMinder_Main_Header_Unlock"
 
 function MainFrame.prototype:init()
   MainFrame.super.prototype.init(self)
@@ -20,6 +25,12 @@ end
 
 function MainFrame.prototype:InitializeState()
   local selfDB = db.char.mainFrame
+
+  if selfDB.locked then
+    getglobal(LOCK_BUTTON_NAME):Hide()
+  else
+    getglobal(UNLOCK_BUTTON_NAME):Hide()
+  end
 
   self.frame:SetPoint(selfDB.position.point, "UIParent", selfDB.position.relativePoint, selfDB.position.x, selfDB.position.y)
   self.frame:SetWidth(selfDB.width)
@@ -126,6 +137,53 @@ end
 
 function MainFrame.prototype:UpdateWidth()
   self.frame:SetWidth(db.char.mainFrame.width)
+end
+
+function MainFrame.prototype:OnCloseClick()
+  PlaySound("gsTitleOptionOK");
+  ManaMinder:Hide(true)
+end
+
+function MainFrame.prototype:OnCloseEnter()
+  GameTooltip:SetOwner(getglobal(CLOSE_BUTTON_NAME), "ANCHOR_LEFT")
+  GameTooltip:AddLine(L["Hide bar frames"], 1, 1, 1)
+  GameTooltip:Show()
+end
+
+function MainFrame.prototype:OnConfigClick()
+  ManaMinder:Config()
+end
+
+function MainFrame.prototype:OnConfigEnter()
+  GameTooltip:SetOwner(getglobal(CONFIG_BUTTON_NAME), "ANCHOR_LEFT")
+  GameTooltip:AddLine(L["Show options"], 1, 1, 1)
+  GameTooltip:Show()
+end
+
+function MainFrame.prototype:OnLockClick()
+  PlaySound("gsTitleOptionOK");
+  ManaMinder:Lock(true)
+  getglobal(LOCK_BUTTON_NAME):Hide()
+  getglobal(UNLOCK_BUTTON_NAME):Show()
+end
+
+function MainFrame.prototype:OnLockEnter()
+  GameTooltip:SetOwner(getglobal(LOCK_BUTTON_NAME), "ANCHOR_LEFT")
+  GameTooltip:AddLine(L["Lock bar frames"], 1, 1, 1)
+  GameTooltip:Show()
+end
+
+function MainFrame.prototype:OnUnlockClick()
+  PlaySound("gsTitleOptionOK");
+  ManaMinder:Unlock(true)
+  getglobal(LOCK_BUTTON_NAME):Show()
+  getglobal(UNLOCK_BUTTON_NAME):Hide()
+end
+
+function MainFrame.prototype:OnUnlockEnter()
+  GameTooltip:SetOwner(getglobal(UNLOCK_BUTTON_NAME), "ANCHOR_LEFT")
+  GameTooltip:AddLine(L["Unlock bar frames"], 1, 1, 1)
+  GameTooltip:Show()
 end
 
 ManaMinder.mainFrame = MainFrame:new()

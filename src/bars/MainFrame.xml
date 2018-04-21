@@ -104,7 +104,7 @@
             </Anchors>
             <NormalTexture file="Interface\Addons\ManaMinder\assets\icons\Locked" />
             <PushedTexture file="Interface\Addons\ManaMinder\assets\icons\Locked" />
-            <HighlightTexture file="Interface\Addons\ManaMinder\assets\icons\Unlocked" alphaMode="ADD" />
+            <HighlightTexture file="Interface\Addons\ManaMinder\assets\icons\Locked" alphaMode="ADD" />
             <Scripts>
               <OnClick>
                   ManaMinder.mainFrame:OnUnlockClick()

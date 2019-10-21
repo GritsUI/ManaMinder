@@ -1,7 +1,5 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local ConsumablesOptions = AceOO.Class()
-local db = ManaMinder.db
 local L = ManaMinder.L
+local db = nil
 
 local AVAILABLE_SECTION_NAME = "ManaMinder_Options_Consumables_Available_Section"
 local TRACKED_SECTION_NAME = "ManaMinder_Options_Consumables_Tracked_Section"
@@ -17,14 +15,22 @@ local OOC_CHECK_NAME = "ManaMinder_Options_Consumables_OOC_Check"
 local MAX_SCROLL_ITEMS = 12
 local SCROLL_ITEM_HEIGHT = 20
 
-function ConsumablesOptions.prototype:init()
-  ConsumablesOptions.super.prototype.init(self)
+ConsumablesOptions = {}
+ConsumablesOptions.__index = ConsumablesOptions;
+
+function ConsumablesOptions:new()
+  local self = {}
+  setmetatable(self, ConsumablesOptions)
+
   self.availableConsumables = {}
   self.availableFrames = {}
   self.trackedFrames = {}
+
+  return self
 end
 
-function ConsumablesOptions.prototype:OnInitialize()
+function ConsumablesOptions:OnInitialize()
+  db = ManaMinder.db
   self.availableSectionFrame = getglobal(AVAILABLE_SECTION_NAME)
   self.trackedSectionFrame = getglobal(TRACKED_SECTION_NAME)
   self:RefreshAllFrames()
@@ -32,42 +38,42 @@ function ConsumablesOptions.prototype:OnInitialize()
   self:SetInitialValues()
 end
 
-function ConsumablesOptions.prototype:ApplyTranslations()
+function ConsumablesOptions:ApplyTranslations()
   getglobal(AVAILABLE_SECTION_NAME .. "Text"):SetText(L["Available"])
   getglobal(TRACKED_SECTION_NAME .. "Text"):SetText(L["Tracked"])
   getglobal(SHARED_SECTION_NAME .. "Text"):SetText(L["Shared Cooldowns"])
   getglobal(USAGE_SECTION_NAME .. "Text"):SetText(L["Usage"])
 end
 
-function ConsumablesOptions.prototype:SetInitialValues()
+function ConsumablesOptions:SetInitialValues()
   getglobal(POTIONS_CHECK_NAME):SetChecked(not db.char.showAllPotions)
   getglobal(RUNES_CHECK_NAME):SetChecked(not db.char.showAllRunes)
   getglobal(GEMS_CHECK_NAME):SetChecked(not db.char.showAllGems)
   getglobal(OOC_CHECK_NAME):SetChecked(db.char.onlyUseInCombat)
 end
 
-function ConsumablesOptions.prototype:RefreshAllFrames()
+function ConsumablesOptions:RefreshAllFrames()
   self:RefreshAvailableFrames()
   self:RefreshTrackedFrames()
 end
 
-function ConsumablesOptions.prototype:RefreshAvailableFrames()
+function ConsumablesOptions:RefreshAvailableFrames()
   self:RemoveCurrentAvailableFrames()
   self:AddAvailableFrames()
 end
 
-function ConsumablesOptions.prototype:RefreshTrackedFrames()
+function ConsumablesOptions:RefreshTrackedFrames()
   self:RemoveCurrentTrackedFrames()
   self:AddTrackedFrames()
 end
 
-function ConsumablesOptions.prototype:RemoveCurrentAvailableFrames()
+function ConsumablesOptions:RemoveCurrentAvailableFrames()
   for i = 1, table.getn(self.availableFrames), 1 do
     self.availableFrames[i].frame:Hide()
   end
 end
 
-function ConsumablesOptions.prototype:AddAvailableFrames()
+function ConsumablesOptions:AddAvailableFrames()
   self.availableConsumables = self:GetAvailableConsumables()
 
   local consumableCount = table.getn(self.availableConsumables)
@@ -83,7 +89,7 @@ function ConsumablesOptions.prototype:AddAvailableFrames()
   end
 end
 
-function ConsumablesOptions.prototype:AddAvailableFrame(index, consumable)
+function ConsumablesOptions:AddAvailableFrame(index, consumable)
   if not self.availableFrames[index] then
     self.availableFrames[index] = ManaMinder.AvailableConsumableFrame:new(self.availableSectionFrame, consumable)
   end
@@ -96,7 +102,7 @@ function ConsumablesOptions.prototype:AddAvailableFrame(index, consumable)
   frame.frame:Show()
 end
 
-function ConsumablesOptions.prototype:GetAvailableConsumables()
+function ConsumablesOptions:GetAvailableConsumables()
   local consumables = {}
 
   for key, data in pairs(ManaMinder.consumables) do
@@ -124,12 +130,12 @@ function ConsumablesOptions.prototype:GetAvailableConsumables()
   return consumables
 end
 
-function ConsumablesOptions.prototype:OnAvailableScroll()
+function ConsumablesOptions:OnAvailableScroll()
   self:UpdateAvailableScroll()
   self:RefreshAvailableFrames()
 end
 
-function ConsumablesOptions.prototype:UpdateAvailableScroll()
+function ConsumablesOptions:UpdateAvailableScroll()
   local consumableCount = table.getn(self.availableConsumables)
   FauxScrollFrame_Update(getglobal(AVAILABLE_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT)
 
@@ -138,41 +144,40 @@ function ConsumablesOptions.prototype:UpdateAvailableScroll()
   end
 end
 
-function ConsumablesOptions.prototype:IsConsumableTracked(consumableKey)
-  for _, consumable in pairs(db.char.consumables) do
-    if consumable.key == consumableKey then
+function ConsumablesOptions:IsConsumableTracked(consumableKey)
+  for index = 1, db.char.consumableCount, 1 do
+    if db.char.consumables[index].key == consumableKey then
       return true
     end
   end
   return false
 end
 
-function ConsumablesOptions.prototype:IsConsumableAvailableForClass(consumable)
+function ConsumablesOptions:IsConsumableAvailableForClass(consumable)
   local _, class = UnitClass("player")
   return not consumable.class or consumable.class == class
 end
 
-function ConsumablesOptions.prototype:RemoveCurrentTrackedFrames()
+function ConsumablesOptions:RemoveCurrentTrackedFrames()
   for i = 1, table.getn(self.trackedFrames), 1 do
     self.trackedFrames[i].frame:Hide()
   end
 end
 
-function ConsumablesOptions.prototype:AddTrackedFrames()
-  local consumableCount = table.getn(db.char.consumables)
+function ConsumablesOptions:AddTrackedFrames()
   local offset = FauxScrollFrame_GetOffset(getglobal(TRACKED_SCROLL_FRAME))
-  if offset > 0 and offset + MAX_SCROLL_ITEMS > consumableCount then
+  if offset > 0 and offset + MAX_SCROLL_ITEMS > db.char.consumableCount then
     offset = offset - 1
     FauxScrollFrame_SetOffset(getglobal(TRACKED_SCROLL_FRAME), offset)
   end
 
-  local itemCount = math.min(MAX_SCROLL_ITEMS, consumableCount)
+  local itemCount = math.min(MAX_SCROLL_ITEMS, db.char.consumableCount)
   for index = 1, itemCount, 1 do
     self:AddTrackedFrame(index, db.char.consumables[index + offset])
   end
 end
 
-function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
+function ConsumablesOptions:AddTrackedFrame(index, consumable)
   if not self.trackedFrames[index] then
     self.trackedFrames[index] = ManaMinder.TrackedConsumableFrame:new(self.trackedSectionFrame, consumable)
   end
@@ -187,13 +192,13 @@ function ConsumablesOptions.prototype:AddTrackedFrame(index, consumable)
   frame.frame:Show()
 end
 
-function ConsumablesOptions.prototype:OnTrackedScroll()
+function ConsumablesOptions:OnTrackedScroll()
   self:UpdateTrackedScroll()
   self:RefreshTrackedFrames()
 end
 
-function ConsumablesOptions.prototype:UpdateTrackedScroll()
-  local consumableCount = table.getn(db.char.consumables)
+function ConsumablesOptions:UpdateTrackedScroll()
+  local consumableCount = db.char.consumableCount
   FauxScrollFrame_Update(getglobal(TRACKED_SCROLL_FRAME), consumableCount, MAX_SCROLL_ITEMS, SCROLL_ITEM_HEIGHT)
 
   for i = 1, table.getn(self.trackedFrames), 1 do
@@ -201,22 +206,25 @@ function ConsumablesOptions.prototype:UpdateTrackedScroll()
   end
 end
 
-function ConsumablesOptions.prototype:TrackConsumable(consumable)
-  table.insert(db.char.consumables, {
+function ConsumablesOptions:TrackConsumable(consumable)
+  db.char.consumableCount = db.char.consumableCount + 1
+  db.char.consumables[db.char.consumableCount] = {
     key = consumable.key,
-    priority = table.getn(db.char.consumables) + 1,
+    priority = db.char.consumableCount,
     type = consumable.type
-  })
+  }
+
   self:RefreshAllFrames()
   self:UpdateAvailableScroll()
   self:UpdateTrackedScroll()
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:UntrackConsumable(consumable)
+function ConsumablesOptions:UntrackConsumable(consumable)
   db.char.consumables = ManaMinder:Splice(db.char.consumables, consumable.priority, 1)
+  db.char.consumableCount = db.char.consumableCount - 1
 
-  for i = 1, table.getn(db.char.consumables), 1 do
+  for i = 1, db.char.consumableCount, 1 do
     db.char.consumables[i].priority = i
   end
   self:RefreshAllFrames()
@@ -225,7 +233,7 @@ function ConsumablesOptions.prototype:UntrackConsumable(consumable)
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:IncreasePriority(index)
+function ConsumablesOptions:IncreasePriority(index)
   if (index == 1) then
     return
   end
@@ -240,8 +248,8 @@ function ConsumablesOptions.prototype:IncreasePriority(index)
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:DecreasePriority(index)
-  if (index == table.getn(db.char.consumables)) then
+function ConsumablesOptions:DecreasePriority(index)
+  if (index == db.char.consumableCount) then
     return
   end
 
@@ -255,42 +263,42 @@ function ConsumablesOptions.prototype:DecreasePriority(index)
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:OnPotionsCheckLoad()
+function ConsumablesOptions:OnPotionsCheckLoad()
   getglobal(POTIONS_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Potion"])
   getglobal(POTIONS_CHECK_NAME).tooltipText = L["When multiple potions are tracked, only show a bar for that with the highest priority."]
 end
 
-function ConsumablesOptions.prototype:OnPotionsCheckChange(value)
+function ConsumablesOptions:OnPotionsCheckChange(value)
   db.char.showAllPotions = not value
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:OnRunesCheckLoad()
+function ConsumablesOptions:OnRunesCheckLoad()
   getglobal(RUNES_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Rune"])
   getglobal(RUNES_CHECK_NAME).tooltipText = L["When multiple runes are tracked, only show a bar for that with the highest priority."]
 end
 
-function ConsumablesOptions.prototype:OnRunesCheckChange(value)
+function ConsumablesOptions:OnRunesCheckChange(value)
   db.char.showAllRunes = not value
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:OnGemsCheckLoad()
+function ConsumablesOptions:OnGemsCheckLoad()
   getglobal(GEMS_CHECK_NAME .. "Text"):SetText(L["Only Show Highest Priority Mana Gem"])
   getglobal(GEMS_CHECK_NAME).tooltipText = L["When multiple mana gems are tracked, only show a bar for that with the highest priority."]
 end
 
-function ConsumablesOptions.prototype:OnGemsCheckChange(value)
+function ConsumablesOptions:OnGemsCheckChange(value)
   db.char.showAllGems = not value
   ManaMinder.mainFrame:UpdateAll()
 end
 
-function ConsumablesOptions.prototype:OnOOCCheckLoad()
+function ConsumablesOptions:OnOOCCheckLoad()
   getglobal(OOC_CHECK_NAME .. "Text"):SetText(L["Only Use Consumables in Combat"])
   getglobal(OOC_CHECK_NAME).tooltipText = L["When checked, macro will not use the next available consumable when out of combat."]
 end
 
-function ConsumablesOptions.prototype:OnOOCCheckChange(value)
+function ConsumablesOptions:OnOOCCheckChange(value)
   db.char.onlyUseInCombat = value
 end
 

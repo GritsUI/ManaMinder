@@ -16,7 +16,7 @@
     </Anchors>
     <Frames>
 
-      <Frame name="$parent_Visibility_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Visibility_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="212"/>
         </Size>
@@ -51,8 +51,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnShowLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnShowChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnShowChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -73,8 +73,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -95,8 +95,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnShowSoloLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnShowSoloChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnShowSoloChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -117,8 +117,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnShowGroupLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnShowGroupChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnShowGroupChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -139,8 +139,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnShowRaidLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnShowRaidChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnShowRaidChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -158,8 +158,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnLockLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnLockChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnLockChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -177,8 +177,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnTooltipsLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnTooltipsChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnTooltipsChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -196,8 +196,8 @@
                   ManaMinder.optionsFrame.barsFrame:OnTestLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.barsFrame:OnTestChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.barsFrame:OnTestChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -205,12 +205,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Display_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="212"/>
         </Size>
@@ -249,7 +249,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.barsFrame:OnWidthChange(this:GetValue())
+                  ManaMinder.optionsFrame.barsFrame:OnWidthChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnWidthLoad()
@@ -270,7 +270,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.barsFrame:OnHeightChange(this:GetValue())
+                  ManaMinder.optionsFrame.barsFrame:OnHeightChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnHeightLoad()
@@ -291,7 +291,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.barsFrame:OnMarginChange(this:GetValue())
+                  ManaMinder.optionsFrame.barsFrame:OnMarginChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnMarginLoad()
@@ -312,7 +312,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.barsFrame:OnFontSizeChange(this:GetValue())
+                  ManaMinder.optionsFrame.barsFrame:OnFontSizeChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnFontSizeLoad()
@@ -328,27 +328,13 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Layers>
-              <Layer level="ARTWORK">
-                <FontString name="$parent_Text" inherits="GameFontNormalSmall" justifyH="LEFT" text="Texture">
-                  <Anchors>
-                    <Anchor point="TOPLEFT">
-                      <Offset x="21" y="9" />
-                    </Anchor>
-                    <Anchor pont="BOTTOMRIGHT">
-                      <Offset x="0" y="0" />
-                    </Anchor>
-                  </Anchors>
-                </FontString>
-              </Layer>
-            </Layers>
             <Scripts>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnTextureDropDownLoad()
               </OnLoad>
               <OnEnter>
-                  GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                  GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                  GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
               </OnEnter>
               <OnLeave>
                   GameTooltip:Hide();
@@ -374,12 +360,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Ready_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Ready_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="186" y="140"/>
         </Size>
@@ -448,7 +434,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.barsFrame:OnReadyAlphaChange(this:GetValue())
+                  ManaMinder.optionsFrame.barsFrame:OnReadyAlphaChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnReadyAlphaLoad()
@@ -480,16 +466,16 @@
                   ManaMinder.optionsFrame.barsFrame:OnReadyTextLoad()
               </OnLoad>
               <OnEnterPressed>
-                  this:ClearFocus()
-                  ManaMinder.optionsFrame.barsFrame:OnReadyTextChange(this:GetText())
+                  self:ClearFocus()
+                  ManaMinder.optionsFrame.barsFrame:OnReadyTextChange(self:GetText())
               </OnEnterPressed>
               <OnEscapePressed>
-                  this:ClearFocus()
+                  self:ClearFocus()
               </OnEscapePressed>
               <OnEnter>
-                  if this.tooltipText then
-                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  if self.tooltipText then
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
                   end
               </OnEnter>
               <OnLeave>
@@ -501,12 +487,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Deficit_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Deficit_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="186" y="140"/>
         </Size>
@@ -575,7 +561,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaChange(this:GetValue())
+                ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaLoad()
@@ -607,16 +593,16 @@
                   ManaMinder.optionsFrame.barsFrame:OnDeficitTextLoad()
               </OnLoad>
               <OnEnterPressed>
-                this:ClearFocus()
-                ManaMinder.optionsFrame.barsFrame:OnDeficitTextChange(this:GetText())
+                self:ClearFocus()
+                ManaMinder.optionsFrame.barsFrame:OnDeficitTextChange(self:GetText())
               </OnEnterPressed>
               <OnEscapePressed>
-                this:ClearFocus()
+                self:ClearFocus()
               </OnEscapePressed>
               <OnEnter>
-                  if this.tooltipText then
-                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  if self.tooltipText then
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
                   end
               </OnEnter>
               <OnLeave>
@@ -628,12 +614,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Cooldown_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Cooldown_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="186" y="140"/>
         </Size>
@@ -702,7 +688,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaChange(this:GetValue())
+                ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaLoad()
@@ -734,16 +720,16 @@
                   ManaMinder.optionsFrame.barsFrame:OnCooldownTextLoad()
               </OnLoad>
               <OnEnterPressed>
-                this:ClearFocus()
-                ManaMinder.optionsFrame.barsFrame:OnCooldownTextChange(this:GetText())
+                self:ClearFocus()
+                ManaMinder.optionsFrame.barsFrame:OnCooldownTextChange(self:GetText())
               </OnEnterPressed>
               <OnEscapePressed>
-                this:ClearFocus()
+                self:ClearFocus()
               </OnEscapePressed>
               <OnEnter>
-                  if this.tooltipText then
-                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  if self.tooltipText then
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
                   end
               </OnEnter>
               <OnLeave>
@@ -755,7 +741,7 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>

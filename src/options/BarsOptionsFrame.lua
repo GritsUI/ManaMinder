@@ -1,6 +1,4 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local BarsOptions = AceOO.Class()
-local db = ManaMinder.db
+local db = nil
 local L = ManaMinder.L
 
 local VISIBILITY_SECTION_TEXT_NAME = "ManaMinder_Options_Bars_Visibility_SectionText"
@@ -37,26 +35,31 @@ local COOLDOWN_TEXT_BOX_NAME = "ManaMinder_Options_Bars_Cooldown_Text"
 local BACKGROUND_PICKER_NAME = "ManaMinder_Options_Bars_Background_Picker"
 local TEXTURE_DROPDOWN_NAME = "ManaMinder_Options_Bars_Texture_DropDown"
 
-function BarsOptions.prototype:init()
-  BarsOptions.super.prototype.init(self)
+BarsOptions = {}
+BarsOptions.__index = BarsOptions;
+
+function BarsOptions:new()
+  local self = {}
+  setmetatable(self, BarsOptions)
+  return self
 end
 
-function BarsOptions.prototype:OnInitialize()
+function BarsOptions:OnInitialize()
+  db = ManaMinder.db
   self:ApplyTranslations()
   self:SetInitialValues()
   self:UpdateShowChecksState()
 end
 
-function BarsOptions.prototype:ApplyTranslations()
+function BarsOptions:ApplyTranslations()
   getglobal(VISIBILITY_SECTION_TEXT_NAME):SetText(L["Visibility"])
   getglobal(DISPLAY_SECTION_TEXT_NAME):SetText(L["Display"])
   getglobal(READY_SECTION_TEXT_NAME):SetText(L["Ready State"])
   getglobal(DEFICIT_SECTION_TEXT_NAME):SetText(L["Deficit State"])
   getglobal(COOLDOWN_SECTION_TEXT_NAME):SetText(L["Cooldown State"])
-  getglobal(TEXTURE_DROPDOWN_TEXT_NAME):SetText(L["Texture"])
 end
 
-function BarsOptions.prototype:SetInitialValues()
+function BarsOptions:SetInitialValues()
   getglobal(SHOW_CHECK_NAME):SetChecked(not db.char.mainFrame.hidden)
   getglobal(SHOW_OOC_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenOutOfCombat)
   getglobal(SHOW_SOLO_CHECK_NAME):SetChecked(not db.char.mainFrame.hiddenSolo)
@@ -85,81 +88,81 @@ function BarsOptions.prototype:SetInitialValues()
   self:SetSwatchColor(BACKGROUND_PICKER_NAME, db.char.bars.backgroundColor)
 end
 
-function BarsOptions.prototype:SetSwatchColor(pickerName, color)
+function BarsOptions:SetSwatchColor(pickerName, color)
   getglobal(pickerName .. "ButtonSwatch"):SetVertexColor(color[1], color[2], color[3])
 end
 
-function BarsOptions.prototype:UpdateShowChecksState()
+function BarsOptions:UpdateShowChecksState()
   if db.char.mainFrame.hidden then
-    OptionsFrame_DisableCheckBox(getglobal(SHOW_OOC_CHECK_NAME))
-    OptionsFrame_DisableCheckBox(getglobal(SHOW_SOLO_CHECK_NAME))
-    OptionsFrame_DisableCheckBox(getglobal(SHOW_GROUP_CHECK_NAME))
-    OptionsFrame_DisableCheckBox(getglobal(SHOW_RAID_CHECK_NAME))
+    _G[SHOW_OOC_CHECK_NAME]:Disable()
+    _G[SHOW_SOLO_CHECK_NAME]:Disable()
+    _G[SHOW_GROUP_CHECK_NAME]:Disable()
+    _G[SHOW_RAID_CHECK_NAME]:Disable()
   else
-    OptionsFrame_EnableCheckBox(getglobal(SHOW_OOC_CHECK_NAME))
-    OptionsFrame_EnableCheckBox(getglobal(SHOW_SOLO_CHECK_NAME))
-    OptionsFrame_EnableCheckBox(getglobal(SHOW_GROUP_CHECK_NAME))
-    OptionsFrame_EnableCheckBox(getglobal(SHOW_RAID_CHECK_NAME))
+    _G[SHOW_OOC_CHECK_NAME]:Enable()
+    _G[SHOW_SOLO_CHECK_NAME]:Enable()
+    _G[SHOW_GROUP_CHECK_NAME]:Enable()
+    _G[SHOW_RAID_CHECK_NAME]:Enable()
   end
 end
 
-function BarsOptions.prototype:OnShowLoad()
+function BarsOptions:OnShowLoad()
   getglobal(SHOW_CHECK_NAME .. "Text"):SetText(L["Show Bars"])
   getglobal(SHOW_CHECK_NAME).tooltipText = L["Uncheck to hide bars at all times."]
 end
 
-function BarsOptions.prototype:OnShowChange(show)
+function BarsOptions:OnShowChange(show)
   db.char.mainFrame.hidden = not show
   self:UpdateShowChecksState()
   ManaMinder.mainFrame:UpdateVisibility()
 end
 
-function BarsOptions.prototype:OnShowOutOfCombatLoad()
+function BarsOptions:OnShowOutOfCombatLoad()
   getglobal(SHOW_OOC_CHECK_NAME .. "Text"):SetText(L["Show Bars Out of Combat"])
   getglobal(SHOW_OOC_CHECK_NAME).tooltipText = L["Uncheck to hide bars when out of combat."]
 end
 
-function BarsOptions.prototype:OnShowOutOfCombatChange(show)
+function BarsOptions:OnShowOutOfCombatChange(show)
   db.char.mainFrame.hiddenOutOfCombat = not show
   ManaMinder.mainFrame:UpdateVisibility()
 end
 
-function BarsOptions.prototype:OnShowSoloLoad()
+function BarsOptions:OnShowSoloLoad()
   getglobal(SHOW_SOLO_CHECK_NAME .. "Text"):SetText(L["Show Bars Solo"])
   getglobal(SHOW_SOLO_CHECK_NAME).tooltipText = L["Uncheck to hide bars when not in a party or raid."]
 end
 
-function BarsOptions.prototype:OnShowSoloChange(show)
+function BarsOptions:OnShowSoloChange(show)
   db.char.mainFrame.hiddenSolo = not show
   ManaMinder.mainFrame:UpdateVisibility()
 end
 
-function BarsOptions.prototype:OnShowGroupLoad()
+function BarsOptions:OnShowGroupLoad()
   getglobal(SHOW_GROUP_CHECK_NAME .. "Text"):SetText(L["Show Bars in Group"])
   getglobal(SHOW_GROUP_CHECK_NAME).tooltipText = L["Uncheck to hide bars when in a party."]
 end
 
-function BarsOptions.prototype:OnShowGroupChange(show)
+function BarsOptions:OnShowGroupChange(show)
   db.char.mainFrame.hiddenGroup = not show
   ManaMinder.mainFrame:UpdateVisibility()
 end
 
-function BarsOptions.prototype:OnShowRaidLoad()
+function BarsOptions:OnShowRaidLoad()
   getglobal(SHOW_RAID_CHECK_NAME .. "Text"):SetText(L["Show Bars in Raid"])
   getglobal(SHOW_RAID_CHECK_NAME).tooltipText = L["Uncheck to hide bars when in a raid."]
 end
 
-function BarsOptions.prototype:OnShowRaidChange(show)
+function BarsOptions:OnShowRaidChange(show)
   db.char.mainFrame.hiddenRaid = not show
   ManaMinder.mainFrame:UpdateVisibility()
 end
 
-function BarsOptions.prototype:OnLockLoad()
+function BarsOptions:OnLockLoad()
   getglobal(LOCK_CHECK_NAME .. "Text"):SetText(L["Lock Bars"])
   getglobal(LOCK_CHECK_NAME).tooltipText = L["Uncheck to make the bars frame draggable."]
 end
 
-function BarsOptions.prototype:OnLockChange(locked)
+function BarsOptions:OnLockChange(locked)
   if locked then
     db.char.mainFrame.locked = true
     ManaMinder.mainFrame.frame:SetMovable(false)
@@ -169,180 +172,184 @@ function BarsOptions.prototype:OnLockChange(locked)
   end
 end
 
-function BarsOptions.prototype:OnTooltipsLoad()
+function BarsOptions:OnTooltipsLoad()
   getglobal(TOOLTIPS_CHECK_NAME .. "Text"):SetText(L["Show Tooltips"])
   getglobal(TOOLTIPS_CHECK_NAME).tooltipText = L["Uncheck to hide tooltips on the bar icons."]
 end
 
-function BarsOptions.prototype:OnTooltipsChange(enabled)
+function BarsOptions:OnTooltipsChange(enabled)
   db.char.bars.tooltipsDisabled = not enabled
 end
 
-function BarsOptions.prototype:OnTestLoad()
+function BarsOptions:OnTestLoad()
   getglobal(TEST_CHECK_NAME .. "Text"):SetText(L["Show Test Bars"])
   getglobal(TEST_CHECK_NAME).tooltipText = L["Check to show test bars for easier configuration"]
 end
 
-function BarsOptions.prototype:OnTestChange(checked)
+function BarsOptions:OnTestChange(checked)
   db.char.bars.testMode = checked
   ManaMinder.barManager:ClearBars()
   ManaMinder.barManager:Update()
 end
 
-function BarsOptions.prototype:OnWidthLoad()
+function BarsOptions:OnWidthLoad()
   getglobal(WIDTH_SLIDER_NAME):SetMinMaxValues(50, 300)
   getglobal(WIDTH_SLIDER_NAME):SetValueStep(1)
   getglobal(WIDTH_SLIDER_NAME).tooltipText = L["Adjust the width of bars."]
 end
 
-function BarsOptions.prototype:OnWidthChange(value)
-  db.char.mainFrame.width = value
+function BarsOptions:OnWidthChange(value)
+  rounded = floor(value + 0.5)
+  db.char.mainFrame.width = rounded
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateWidth() end)
   ManaMinder.mainFrame:UpdateWidth()
   getglobal(WIDTH_SLIDER_NAME .. "Text"):SetText(L["Width: "] .. db.char.mainFrame.width)
 end
 
-function BarsOptions.prototype:OnHeightLoad()
+function BarsOptions:OnHeightLoad()
   getglobal(HEIGHT_SLIDER_NAME):SetMinMaxValues(10, 50)
   getglobal(HEIGHT_SLIDER_NAME):SetValueStep(1)
   getglobal(HEIGHT_SLIDER_NAME).tooltipText = L["Adjust the height of bars."]
 end
 
-function BarsOptions.prototype:OnHeightChange(value)
-  db.char.bars.height = value
+function BarsOptions:OnHeightChange(value)
+  rounded = floor(value + 0.5)
+  db.char.bars.height = rounded
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateHeight() end)
   ManaMinder.mainFrame:UpdateHeight()
   getglobal(HEIGHT_SLIDER_NAME .. "Text"):SetText(L["Height: "] .. db.char.bars.height)
 end
 
-function BarsOptions.prototype:OnFontSizeLoad()
+function BarsOptions:OnFontSizeLoad()
   getglobal(FONT_SIZE_SLIDER_NAME):SetMinMaxValues(6, 20)
   getglobal(FONT_SIZE_SLIDER_NAME):SetValueStep(1)
   getglobal(FONT_SIZE_SLIDER_NAME).tooltipText = L["Adjust the font size of bar text."]
 end
 
-function BarsOptions.prototype:OnFontSizeChange(value)
-  db.char.bars.fontSize = value
+function BarsOptions:OnFontSizeChange(value)
+  rounded = floor(value + 0.5)
+  db.char.bars.fontSize = rounded
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateFontSize() end)
   getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText(L["Font Size: "] .. db.char.bars.fontSize)
 end
 
-function BarsOptions.prototype:OnMarginLoad()
+function BarsOptions:OnMarginLoad()
   getglobal(MARGIN_SLIDER_NAME):SetMinMaxValues(0, 20)
   getglobal(MARGIN_SLIDER_NAME):SetValueStep(1)
   getglobal(MARGIN_SLIDER_NAME).tooltipText = L["Adjust the spacing between bars."]
 end
 
-function BarsOptions.prototype:OnMarginChange(value)
-  db.char.bars.margin = value
+function BarsOptions:OnMarginChange(value)
+  rounded = floor(value + 0.5)
+  db.char.bars.margin = rounded
   ManaMinder.barManager:ForEachBar(function(bar) bar:UpdatePosition() end)
   ManaMinder.mainFrame:UpdateHeight()
   getglobal(MARGIN_SLIDER_NAME .. "Text"):SetText(L["Margin: "] .. db.char.bars.margin)
 end
 
-function BarsOptions.prototype:OnReadyBackgroundLoad()
+function BarsOptions:OnReadyBackgroundLoad()
   getglobal(READY_BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Bar Color"])
   getglobal(READY_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(READY_BACKGROUND_PICKER_NAME, "readyColor", false))
   getglobal(READY_BACKGROUND_PICKER_NAME .. "Button").tooltipText = L["Change the bar color when a consumable is ready to be used."]
 end
 
-function BarsOptions.prototype:OnReadyFontLoad()
+function BarsOptions:OnReadyFontLoad()
   getglobal(READY_FONT_PICKER_NAME .. "Text"):SetText(L["Font Color"])
   getglobal(READY_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(READY_FONT_PICKER_NAME, "readyFontColor", false))
   getglobal(READY_FONT_PICKER_NAME .. "Button").tooltipText = L["Change the font color of bar text when a consumable is ready to be used."]
 end
 
-function BarsOptions.prototype:OnReadyAlphaLoad()
+function BarsOptions:OnReadyAlphaLoad()
   getglobal(READY_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1)
   getglobal(READY_ALPHA_SLIDER_NAME):SetValueStep(0.01)
   getglobal(READY_ALPHA_SLIDER_NAME).tooltipText = L["Adjust the alpha of bars for consumables that are ready to be used."]
 end
 
-function BarsOptions.prototype:OnReadyAlphaChange(value)
+function BarsOptions:OnReadyAlphaChange(value)
   db.char.bars.readyAlpha = value
   getglobal(READY_ALPHA_SLIDER_NAME .. "Text"):SetText(L["Alpha: "] .. ManaMinder:RoundTo(db.char.bars.readyAlpha, 2))
 end
 
-function BarsOptions.prototype:OnReadyTextLoad()
+function BarsOptions:OnReadyTextLoad()
   getglobal(READY_TEXT_BOX_NAME .. "Text"):SetText(L["Text"])
   getglobal(READY_TEXT_BOX_NAME).tooltipText = L["Change the text displayed when a consumable is ready to be used."]
 end
 
-function BarsOptions.prototype:OnReadyTextChange(value)
+function BarsOptions:OnReadyTextChange(value)
   db.char.bars.readyText = value
 end
 
-function BarsOptions.prototype:OnDeficitBackgroundLoad()
+function BarsOptions:OnDeficitBackgroundLoad()
   getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Bar Color"])
   getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(DEFICIT_BACKGROUND_PICKER_NAME, "deficitColor", false))
   getglobal(DEFICIT_BACKGROUND_PICKER_NAME .. "Button").tooltipText = L["Change the bar color when you do not have the proper mana deficit to use a consumable."]
 end
 
-function BarsOptions.prototype:OnDeficitFontLoad()
+function BarsOptions:OnDeficitFontLoad()
   getglobal(DEFICIT_FONT_PICKER_NAME .. "Text"):SetText(L["Font Color"])
   getglobal(DEFICIT_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(DEFICIT_FONT_PICKER_NAME, "deficitFontColor", false))
   getglobal(DEFICIT_FONT_PICKER_NAME .. "Button").tooltipText = L["Change the font color of bar text when you do not have the proper mana deficit to use a consumable."]
 end
 
-function BarsOptions.prototype:OnDeficitAlphaLoad()
+function BarsOptions:OnDeficitAlphaLoad()
   getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1)
   getglobal(DEFICIT_ALPHA_SLIDER_NAME):SetValueStep(0.01)
   getglobal(DEFICIT_ALPHA_SLIDER_NAME).tooltipText = L["Adjust the alpha of bars where you do not have the proper mana deficit to use a consumable."]
 end
 
-function BarsOptions.prototype:OnDeficitAlphaChange(value)
+function BarsOptions:OnDeficitAlphaChange(value)
   db.char.bars.deficitAlpha = value
   getglobal(DEFICIT_ALPHA_SLIDER_NAME .. "Text"):SetText(L["Alpha: "] .. ManaMinder:RoundTo(db.char.bars.deficitAlpha, 2))
 end
 
-function BarsOptions.prototype:OnDeficitTextLoad()
+function BarsOptions:OnDeficitTextLoad()
   getglobal(DEFICIT_TEXT_BOX_NAME .. "Text"):SetText(L["Text"])
   getglobal(DEFICIT_TEXT_BOX_NAME).tooltipText = L["Change the text displayed when you do not have the proper mana deficit to use a consumable. Use \"%deficit%\" to insert the current required deficit."]
 end
 
-function BarsOptions.prototype:OnDeficitTextChange(value)
+function BarsOptions:OnDeficitTextChange(value)
   db.char.bars.deficitText = value
 end
 
-function BarsOptions.prototype:OnCooldownBackgroundLoad()
+function BarsOptions:OnCooldownBackgroundLoad()
   getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Bar Color"])
   getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(COOLDOWN_BACKGROUND_PICKER_NAME, "cooldownColor", false))
   getglobal(COOLDOWN_BACKGROUND_PICKER_NAME .. "Button").tooltipText = L["Change the bar color when a consumable is on cooldown."]
 end
 
-function BarsOptions.prototype:OnCooldownFontLoad()
+function BarsOptions:OnCooldownFontLoad()
   getglobal(COOLDOWN_FONT_PICKER_NAME .. "Text"):SetText(L["Font Color"])
   getglobal(COOLDOWN_FONT_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(COOLDOWN_FONT_PICKER_NAME, "cooldownFontColor", false))
   getglobal(COOLDOWN_FONT_PICKER_NAME .. "Button").tooltipText = L["Change the font color of bar text when a consumable is on cooldown."]
 end
 
-function BarsOptions.prototype:OnCooldownAlphaLoad()
+function BarsOptions:OnCooldownAlphaLoad()
   getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetMinMaxValues(0, 1)
   getglobal(COOLDOWN_ALPHA_SLIDER_NAME):SetValueStep(0.01)
   getglobal(COOLDOWN_ALPHA_SLIDER_NAME).tooltipText = L["Adjust the alpha of bars for consumables on cooldown."]
 end
 
-function BarsOptions.prototype:OnCooldownAlphaChange(value)
+function BarsOptions:OnCooldownAlphaChange(value)
   db.char.bars.cooldownAlpha = value
   getglobal(COOLDOWN_ALPHA_SLIDER_NAME .. "Text"):SetText(L["Alpha: "] .. ManaMinder:RoundTo(db.char.bars.cooldownAlpha, 2))
 end
 
-function BarsOptions.prototype:OnCooldownTextLoad()
+function BarsOptions:OnCooldownTextLoad()
   getglobal(COOLDOWN_TEXT_BOX_NAME .. "Text"):SetText(L["Text"])
   getglobal(COOLDOWN_TEXT_BOX_NAME).tooltipText = L["Change the text displayed when a consumable is on cooldown. Use \"%cooldown%\" to insert the current cooldown."]
 end
 
-function BarsOptions.prototype:OnCooldownTextChange(value)
+function BarsOptions:OnCooldownTextChange(value)
   db.char.bars.cooldownText = value
 end
 
-function BarsOptions.prototype:OnBackgroundPickerLoad()
+function BarsOptions:OnBackgroundPickerLoad()
   getglobal(BACKGROUND_PICKER_NAME .. "Text"):SetText(L["Background Color"])
   getglobal(BACKGROUND_PICKER_NAME .. "Button"):SetScript("OnClick",
     self:GetColorPickerClickHandler(BACKGROUND_PICKER_NAME, "backgroundColor", true, function()
@@ -351,29 +358,28 @@ function BarsOptions.prototype:OnBackgroundPickerLoad()
   getglobal(BACKGROUND_PICKER_NAME .. "Button").tooltipText = L["Change the background color of bars."]
 end
 
-function BarsOptions.prototype:OnTextureDropDownLoad()
-  local dropdown = this
+function BarsOptions:OnTextureDropDownLoad()
+  local dropdown = _G[TEXTURE_DROPDOWN_NAME]
   dropdown.tooltipText = L["Change the display texture of bars."]
 
-  UIDropDownMenu_Initialize(this, function()
+  UIDropDownMenu_Initialize(dropdown, function()
     for _, value in ipairs(ManaMinder.texturesList) do
-      local optionValue = value.name
       local info = {}
       info.text = L[value.name]
       info.value = value.name
       info.func = function()
-        UIDropDownMenu_SetSelectedID(dropdown, this:GetID())
-        db.char.bars.texture = optionValue
+        db.char.bars.texture = value.name
+        _G[TEXTURE_DROPDOWN_NAME .. "Text"]:SetText(db.char.bars.texture)
         ManaMinder.barManager:ForEachBar(function(bar) bar:UpdateTexture() end)
       end
-      info.checked = false
+      info.checked = db and value.name == db.char.bars.texture or false
       UIDropDownMenu_AddButton(info, 1)
     end
   end)
-  UIDropDownMenu_SetWidth(115, dropdown)
+  UIDropDownMenu_SetWidth(dropdown, 115)
 end
 
-function BarsOptions.prototype:GetColorPickerClickHandler(pickerName, optionName, hasOpacity, callback)
+function BarsOptions:GetColorPickerClickHandler(pickerName, optionName, hasOpacity, callback)
   return function()
     local color = db.char.bars[optionName]
     ManaMinder:ShowColorPicker(color[1], color[2], color[3], color[4], hasOpacity, function()

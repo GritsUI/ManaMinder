@@ -69,14 +69,14 @@
         </Layers>
         <Scripts>
           <OnEnter>
-              getglobal(this:GetName() .. "Border"):SetVertexColor(0.91, 0.78, 0.09)
-              if this.tooltipText then
-                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+              getglobal(self:GetName() .. "Border"):SetVertexColor(0.91, 0.78, 0.09)
+              if self.tooltipText then
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
               end
           </OnEnter>
           <OnLeave>
-              getglobal(this:GetName() .. "Border"):SetVertexColor(1, 1, 1)
+              getglobal(self:GetName() .. "Border"):SetVertexColor(1, 1, 1)
               GameTooltip:Hide();
           </OnLeave>
         </Scripts>

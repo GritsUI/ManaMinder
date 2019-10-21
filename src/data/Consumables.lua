@@ -127,6 +127,15 @@ local consumables = {
     requiredDeficit = 1201,
     type = "ITEM",
     class = "MAGE"
+  },
+  ["NIGHT_DRAGONS_BREATH"] = {
+    name = "Night Dragon's Breath",
+    key = "NIGHT_DRAGONS_BREATH",
+    group = "RUNE",
+    itemId = 11952,
+    iconTexture = "Interface\\Icons\\INV_Misc_Food_45",
+    requiredDeficit = 457,
+    type = "ITEM"
   }
 }
 

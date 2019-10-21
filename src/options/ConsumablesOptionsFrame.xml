@@ -16,7 +16,7 @@
     </Anchors>
     <Frames>
 
-      <Frame name="$parent_Available_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Available_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="250"/>
         </Size>
@@ -58,8 +58,8 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnAvailableScroll()
               </OnShow>
               <OnVerticalScroll>
-                FauxScrollFrame_OnVerticalScroll(20, function()
-                ManaMinder.optionsFrame.consumablesFrame:OnAvailableScroll()
+                FauxScrollFrame_OnVerticalScroll(self, offset, 20, function()
+                  ManaMinder.optionsFrame.consumablesFrame:OnAvailableScroll()
                 end)
               </OnVerticalScroll>
             </Scripts>
@@ -67,12 +67,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Tracked_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Tracked_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="250"/>
         </Size>
@@ -118,8 +118,8 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnTrackedScroll()
               </OnShow>
               <OnVerticalScroll>
-                FauxScrollFrame_OnVerticalScroll(20, function()
-                ManaMinder.optionsFrame.consumablesFrame:OnTrackedScroll()
+                FauxScrollFrame_OnVerticalScroll(self, offset, 20, function()
+                  ManaMinder.optionsFrame.consumablesFrame:OnTrackedScroll()
                 end)
               </OnVerticalScroll>
             </Scripts>
@@ -127,12 +127,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Shared_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Shared_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="98"/>
         </Size>
@@ -171,8 +171,8 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.consumablesFrame:OnPotionsCheckChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -190,8 +190,8 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.consumablesFrame:OnRunesCheckChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -209,8 +209,8 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.consumablesFrame:OnGemsCheckChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -218,12 +218,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Usage_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Usage_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="98"/>
         </Size>
@@ -262,8 +262,8 @@
                   ManaMinder.optionsFrame.consumablesFrame:OnOOCCheckLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.consumablesFrame:OnOOCCheckChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.consumablesFrame:OnOOCCheckChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -271,7 +271,7 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>

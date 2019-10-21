@@ -18,16 +18,16 @@ end
 function ManaMinder:PlaySound(key)
   local data = ManaMinder.sounds[key]
   if data.type == "FILE" then
-    PlaySoundFile(data.path)
+    PlaySoundFile(data.path, "SFX")
   else
-    PlaySound(data.path)
+    PlaySound(data.path, "SFX")
   end
 end
 
-function ManaMinder:OnCheckBoxClick()
-  if ( this:GetChecked() ) then
-    PlaySound("igMainMenuOptionCheckBoxOff");
+function ManaMinder:OnCheckBoxClick(frame)
+  if ( frame:GetChecked() ) then
+    PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);
   else
-    PlaySound("igMainMenuOptionCheckBoxOn");
+    PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
   end
 end

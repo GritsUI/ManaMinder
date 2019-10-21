@@ -65,7 +65,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentTab1" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-15" y="0"/>
+              <AbsDimension x="-16" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -74,7 +74,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentTab2" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-15" y="0"/>
+              <AbsDimension x="-16" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -109,7 +109,7 @@
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">
-            <FontString inherits="GameFontDisableSmall" text="1.7" nonspacewrap="true">
+            <FontString inherits="GameFontDisableSmall" text="2.0" nonspacewrap="true">
               <Anchors>
                 <Anchor point="CENTER" />
               </Anchors>
@@ -118,8 +118,8 @@
         </Layers>
         <Scripts>
           <OnEnter>
-              GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-              GameTooltip:AddLine("ManaMinder 1.7", 1, 1, 1)
+              GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+              GameTooltip:AddLine("ManaMinder 2.0", 1, 1, 1)
               GameTooltip:AddLine(ManaMinder.L["Created by"] .. " Grits", 1, 0.82, 0)
               GameTooltip:Show()
           </OnEnter>
@@ -132,7 +132,7 @@
     </Frames>
     <Scripts>
       <OnLoad>
-          ManaMinder.optionsFrame:OnLoad(this)
+          ManaMinder.optionsFrame:OnLoad(self)
       </OnLoad>
     </Scripts>
   </Frame>

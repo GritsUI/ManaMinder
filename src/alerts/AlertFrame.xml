@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 
-  <Frame name="ManaMinder_Alert" parent="UIParent">
+  <Frame name="ManaMinder_Alert" toplevel="true" movable="true" enableMouse="true" parent="UIParent">
     <Size>
       <AbsDimension x="300" y="65"/>
     </Size>
@@ -43,7 +43,7 @@
     </Frames>
     <Scripts>
       <OnLoad>
-          ManaMinder.alertFrame:OnLoad(this)
+          ManaMinder.alertFrame:OnLoad(self)
       </OnLoad>
     </Scripts>
   </Frame>

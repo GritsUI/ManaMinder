@@ -1,6 +1,4 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local AlertsOptions = AceOO.Class()
-local db = ManaMinder.db
+local db = nil
 local L = ManaMinder.L
 
 local DISPLAY_SECTION_TEXT_NAME = "ManaMinder_Options_Alerts_Display_SectionText"
@@ -18,170 +16,178 @@ local FONT_SIZE_SLIDER_NAME = "ManaMinder_Options_Alerts_Font_Size_Slider"
 local REPEAT_DELAY_SLIDER_NAME = "ManaMinder_Options_Alerts_Repeat_Delay_Slider"
 local SOUND_DROPDOWN_NAME = "ManaMinder_Options_Alerts_Sound_DropDown"
 
-function AlertsOptions.prototype:init()
-  AlertsOptions.super.prototype.init(self)
+AlertsOptions = {}
+AlertsOptions.__index = AlertsOptions;
+
+function AlertsOptions:new()
+  local self = {}
+  setmetatable(self, AlertsOptions)
+  return self
 end
 
-function AlertsOptions.prototype:OnInitialize()
+function AlertsOptions:OnInitialize()
+  db = ManaMinder.db
   self:ApplyTranslations()
   self:SetInitialValues()
   self:UpdateEnabledChecksState()
 end
 
-function AlertsOptions.prototype:ApplyTranslations()
-  getglobal(DISPLAY_SECTION_TEXT_NAME):SetText(L["Display"])
-  getglobal(SOUND_SECTION_TEXT_NAME):SetText(L["Sound"])
-  getglobal(SOUND_DROPDOWN_NAME .. "_Text"):SetText(L["Sound"])
+function AlertsOptions:ApplyTranslations()
+  _G[DISPLAY_SECTION_TEXT_NAME]:SetText(L["Display"])
+  _G[SOUND_SECTION_TEXT_NAME]:SetText(L["Sound"])
 end
 
-function AlertsOptions.prototype:SetInitialValues()
-  getglobal(ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.hidden)
-  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME):SetChecked(db.char.alertFrame.showWithoutBars)
-  getglobal(LOCKED_CHECK_NAME):SetChecked(not db.char.alertFrame.unlocked)
-  getglobal(SOUNDS_ENABLED_CHECK_NAME):SetChecked(not db.char.alertFrame.soundDisabled)
-  getglobal(TEXT_INPUT_NAME):SetText(db.char.alertFrame.text)
-  getglobal(DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.duration)
-  getglobal(ANIMATION_DURATION_SLIDER_NAME):SetValue(db.char.alertFrame.animationDuration)
-  getglobal(ICON_SIZE_SLIDER_NAME):SetValue(db.char.alertFrame.size)
-  getglobal(FONT_SIZE_SLIDER_NAME):SetValue(db.char.alertFrame.fontSize)
-  getglobal(REPEAT_DELAY_SLIDER_NAME):SetValue(db.char.alertFrame.repeatDelay)
-  UIDropDownMenu_SetSelectedValue(getglobal(SOUND_DROPDOWN_NAME), db.char.alertFrame.soundType)
-  UIDropDownMenu_SetText(db.char.alertFrame.soundType, getglobal(SOUND_DROPDOWN_NAME))
+function AlertsOptions:SetInitialValues()
+  _G[ENABLED_CHECK_NAME]:SetChecked(not db.char.alertFrame.hidden)
+  _G[ENABLED_WHEN_HIDDEN_CHECK_NAME]:SetChecked(db.char.alertFrame.showWithoutBars)
+  _G[LOCKED_CHECK_NAME]:SetChecked(not db.char.alertFrame.unlocked)
+  _G[SOUNDS_ENABLED_CHECK_NAME]:SetChecked(not db.char.alertFrame.soundDisabled)
+  _G[TEXT_INPUT_NAME]:SetText(db.char.alertFrame.text)
+  _G[DURATION_SLIDER_NAME]:SetValue(db.char.alertFrame.duration)
+  _G[ANIMATION_DURATION_SLIDER_NAME]:SetValue(db.char.alertFrame.animationDuration)
+  _G[ICON_SIZE_SLIDER_NAME]:SetValue(db.char.alertFrame.size)
+  _G[FONT_SIZE_SLIDER_NAME]:SetValue(db.char.alertFrame.fontSize)
+  _G[REPEAT_DELAY_SLIDER_NAME]:SetValue(db.char.alertFrame.repeatDelay)
+  _G[SOUND_DROPDOWN_NAME .. "Text"]:SetText(db.char.alertFrame.soundType)
 end
 
-function AlertsOptions.prototype:UpdateEnabledChecksState()
+function AlertsOptions:UpdateEnabledChecksState()
   if db.char.alertFrame.hidden then
-    OptionsFrame_DisableCheckBox(getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME))
+    _G[ENABLED_WHEN_HIDDEN_CHECK_NAME]:Disable()
   else
-    OptionsFrame_EnableCheckBox(getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME))
+    _G[ENABLED_WHEN_HIDDEN_CHECK_NAME]:Enable()
   end
 end
 
-function AlertsOptions.prototype:OnEnabledLoad()
-  getglobal(ENABLED_CHECK_NAME .. "Text"):SetText(L["Show Alerts"])
-  getglobal(ENABLED_CHECK_NAME).tooltipText = L["Uncheck to disable alerts at all times."]
+function AlertsOptions:OnEnabledLoad()
+  _G[ENABLED_CHECK_NAME .. "Text"]:SetText(L["Show Alerts"])
+  _G[ENABLED_CHECK_NAME].tooltipText = L["Uncheck to disable alerts at all times."]
 end
 
-function AlertsOptions.prototype:OnEnabledChange(enabled)
+function AlertsOptions:OnEnabledChange(enabled)
   db.char.alertFrame.hidden = not enabled
   self:UpdateEnabledChecksState()
 end
 
-function AlertsOptions.prototype:OnEnabledWhenHiddenLoad()
-  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME .. "Text"):SetText(L["Show Alerts When Bars Hidden"])
-  getglobal(ENABLED_WHEN_HIDDEN_CHECK_NAME).tooltipText = L["Check to continue showing alerts when bars are hidden."]
+function AlertsOptions:OnEnabledWhenHiddenLoad()
+  _G[ENABLED_WHEN_HIDDEN_CHECK_NAME .. "Text"]:SetText(L["Show Alerts When Bars Hidden"])
+  _G[ENABLED_WHEN_HIDDEN_CHECK_NAME].tooltipText = L["Check to continue showing alerts when bars are hidden."]
 end
 
-function AlertsOptions.prototype:OnEnabledWhenHiddenChange(enabled)
+function AlertsOptions:OnEnabledWhenHiddenChange(enabled)
   db.char.alertFrame.showWithoutBars = enabled
 end
 
-function AlertsOptions.prototype:OnLockedLoad()
-  getglobal(LOCKED_CHECK_NAME .. "Text"):SetText(L["Lock Alerts"])
-  getglobal(LOCKED_CHECK_NAME).tooltipText = L["Uncheck to make the alert frame draggable."]
+function AlertsOptions:OnLockedLoad()
+  _G[LOCKED_CHECK_NAME .. "Text"]:SetText(L["Lock Alerts"])
+  _G[LOCKED_CHECK_NAME].tooltipText = L["Uncheck to make the alert frame draggable."]
 end
 
-function AlertsOptions.prototype:OnLockedChange(locked)
+function AlertsOptions:OnLockedChange(locked)
   db.char.alertFrame.unlocked = not locked
   ManaMinder.alertFrame:OnLockChange(locked)
 end
 
-function AlertsOptions.prototype:OnSoundsEnabledLoad()
-  getglobal(SOUNDS_ENABLED_CHECK_NAME .. "Text"):SetText(L["Enable Alert Sound"])
-  getglobal(SOUNDS_ENABLED_CHECK_NAME).tooltipText = L["Uncheck to disable alert sounds."]
+function AlertsOptions:OnSoundsEnabledLoad()
+  _G[SOUNDS_ENABLED_CHECK_NAME .. "Text"]:SetText(L["Enable Alert Sound"])
+  _G[SOUNDS_ENABLED_CHECK_NAME].tooltipText = L["Uncheck to disable alert sounds."]
 end
 
-function AlertsOptions.prototype:OnSoundsEnabledChange(enabled)
+function AlertsOptions:OnSoundsEnabledChange(enabled)
   db.char.alertFrame.soundDisabled = not enabled
 end
 
-function AlertsOptions.prototype:OnTextLoad()
-  getglobal(TEXT_INPUT_NAME .. "Text"):SetText(L["Text"])
-  getglobal(TEXT_INPUT_NAME).tooltipText = L["Change the text displayed with alerts. Use \"%name%\" to insert the name of the consumable."]
+function AlertsOptions:OnTextLoad()
+  _G[TEXT_INPUT_NAME .. "Text"]:SetText(L["Text"])
+  _G[TEXT_INPUT_NAME].tooltipText = L["Change the text displayed with alerts. Use \"%name%\" to insert the name of the consumable."]
 end
 
-function AlertsOptions.prototype:OnTextChange(value)
+function AlertsOptions:OnTextChange(value)
   db.char.alertFrame.text = value
 end
 
-function AlertsOptions.prototype:OnDurationLoad()
-  getglobal(DURATION_SLIDER_NAME):SetMinMaxValues(1, 10)
-  getglobal(DURATION_SLIDER_NAME):SetValueStep(1)
-  getglobal(DURATION_SLIDER_NAME).tooltipText = L["Adjust the length of time an alert is displayed."]
+function AlertsOptions:OnDurationLoad()
+  _G[DURATION_SLIDER_NAME]:SetMinMaxValues(1, 10)
+  _G[DURATION_SLIDER_NAME]:SetValueStep(1)
+  _G[DURATION_SLIDER_NAME].tooltipText = L["Adjust the length of time an alert is displayed."]
 end
 
-function AlertsOptions.prototype:OnDurationChange(value)
-  db.char.alertFrame.duration = value
-  getglobal(DURATION_SLIDER_NAME .. "Text"):SetText(L["Duration: "] .. value .. L["SECONDS"])
+function AlertsOptions:OnDurationChange(value)
+  rounded = floor(value + 0.5)
+  db.char.alertFrame.duration = rounded
+  _G[DURATION_SLIDER_NAME .. "Text"]:SetText(L["Duration: "] .. rounded .. L["SECONDS"])
 end
 
-function AlertsOptions.prototype:OnAnimationDurationLoad()
-  getglobal(ANIMATION_DURATION_SLIDER_NAME):SetMinMaxValues(0, 1)
-  getglobal(ANIMATION_DURATION_SLIDER_NAME):SetValueStep(0.01)
-  getglobal(ANIMATION_DURATION_SLIDER_NAME).tooltipText = L["Adjust the speed at which an alert fades in and out."]
+function AlertsOptions:OnAnimationDurationLoad()
+  _G[ANIMATION_DURATION_SLIDER_NAME]:SetMinMaxValues(0, 1)
+  _G[ANIMATION_DURATION_SLIDER_NAME]:SetValueStep(0.01)
+  _G[ANIMATION_DURATION_SLIDER_NAME].tooltipText = L["Adjust the speed at which an alert fades in and out."]
 end
 
-function AlertsOptions.prototype:OnAnimationDurationChange(value)
+function AlertsOptions:OnAnimationDurationChange(value)
   db.char.alertFrame.animationDuration = value
-  getglobal(ANIMATION_DURATION_SLIDER_NAME .. "Text"):SetText(L["Animation Duration: "] .. ManaMinder:RoundTo(value, 2) .. L["SECONDS"])
+  _G[ANIMATION_DURATION_SLIDER_NAME .. "Text"]:SetText(L["Animation Duration: "] .. ManaMinder:RoundTo(value, 2) .. L["SECONDS"])
 end
 
-function AlertsOptions.prototype:OnIconSizeLoad()
-  getglobal(ICON_SIZE_SLIDER_NAME):SetMinMaxValues(20, 60)
-  getglobal(ICON_SIZE_SLIDER_NAME):SetValueStep(1)
-  getglobal(ICON_SIZE_SLIDER_NAME).tooltipText = L["Adjust the size of the icon displayed in an alert."]
+function AlertsOptions:OnIconSizeLoad()
+  _G[ICON_SIZE_SLIDER_NAME]:SetMinMaxValues(20, 60)
+  _G[ICON_SIZE_SLIDER_NAME]:SetValueStep(1)
+  _G[ICON_SIZE_SLIDER_NAME].tooltipText = L["Adjust the size of the icon displayed in an alert."]
 end
 
-function AlertsOptions.prototype:OnIconSizeChange(value)
-  db.char.alertFrame.size = value
+function AlertsOptions:OnIconSizeChange(value)
+  rounded = floor(value + 0.5)
+  db.char.alertFrame.size = rounded
   ManaMinder.alertFrame:UpdateSize()
-  getglobal(ICON_SIZE_SLIDER_NAME .. "Text"):SetText(L["Icon Size: "] .. value)
+  _G[ICON_SIZE_SLIDER_NAME .. "Text"]:SetText(L["Icon Size: "] .. rounded)
 end
 
-function AlertsOptions.prototype:OnFontSizeLoad()
-  getglobal(FONT_SIZE_SLIDER_NAME):SetMinMaxValues(10, 40)
-  getglobal(FONT_SIZE_SLIDER_NAME):SetValueStep(1)
-  getglobal(FONT_SIZE_SLIDER_NAME).tooltipText = L["Adjust the font size of the text displayed in an alert."]
+function AlertsOptions:OnFontSizeLoad()
+  _G[FONT_SIZE_SLIDER_NAME]:SetMinMaxValues(10, 40)
+  _G[FONT_SIZE_SLIDER_NAME]:SetValueStep(1)
+  _G[FONT_SIZE_SLIDER_NAME].tooltipText = L["Adjust the font size of the text displayed in an alert."]
 end
 
-function AlertsOptions.prototype:OnFontSizeChange(value)
-  db.char.alertFrame.fontSize = value
+function AlertsOptions:OnFontSizeChange(value)
+  rounded = floor(value + 0.5)
+  db.char.alertFrame.fontSize = rounded
   ManaMinder.alertFrame:UpdateFontSize()
-  getglobal(FONT_SIZE_SLIDER_NAME .. "Text"):SetText(L["Font Size: "] .. value)
+  _G[FONT_SIZE_SLIDER_NAME .. "Text"]:SetText(L["Font Size: "] .. rounded)
 end
 
-function AlertsOptions.prototype:OnRepeatDelayLoad()
-  getglobal(REPEAT_DELAY_SLIDER_NAME):SetMinMaxValues(0, 20)
-  getglobal(REPEAT_DELAY_SLIDER_NAME):SetValueStep(1)
-  getglobal(REPEAT_DELAY_SLIDER_NAME).tooltipText = L["Adjust the length of time a consumable needs to be not ready before a new alert is shown again. This prevents multiple alerts when hovering around the required deficit for a consumable."]
+function AlertsOptions:OnRepeatDelayLoad()
+  _G[REPEAT_DELAY_SLIDER_NAME]:SetMinMaxValues(0, 20)
+  _G[REPEAT_DELAY_SLIDER_NAME]:SetValueStep(1)
+  _G[REPEAT_DELAY_SLIDER_NAME].tooltipText = L["Adjust the length of time a consumable needs to be not ready before a new alert is shown again. This prevents multiple alerts when hovering around the required deficit for a consumable."]
 end
 
-function AlertsOptions.prototype:OnRepeatDelayChange(value)
-  db.char.alertFrame.repeatDelay = value
-  getglobal(REPEAT_DELAY_SLIDER_NAME .. "Text"):SetText(L["Repeat Delay: "] .. value .. L["SECONDS"])
+function AlertsOptions:OnRepeatDelayChange(value)
+  rounded = floor(value + 0.5)
+  db.char.alertFrame.repeatDelay = rounded
+  _G[REPEAT_DELAY_SLIDER_NAME .. "Text"]:SetText(L["Repeat Delay: "] .. rounded .. L["SECONDS"])
 end
 
-function AlertsOptions.prototype:OnSoundDropDownLoad()
-  local dropdown = getglobal(SOUND_DROPDOWN_NAME)
+function AlertsOptions:OnSoundDropDownLoad()
+  local dropdown = _G[SOUND_DROPDOWN_NAME]
   dropdown.tooltipText = L["Change the sound played when an alert occurs."]
 
-  UIDropDownMenu_Initialize(this, function()
+  UIDropDownMenu_Initialize(dropdown, function()
     for _, value in ipairs(ManaMinder.soundsList) do
       local info = {}
       info.text = value.name
       info.value = value.name
       info.func = function()
-        UIDropDownMenu_SetSelectedID(dropdown, this:GetID())
-        db.char.alertFrame.soundType = UIDropDownMenu_GetText(dropdown)
+        db.char.alertFrame.soundType = value.name
+        _G[SOUND_DROPDOWN_NAME .. "Text"]:SetText(db.char.alertFrame.soundType)
       end
-      info.checked = false
+      info.checked = db and value.name == db.char.alertFrame.soundType or false
       UIDropDownMenu_AddButton(info, 1)
     end
   end)
-  UIDropDownMenu_SetWidth(150, dropdown)
+  UIDropDownMenu_SetWidth(dropdown, 150)
 end
 
-function AlertsOptions.prototype:OnSoundTestClick()
+function AlertsOptions:OnSoundTestClick()
   ManaMinder:PlaySound(db.char.alertFrame.soundType)
 end
 

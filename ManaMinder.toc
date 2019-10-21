@@ -1,19 +1,18 @@
-## Interface: 11200
+## Interface: 11302
 ## Title: ManaMinder
 ## Notes: A tool to help manage mana consumables
 ## Author: Grits
 ## SavedVariables: ManaMinderDB
-## SavedVariablesPerCharacter: ManaMinderCharDB
 
-lib\AceLibrary\AceLibrary.lua
-lib\AceOO-2.0\AceOO-2.0.lua
-lib\AceAddon-2.0\AceAddon-2.0.lua
-lib\AceEvent-2.0\AceEvent-2.0.lua
-lib\AceDB-2.0\AceDB-2.0.lua
-lib\AceConsole-2.0\AceConsole-2.0.lua
-lib\AceLocale-2.2\AceLocale-2.2.lua
-
-src\ManaMinder.lua
+lib\LibStub\LibStub.lua
+lib\CallbackHandler-1.0\CallbackHandler-1.0.xml
+lib\AceAddon-3.0\AceAddon-3.0.xml
+lib\AceEvent-3.0\AceEvent-3.0.xml
+lib\AceDB-3.0\AceDB-3.0.xml
+lib\AceConsole-3.0\AceConsole-3.0.xml
+lib\AceLocale-3.0\AceLocale-3.0.xml
+lib\LibDataBroker-1.1\LibDataBroker-1.1.lua
+lib\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
 src\locales\enUS.lua
 src\locales\deDE.lua
@@ -23,6 +22,8 @@ src\locales\ruRU.lua
 src\locales\zhCN.lua
 src\locales\zhTW.lua
 
+src\ManaMinder.lua
+
 src\data\Consumables.lua
 src\data\Items.lua
 src\data\Sounds.lua
@@ -31,7 +32,6 @@ src\data\Textures.lua
 src\data\Test.lua
 src\options\Defaults.lua
 
-src\util\Chat.lua
 src\util\Func.lua
 src\util\Game.lua
 src\util\Options.lua
@@ -57,5 +57,3 @@ src\options\BarsOptionsFrame.lua
 src\options\BarsOptionsFrame.xml
 src\options\ConsumablesOptionsFrame.lua
 src\options\ConsumablesOptionsFrame.xml
-
-src\MinimapButton.xml

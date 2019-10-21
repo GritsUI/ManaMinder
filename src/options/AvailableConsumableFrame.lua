@@ -1,6 +1,3 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local AvailableConsumableFrame = AceOO.Class()
-
 local L = ManaMinder.L
 local frameCount = 1
 
@@ -12,8 +9,12 @@ local ITEM_HEIGHT = 20
 local ICON_HEIGHT = ITEM_HEIGHT - 4
 local NORMALTEX_RATIO = 1.7
 
-function AvailableConsumableFrame.prototype:init(parentFrame, consumable)
-  AvailableConsumableFrame.super.prototype.init(self)
+AvailableConsumableFrame = {}
+AvailableConsumableFrame.__index = AvailableConsumableFrame;
+
+function AvailableConsumableFrame:new(parentFrame, consumable)
+  local self = {}
+  setmetatable(self, AvailableConsumableFrame)
 
   self.parentFrame = parentFrame
   self.frameName = "ManaMinder_Available_Consumable_" .. frameCount
@@ -26,9 +27,11 @@ function AvailableConsumableFrame.prototype:init(parentFrame, consumable)
   self:InitializeEventHandlers()
   self:InitializeIcon()
   self:Update()
+
+  return self
 end
 
-function AvailableConsumableFrame.prototype:InitializeIcon()
+function AvailableConsumableFrame:InitializeIcon()
   local iconButton = getglobal(self.frameName .. "_Icon")
   iconButton:SetWidth(ICON_HEIGHT)
   iconButton:SetHeight(ICON_HEIGHT)
@@ -39,7 +42,7 @@ function AvailableConsumableFrame.prototype:InitializeIcon()
   normalTexture:SetHeight(ICON_HEIGHT * NORMALTEX_RATIO)
 end
 
-function AvailableConsumableFrame.prototype:InitializeEventHandlers()
+function AvailableConsumableFrame:InitializeEventHandlers()
   self.frame:EnableMouse(true)
   self.frame:SetScript("OnEnter", function() self:OnMouseEnter() end)
   self.frame:SetScript("OnLeave", function() self:OnMouseLeave() end)
@@ -49,22 +52,22 @@ function AvailableConsumableFrame.prototype:InitializeEventHandlers()
   getglobal(self.frameName .. "_Add"):SetScript("OnLeave", function() self:OnMouseLeave() end)
 end
 
-function AvailableConsumableFrame.prototype:OnMouseEnter()
+function AvailableConsumableFrame:OnMouseEnter()
   getglobal(self.frameName .. "_Text"):SetTextColor(1, 1, 1, 1)
 end
 
-function AvailableConsumableFrame.prototype:OnMouseLeave()
+function AvailableConsumableFrame:OnMouseLeave()
   getglobal(self.frameName .. "_Text"):SetTextColor(1, 0.82, 0, 1)
 end
 
-function AvailableConsumableFrame.prototype:OnClick()
-  PlaySound("igMainMenuOptionCheckBoxOn");
+function AvailableConsumableFrame:OnClick()
+  PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
   if self.onClick then
     self.onClick(self.consumable)
   end
 end
 
-function AvailableConsumableFrame.prototype:SetPosition(index)
+function AvailableConsumableFrame:SetPosition(index)
   self.index = index
 
   self.frame:SetPoint(
@@ -79,20 +82,20 @@ function AvailableConsumableFrame.prototype:SetPosition(index)
   self.frame:SetPoint("RIGHT", self.parentFrame, "RIGHT", rightMargin, 0)
 end
 
-function AvailableConsumableFrame.prototype:Update()
+function AvailableConsumableFrame:Update()
   self:UpdateText()
   self:UpdateIconTexture()
 end
 
-function AvailableConsumableFrame.prototype:UpdateText()
+function AvailableConsumableFrame:UpdateText()
   getglobal(self.frameName .. "_Text"):SetText(L[self.consumable.name])
 end
 
-function AvailableConsumableFrame.prototype:UpdateIconTexture()
+function AvailableConsumableFrame:UpdateIconTexture()
   getglobal(self.frameName .. "_IconIcon"):SetTexture(self.consumable.iconTexture)
 end
 
-function AvailableConsumableFrame.prototype:SetScrollVisibility(visible)
+function AvailableConsumableFrame:SetScrollVisibility(visible)
   self.withScroll = visible
   self:SetPosition(self.index)
 end

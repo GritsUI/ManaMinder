@@ -1,13 +1,17 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local BarFrame = AceOO.Class()
-
-local db = ManaMinder.db
+local db = nil
 local frameCount = 1
 local NORMALTEX_RATIO = 1.7
 local HEADER_HEIGHT = 20
 
-function BarFrame.prototype:init(parentFrame, data)
-  BarFrame.super.prototype.init(self)
+BarFrame = {}
+BarFrame.__index = BarFrame;
+
+function BarFrame:new(parentFrame, data)
+  local self = {}
+  setmetatable(self, BarFrame)
+
+  db = ManaMinder.db
+
   self.frame = CreateFrame("Frame", "ManaMinder_Bar_" .. frameCount, parentFrame)
   self.parentFrame = parentFrame
 
@@ -18,22 +22,24 @@ function BarFrame.prototype:init(parentFrame, data)
   self:SetupFrameBackground()
   self:SetupIcon()
   self:SetupStatusBar()
+
+  return self
 end
 
-function BarFrame.prototype:SetupFrame()
+function BarFrame:SetupFrame()
   self.frame:SetWidth(db.char.mainFrame.width)
   self.frame:SetHeight(db.char.bars.height)
   self.frame:SetScript("OnUpdate", function() self:Update() end)
 end
 
-function BarFrame.prototype:SetupFrameBackground()
+function BarFrame:SetupFrameBackground()
   local color = db.char.bars.backgroundColor
   self.background = self.frame:CreateTexture(nil, "BACKGROUND")
-  self.background:SetTexture(color[1], color[2], color[3], color[4])
-  self.background:SetAllPoints()
+  self.background:SetAllPoints(self.frame)
+  self.background:SetColorTexture(color[1], color[2], color[3], color[4])
 end
 
-function BarFrame.prototype:SetupStatusBar()
+function BarFrame:SetupStatusBar()
   local font = GameFontHighlight:GetFont()
   local fontColor = db.char.bars.readyFontColor
   local texture = ManaMinder.textures[db.char.bars.texture]
@@ -55,7 +61,7 @@ function BarFrame.prototype:SetupStatusBar()
   self.statusBarText:SetText("")
 end
 
-function BarFrame.prototype:SetupIcon()
+function BarFrame:SetupIcon()
   local buttonName = self.frame:GetName() .. "_Button"
   local buttonSize = db.char.bars.height
   self.button = CreateFrame("Button", buttonName, self.frame, "ActionButtonTemplate")
@@ -87,7 +93,7 @@ function BarFrame.prototype:SetupIcon()
   self.buttonText:SetText(self.data.count)
 end
 
-function BarFrame.prototype:ChangeIndex(index, animate)
+function BarFrame:ChangeIndex(index, animate)
   if self.index == index then
     return
   end
@@ -102,18 +108,18 @@ function BarFrame.prototype:ChangeIndex(index, animate)
   end
 end
 
-function BarFrame.prototype:GetPositionForIndex(index)
+function BarFrame:GetPositionForIndex(index)
   local margin = db.char.bars.margin
   local height = db.char.bars.height
   return (HEADER_HEIGHT + (index - 1) * (height + margin)) * -1
 end
 
-function BarFrame.prototype:SetPosition(y)
+function BarFrame:SetPosition(y)
   self.frame:SetPoint("TOPLEFT", self.parentFrame, "TOPLEFT", 0, y)
   self.position = y
 end
 
-function BarFrame.prototype:BeginPositionAnimation(y)
+function BarFrame:BeginPositionAnimation(y)
   self.animation = {
     startPosition = self.position,
     endPosition = y,
@@ -122,7 +128,7 @@ function BarFrame.prototype:BeginPositionAnimation(y)
   }
 end
 
-function BarFrame.prototype:Update()
+function BarFrame:Update()
   self:UpdateAnimation()
   self:UpdateAlpha()
   self:UpdateCooldownState()
@@ -130,7 +136,7 @@ function BarFrame.prototype:Update()
   self:UpdateConsumableCount()
 end
 
-function BarFrame.prototype:UpdateAnimation()
+function BarFrame:UpdateAnimation()
   if not self.animation then
     return
   end
@@ -151,7 +157,7 @@ function BarFrame.prototype:UpdateAnimation()
   end
 end
 
-function BarFrame.prototype:UpdateAlpha()
+function BarFrame:UpdateAlpha()
   if self:GetCooldownRemaining() > 0 then
     self.frame:SetAlpha(db.char.bars.cooldownAlpha)
   elseif self:GetDeficitRemaining() > 0 then
@@ -163,7 +169,7 @@ function BarFrame.prototype:UpdateAlpha()
   end
 end
 
-function BarFrame.prototype:UpdateCooldownState()
+function BarFrame:UpdateCooldownState()
   local newValue = self:GetCooldownRemaining() > 0
 
   if self.onCooldown ~= newValue then
@@ -173,7 +179,7 @@ function BarFrame.prototype:UpdateCooldownState()
   self.onCooldown = newValue
 end
 
-function BarFrame.prototype:UpdateStatusBar()
+function BarFrame:UpdateStatusBar()
   local color, fontColor = self:GetCurrentColors()
   self.statusBar:SetStatusBarColor(color[1], color[2], color[3], color[4])
   self.statusBar:SetValue(self:GetCurrentPercent())
@@ -181,11 +187,11 @@ function BarFrame.prototype:UpdateStatusBar()
   self.statusBarText:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
 end
 
-function BarFrame.prototype:UpdateConsumableCount()
+function BarFrame:UpdateConsumableCount()
   self.buttonText:SetText(self.data.count)
 end
 
-function BarFrame.prototype:GetDeficitRemaining()
+function BarFrame:GetDeficitRemaining()
   if db.char.bars.testMode then
     return self.data.deficitRemaining
   end
@@ -194,14 +200,14 @@ function BarFrame.prototype:GetDeficitRemaining()
     return 0
   end
 
-  local mana = UnitMana("player")
-  local manaMax = UnitManaMax("player")
+  local mana = UnitPower("player", 0)
+  local manaMax = UnitPowerMax("player", 0)
   local deficit = manaMax - mana
   local requiredDeficit = self:ResolveDeficit(self.data.requiredDeficit)
   return math.max(0, requiredDeficit - deficit)
 end
 
-function BarFrame.prototype:ResolveDeficit(deficit)
+function BarFrame:ResolveDeficit(deficit)
   if type(deficit) == "table" then
     local normalRegen = ManaMinder:GetSpiritRegenRate()
     local increasedRegen = normalRegen + normalRegen * (deficit[1] / 100)
@@ -212,14 +218,14 @@ function BarFrame.prototype:ResolveDeficit(deficit)
   end
 end
 
-function BarFrame.prototype:GetCooldownRemaining()
+function BarFrame:GetCooldownRemaining()
   if db.char.bars.testMode then
     return self.data.cooldownRemaining
   end
   return ManaMinder:GetCooldownRemaining(self.data.cooldownStart, self.data.cooldown)
 end
 
-function BarFrame.prototype:GetCurrentPercent()
+function BarFrame:GetCurrentPercent()
   local remaining = self:GetCooldownRemaining()
   if remaining == 0 then
     return 100
@@ -227,7 +233,7 @@ function BarFrame.prototype:GetCurrentPercent()
   return (remaining / self.data.cooldown) * 100
 end
 
-function BarFrame.prototype:GetCurrentColors()
+function BarFrame:GetCurrentColors()
   if self:GetCooldownRemaining() > 0 then
     return db.char.bars.cooldownColor, db.char.bars.cooldownFontColor
   end
@@ -243,7 +249,7 @@ function BarFrame.prototype:GetCurrentColors()
   return db.char.bars.cooldownColor, db.char.bars.cooldownFontColor
 end
 
-function BarFrame.prototype:GetCurrentText()
+function BarFrame:GetCurrentText()
   local remaining = self:GetCooldownRemaining()
   if remaining > 0 then
     local relative = ManaMinder:SecondsToRelativeTime(remaining)
@@ -262,7 +268,7 @@ function BarFrame.prototype:GetCurrentText()
   return ""
 end
 
-function BarFrame.prototype:Consume(force)
+function BarFrame:Consume(force)
   if db.char.bars.testMode then
     return
   end
@@ -278,12 +284,12 @@ function BarFrame.prototype:Consume(force)
   end
 end
 
-function BarFrame.prototype:OnButtonEnter()
+function BarFrame:OnButtonEnter()
   ManaMinder.mainFrame:OnEnter()
   self:ShowTooltip()
 end
 
-function BarFrame.prototype:ShowTooltip()
+function BarFrame:ShowTooltip()
   if db.char.bars.testMode or db.char.bars.tooltipsDisabled then
     return
   end
@@ -293,7 +299,7 @@ function BarFrame.prototype:ShowTooltip()
   if self.data.type == "ITEM" then
     GameTooltip:SetBagItem(self.data.bag, self.data.slot)
   elseif self.data.type == "SPELL" then
-    GameTooltip:SetSpell(self.data.spellId, "BOOKTYPE_SPELL")
+    GameTooltip:SetSpellBookItem(self.data.spellId, "BOOKTYPE_SPELL")
   elseif self.data.type == "EQUIPPED" then
     GameTooltip:SetInventoryItem("player", self.data.slot)
   end
@@ -301,12 +307,12 @@ function BarFrame.prototype:ShowTooltip()
   GameTooltip:Show()
 end
 
-function BarFrame.prototype:OnButtonLeave()
+function BarFrame:OnButtonLeave()
   ManaMinder.mainFrame:OnLeave()
   self:HideTooltip()
 end
 
-function BarFrame.prototype:HideTooltip()
+function BarFrame:HideTooltip()
   if db.char.bars.tooltipsDisabled then
     return
   end
@@ -314,11 +320,11 @@ function BarFrame.prototype:HideTooltip()
   GameTooltip:Hide()
 end
 
-function BarFrame.prototype:UpdateWidth()
+function BarFrame:UpdateWidth()
   self.frame:SetWidth(db.char.mainFrame.width)
 end
 
-function BarFrame.prototype:UpdateHeight()
+function BarFrame:UpdateHeight()
   local height = db.char.bars.height
   self.frame:SetHeight(height)
   self.statusBar:SetPoint("TOPLEFT", self.frame, "TOPLEFT", height + 1, 0)
@@ -333,26 +339,26 @@ function BarFrame.prototype:UpdateHeight()
   self:UpdatePosition()
 end
 
-function BarFrame.prototype:UpdateFontSize()
+function BarFrame:UpdateFontSize()
   self.statusBarText:SetFont(GameFontHighlight:GetFont(), db.char.bars.fontSize)
 end
 
-function BarFrame.prototype:UpdatePosition()
+function BarFrame:UpdatePosition()
   self.animation = nil
   self:SetPosition(self:GetPositionForIndex(self.index))
 end
 
-function BarFrame.prototype:UpdateBackground()
+function BarFrame:UpdateBackground()
   local color = db.char.bars.backgroundColor
-  self.background:SetTexture(color[1], color[2], color[3], color[4])
+  self.background:SetColorTexture(color[1], color[2], color[3], color[4])
 end
 
-function BarFrame.prototype:UpdateTexture()
+function BarFrame:UpdateTexture()
   local texture = ManaMinder.textures[db.char.bars.texture]
   self.statusBar:SetStatusBarTexture(texture.texture)
 end
 
-function BarFrame.prototype:IsReady()
+function BarFrame:IsReady()
   return self:GetCooldownRemaining() == 0 and self:GetDeficitRemaining() == 0 and self.index == 1
 end
 

@@ -1,6 +1,3 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local TrackedConsumableFrame = AceOO.Class()
-
 local L = ManaMinder.L
 local frameCount = 1
 
@@ -12,8 +9,12 @@ local ITEM_HEIGHT = 20
 local ICON_HEIGHT = ITEM_HEIGHT - 4
 local NORMALTEX_RATIO = 1.7
 
-function TrackedConsumableFrame.prototype:init(parentFrame, consumable)
-  TrackedConsumableFrame.super.prototype.init(self)
+TrackedConsumableFrame = {}
+TrackedConsumableFrame.__index = TrackedConsumableFrame;
+
+function TrackedConsumableFrame:new(parentFrame, consumable)
+  local self = {}
+  setmetatable(self, TrackedConsumableFrame)
 
   self.parentFrame = parentFrame
   self.frameName = "ManaMinder_Tracked_Consumable_" .. frameCount
@@ -26,9 +27,11 @@ function TrackedConsumableFrame.prototype:init(parentFrame, consumable)
   self:InitializeEventHandlers()
   self:InitializeIcon()
   self:Update()
+
+  return self
 end
 
-function TrackedConsumableFrame.prototype:SetPosition(index)
+function TrackedConsumableFrame:SetPosition(index)
   self.index = index
 
   self.frame:SetPoint(
@@ -43,12 +46,12 @@ function TrackedConsumableFrame.prototype:SetPosition(index)
   self.frame:SetPoint("RIGHT", self.parentFrame, "RIGHT", rightMargin, 0)
 end
 
-function TrackedConsumableFrame.prototype:SetScrollVisibility(visible)
+function TrackedConsumableFrame:SetScrollVisibility(visible)
   self.withScroll = visible
   self:SetPosition(self.index)
 end
 
-function TrackedConsumableFrame.prototype:InitializeEventHandlers()
+function TrackedConsumableFrame:InitializeEventHandlers()
   self.frame:EnableMouse(true)
   self.frame:SetScript("OnEnter", function() self:OnMouseEnter() end)
   self.frame:SetScript("OnLeave", function() self:OnMouseLeave() end)
@@ -64,15 +67,15 @@ function TrackedConsumableFrame.prototype:InitializeEventHandlers()
   getglobal(self.frameName .. "_Up"):SetScript("OnLeave", function() self:OnMouseLeave() end)
 end
 
-function TrackedConsumableFrame.prototype:OnMouseEnter()
+function TrackedConsumableFrame:OnMouseEnter()
   getglobal(self.frameName .. "_Text"):SetTextColor(1, 1, 1, 1)
 end
 
-function TrackedConsumableFrame.prototype:OnMouseLeave()
+function TrackedConsumableFrame:OnMouseLeave()
   getglobal(self.frameName .. "_Text"):SetTextColor(1, 0.82, 0, 1)
 end
 
-function TrackedConsumableFrame.prototype:InitializeIcon()
+function TrackedConsumableFrame:InitializeIcon()
   local iconButton = getglobal(self.frameName .. "_Icon")
   iconButton:SetWidth(ICON_HEIGHT)
   iconButton:SetHeight(ICON_HEIGHT)
@@ -83,35 +86,35 @@ function TrackedConsumableFrame.prototype:InitializeIcon()
   normalTexture:SetHeight(ICON_HEIGHT * NORMALTEX_RATIO)
 end
 
-function TrackedConsumableFrame.prototype:Update()
+function TrackedConsumableFrame:Update()
   self:UpdateText()
   self:UpdateIconTexture()
 end
 
-function TrackedConsumableFrame.prototype:UpdateIconTexture()
+function TrackedConsumableFrame:UpdateIconTexture()
   getglobal(self.frameName .. "_IconIcon"):SetTexture(ManaMinder:GetConsumableTextureForKey(self.consumable.key, self.consumable.type))
 end
 
-function TrackedConsumableFrame.prototype:UpdateText()
+function TrackedConsumableFrame:UpdateText()
   getglobal(self.frameName .. "_Text"):SetText(L[ManaMinder:GetConsumableNameForKey(self.consumable.key, self.consumable.type)])
 end
 
-function TrackedConsumableFrame.prototype:OnRemoveClick()
-  PlaySound("igMainMenuOptionCheckBoxOn");
+function TrackedConsumableFrame:OnRemoveClick()
+  PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
   if self.onRemoveClick then
     self.onRemoveClick(self.consumable)
   end
 end
 
-function TrackedConsumableFrame.prototype:OnDownClick()
-  PlaySound("igMainMenuOptionCheckBoxOn");
+function TrackedConsumableFrame:OnDownClick()
+  PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
   if self.onDownClick then
     self.onDownClick(self.consumable)
   end
 end
 
-function TrackedConsumableFrame.prototype:OnUpClick()
-  PlaySound("igMainMenuOptionCheckBoxOn");
+function TrackedConsumableFrame:OnUpClick()
+  PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
   if self.onUpClick then
     self.onUpClick(self.consumable)
   end

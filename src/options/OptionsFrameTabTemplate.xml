@@ -5,7 +5,7 @@
 
   <Button name="ManaMinder_FrameTabButtonTemplate" virtual="true">
     <Size>
-      <AbsDimension x="115" y="32"/>
+      <AbsDimension x="10" y="32"/>
     </Size>
     <Layers>
       <Layer level="BACKGROUND">
@@ -16,7 +16,7 @@
           <Anchors>
             <Anchor point="TOPLEFT">
               <Offset>
-                <AbsDimension x="0" y="5"/>
+                <AbsDimension x="0" y="4"/>
               </Offset>
             </Anchor>
           </Anchors>
@@ -45,7 +45,7 @@
             <AbsDimension x="20" y="32"/>
           </Size>
           <Anchors>
-            <Anchor point="TOPLEFT"/>
+            <Anchor point="TOPLEFT" x="0" y="-1"/>
           </Anchors>
           <TexCoords left="0" right="0.15625" top="0" bottom="1.0"/>
         </Texture>
@@ -69,56 +69,44 @@
         </Texture>
       </Layer>
     </Layers>
-    <NormalText name="$parentText" inherits="GameFontNormalSmall">
+    <ButtonText name="$parentText">
+      <Size>
+        <AbsDimension x="0" y="10"/>
+      </Size>
       <Anchors>
-        <Anchor point="CENTER">
+        <Anchor point="TOP">
           <Offset>
-            <AbsDimension x="0" y="2"/>
+            <AbsDimension x="0" y="-10"/>
           </Offset>
         </Anchor>
       </Anchors>
-    </NormalText>
-    <HighlightText name="$parentHighlightText" inherits="GameFontHighlightSmall">
+    </ButtonText>
+    <NormalFont style="GameFontNormalSmall"/>
+    <HighlightFont style="GameFontHighlightSmall"/>
+    <DisabledFont style="GameFontHighlightSmall"/>
+    <HighlightTexture name="$parentHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-RealHighlight" alphaMode="ADD">
       <Anchors>
-        <Anchor point="CENTER">
+        <Anchor point="TOPLEFT">
           <Offset>
-            <AbsDimension x="0" y="2"/>
+            <AbsDimension x="3" y="5"/>
           </Offset>
         </Anchor>
-      </Anchors>
-    </HighlightText>
-    <DisabledText name="$parentDisabledText" inherits="GameFontHighlightSmall">
-      <Anchors>
-        <Anchor point="CENTER">
+        <Anchor point="BOTTOMRIGHT">
           <Offset>
-            <AbsDimension x="0" y="2"/>
-          </Offset>
-        </Anchor>
-      </Anchors>
-    </DisabledText>
-    <HighlightTexture name="$parentHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
-      <Anchors>
-        <Anchor point="LEFT">
-          <Offset>
-            <AbsDimension x="10" y="2"/>
-          </Offset>
-        </Anchor>
-        <Anchor point="RIGHT">
-          <Offset>
-            <AbsDimension x="-10" y="2"/>
+            <AbsDimension x="-3" y="0"/>
           </Offset>
         </Anchor>
       </Anchors>
     </HighlightTexture>
     <Scripts>
       <OnLoad>
-          ManaMinder.optionsFrame:OnTabLoad(this)
+          ManaMinder.optionsFrame:OnTabLoad(self)
       </OnLoad>
       <OnClick>
-          ManaMinder.optionsFrame:OnTabClick(this)
+          ManaMinder.optionsFrame:OnTabClick(self)
       </OnClick>
       <OnShow>
-          ManaMinder.optionsFrame:OnTabShow(this)
+          ManaMinder.optionsFrame:OnTabShow(self)
       </OnShow>
     </Scripts>
   </Button>

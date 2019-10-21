@@ -1,58 +1,58 @@
 local sounds = {
   ["Alright"] = {
     name = "Alright",
-    path = "Sound\\Creature\\Peasant\\PeasantYes3.wav",
-    type = "FILE"
+    path = 6285,
+    type = "STANDARD"
   },
   ["Bell"] = {
     name = "Bell",
-    path = "Sound\\Doodad\\BellTollNightElf.wav",
-    type = "FILE"
+    path = 7256,
+    type = "STANDARD"
   },
   ["Fireworks"] = {
     name = "Fireworks",
-    path = "Sound\\Doodad\\G_FireworkBoomGeneral3.wav",
-    type = "FILE"
+    path = 8664,
+    type = "STANDARD"
   },
   ["Gong"] = {
     name = "Gong",
-    path = "Sound\\Doodad\\G_GongTroll01.wav",
-    type = "FILE"
+    path = 4654,
+    type = "STANDARD"
   },
   ["Map Ping"] = {
     name = "Map Ping",
-    path = "MapPing",
+    path = 3175,
     type = "STANDARD"
   },
   ["Okie Dokie"] = {
     name = "Okie Dokie",
-    path = "Sound\\Creature\\Peon\\PeonYes4.wav",
-    type = "FILE"
+    path = 6294,
+    type = "STANDARD"
   },
   ["Raid Warning"] = {
     name = "Raid Warning",
-    path = "RaidWarning",
+    path = 8959,
     type = "STANDARD"
   },
   ["Righto"] = {
     name = "Righto",
-    path = "Sound\\Creature\\Peasant\\PeasantYes1.wav",
-    type = "FILE"
+    path = 6284,
+    type = "STANDARD"
   },
   ["Whip"] = {
     name = "Whip",
-    path = "Sound\\Item\\Weapons\\Whip\\BullWhipHit3.wav",
-    type = "FILE"
+    path = 3338,
+    type = "STANDARD"
   },
   ["Wisp"] = {
     name = "Wisp",
-    path = "Sound\\Event Sounds\\Wisp\\WispReady1.wav",
-    type = "FILE"
+    path = 6340,
+    type = "STANDARD"
   },
   ["Yarrrr"] = {
     name = "Yarrrr",
-    path = "Sound\\Spells\\YarrrrImpact.wav",
-    type = "FILE"
+    path = 5754,
+    type = "STANDARD"
   }
 }
 

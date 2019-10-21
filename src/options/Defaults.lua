@@ -5,7 +5,7 @@ ManaMinder.defaults = {
   char = {
     mainFrame = {
       position = {
-        point = "CENTER",
+        point = "TOPLEFT",
         relativePoint = "CENTER",
         x = -300,
         y = 0
@@ -76,6 +76,7 @@ ManaMinder.defaults = {
         type = "ITEM"
       }
     },
+    consumableCount = 3,
     showAllPotions = false,
     showAllRunes = false,
     showAllGems = false,

@@ -1,20 +1,24 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local AlertFrame = AceOO.Class()
-
-local db = ManaMinder.db
+local db = nil
 local L = ManaMinder.L
 
 local ICON_BOTTOM_MARGIN = 8
 
-function AlertFrame.prototype:init()
-  AlertFrame.super.prototype.init(self)
+AlertFrame = {}
+AlertFrame.__index = AlertFrame;
+
+function AlertFrame:new()
+  local self = {}
+  setmetatable(self, AlertFrame)
+
   self.isActive = false
   self.startTime = nil
   self.lastActiveConsumable = nil
   self.lastReady = {}
+
+  return self
 end
 
-function AlertFrame.prototype:OnLoad(frame)
+function AlertFrame:OnLoad(frame)
   local name = frame:GetName()
   self.frame = frame
   self.icon = getglobal(name .. "_Icon")
@@ -22,12 +26,13 @@ function AlertFrame.prototype:OnLoad(frame)
   self.text = getglobal(name .. "_Text")
 end
 
-function AlertFrame.prototype:OnInitialize()
+function AlertFrame:OnInitialize()
+  db = ManaMinder.db
   self:InitializeState()
   self:InitializeEventHandlers()
 end
 
-function AlertFrame.prototype:InitializeState()
+function AlertFrame:InitializeState()
   local selfDB = db.char.alertFrame
 
   self.frame:SetPoint(selfDB.position.point, "UIParent", selfDB.position.relativePoint, selfDB.position.x, selfDB.position.y)
@@ -46,13 +51,13 @@ function AlertFrame.prototype:InitializeState()
   self.text:SetText(self:GetText(ManaMinder.consumables["MAJOR_MANA_POTION"]))
 end
 
-function AlertFrame.prototype:InitializeEventHandlers()
+function AlertFrame:InitializeEventHandlers()
   self.frame:SetScript("OnUpdate", function() self:OnUpdate() end)
   self.frame:SetScript("OnDragStart", function() self:OnDragStart() end)
   self.frame:SetScript("OnDragStop", function() self:OnDragStop() end)
 end
 
-function AlertFrame.prototype:OnUpdate()
+function AlertFrame:OnUpdate()
   local readyConsumable = self:GetReadyConsumable()
 
   if readyConsumable then
@@ -74,34 +79,34 @@ function AlertFrame.prototype:OnUpdate()
   self:UpdateState()
 end
 
-function AlertFrame.prototype:GetReadyConsumable()
+function AlertFrame:GetReadyConsumable()
   if ManaMinder.barManager.barFrames[1] and ManaMinder.barManager.barFrames[1]:IsReady() then
     return ManaMinder.barManager.barFrames[1].data
   end
   return nil
 end
 
-function AlertFrame.prototype:HasDurationExpired()
+function AlertFrame:HasDurationExpired()
   return (GetTime() - self.startTime) >= db.char.alertFrame.duration
 end
 
-function AlertFrame.prototype:Deactivate()
+function AlertFrame:Deactivate()
   self.isActive = false
   if not db.char.alertFrame.unlocked then
     self.frame:SetAlpha(0)
   end
 end
 
-function AlertFrame.prototype:ShouldFinishEarly(readyConsumable)
+function AlertFrame:ShouldFinishEarly(readyConsumable)
   return (not self:IsEnabled() or not readyConsumable or readyConsumable.key ~= self.lastActiveConsumable.key)
     and self.startTime > self:GetFadeOutStartTime()
 end
 
-function AlertFrame.prototype:GetFadeOutStartTime()
+function AlertFrame:GetFadeOutStartTime()
   return GetTime() - (db.char.alertFrame.duration - db.char.alertFrame.animationDuration)
 end
 
-function AlertFrame.prototype:CanRealert(consumable)
+function AlertFrame:CanRealert(consumable)
   if not consumable then
     return true
   end
@@ -109,7 +114,7 @@ function AlertFrame.prototype:CanRealert(consumable)
   return sinceReady == nil or sinceReady > db.char.alertFrame.repeatDelay
 end
 
-function AlertFrame.prototype:TimeSinceLastReady(consumable)
+function AlertFrame:TimeSinceLastReady(consumable)
   local lastReady = self.lastReady[consumable.key]
   if not lastReady then
     return nil
@@ -118,11 +123,11 @@ function AlertFrame.prototype:TimeSinceLastReady(consumable)
   return GetTime() - lastReady
 end
 
-function AlertFrame.prototype:IsEnabled()
+function AlertFrame:IsEnabled()
   return not db.char.alertFrame.hidden and (ManaMinder.mainFrame.isVisible or db.char.alertFrame.showWithoutBars)
 end
 
-function AlertFrame.prototype:NeedsActivation(consumable)
+function AlertFrame:NeedsActivation(consumable)
   return
     not self.isActive
     and consumable
@@ -132,7 +137,7 @@ function AlertFrame.prototype:NeedsActivation(consumable)
     )
 end
 
-function AlertFrame.prototype:Activate(consumable)
+function AlertFrame:Activate(consumable)
   self.isActive = true
   self.startTime = GetTime()
   self.lastActiveConsumable = consumable
@@ -144,12 +149,12 @@ function AlertFrame.prototype:Activate(consumable)
   end
 end
 
-function AlertFrame.prototype:GetText(consumable)
+function AlertFrame:GetText(consumable)
   local name = ManaMinder:GetConsumableNameForKey(consumable.key, consumable.type)
   return string.gsub(db.char.alertFrame.text, "%%name%%", L[name])
 end
 
-function AlertFrame.prototype:UpdateState()
+function AlertFrame:UpdateState()
   if not self.isActive then
     return
   end
@@ -157,7 +162,7 @@ function AlertFrame.prototype:UpdateState()
   self:UpdateAlpha()
 end
 
-function AlertFrame.prototype:UpdateAlpha()
+function AlertFrame:UpdateAlpha()
   local alpha = 1
   local elapsed = GetTime() - self.startTime
   local total = db.char.alertFrame.duration
@@ -175,17 +180,17 @@ function AlertFrame.prototype:UpdateAlpha()
   self.frame:SetAlpha(alpha)
 end
 
-function AlertFrame.prototype:UpdateSize()
+function AlertFrame:UpdateSize()
   self.icon:SetWidth(db.char.alertFrame.size)
   self.icon:SetHeight(db.char.alertFrame.size)
   self.text:SetPoint("TOPLEFT", "$parent", "TOPLEFT", 0, -(db.char.alertFrame.size + ICON_BOTTOM_MARGIN))
 end
 
-function AlertFrame.prototype:UpdateFontSize()
+function AlertFrame:UpdateFontSize()
   self.text:SetFont(GameFontHighlight:GetFont(), db.char.alertFrame.fontSize)
 end
 
-function AlertFrame.prototype:OnLockChange(locked)
+function AlertFrame:OnLockChange(locked)
   if locked then
     self:OnLock()
   else
@@ -193,7 +198,7 @@ function AlertFrame.prototype:OnLockChange(locked)
   end
 end
 
-function AlertFrame.prototype:OnLock()
+function AlertFrame:OnLock()
   if not self.isActive then
     self.frame:SetAlpha(0)
   end
@@ -201,13 +206,13 @@ function AlertFrame.prototype:OnLock()
   self.frame:EnableMouse(false)
 end
 
-function AlertFrame.prototype:OnUnlock()
+function AlertFrame:OnUnlock()
   self.frame:SetAlpha(1)
   self.frame:SetMovable(true)
   self.frame:EnableMouse(true)
 end
 
-function AlertFrame.prototype:OnDragStart()
+function AlertFrame:OnDragStart()
   if not db.char.alertFrame.unlocked then
     return
   end
@@ -215,7 +220,7 @@ function AlertFrame.prototype:OnDragStart()
   self.frame:StartMoving()
 end
 
-function AlertFrame.prototype:OnDragStop()
+function AlertFrame:OnDragStop()
   if not db.char.alertFrame.unlocked then
     return
   end

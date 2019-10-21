@@ -33,7 +33,7 @@ end
 function ManaMinder:GetItemIdFromLink(itemLink)
   local id
   if (itemLink) then
-    for id in string.gfind(itemLink, "|c%x+|Hitem:(%d+):%d+:%d+:%d+|h%[.-%]|h|r") do
+    for id in string.gmatch(itemLink, "|c%x+|Hitem:(%d+):%d+:%d+:%d+|h%[.-%]|h|r") do
       return tonumber(id)
     end
   end
@@ -67,7 +67,7 @@ function ManaMinder:GetCooldownForSpellName(spellName)
   local _,_,offset,numSpells = GetSpellTabInfo(GetNumSpellTabs())
   local numAllSpell = offset + numSpells
   for i = numAllSpell, 1, -1 do
-    local name = GetSpellName(i, "BOOKTYPE_SPELL")
+    local name = GetSpellBookItemName(i, "BOOKTYPE_SPELL")
     if name == L[spellName] then
       local start, duration = GetSpellCooldown(i, "BOOKTYPE_SPELL")
       return start, duration, i

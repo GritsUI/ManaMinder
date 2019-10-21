@@ -1,15 +1,24 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local BarManager = AceOO.Class()
-local db = ManaMinder.db
+local db = nil
 
 local HEADER_HEIGHT = 20
 
-function BarManager.prototype:init()
-  BarManager.super.prototype.init(self)
+BarManager = {}
+BarManager.__index = BarManager;
+
+function BarManager:new()
+  local self = {}
+  setmetatable(self, BarManager)
+
   self.barFrames = {}
+
+  return self
 end
 
-function BarManager.prototype:Update()
+function BarManager:OnInitialize()
+  db = ManaMinder.db
+end
+
+function BarManager:Update()
   local newData = ManaMinder.testBarData
   if not db.char.bars.testMode then
     newData = ManaMinder.stateManager:GetBarData()
@@ -33,7 +42,7 @@ function BarManager.prototype:Update()
   self:UpdateBars(newData)
 end
 
-function BarManager.prototype:CreateMissingBars(newData)
+function BarManager:CreateMissingBars(newData)
   for _, newBar in ipairs(newData) do
     if not self:IsBarInArray(self.barFrames, newBar.key) then
       table.insert(self.barFrames, self:CreateBar(newBar))
@@ -41,7 +50,7 @@ function BarManager.prototype:CreateMissingBars(newData)
   end
 end
 
-function BarManager.prototype:IsBarInArray(array, key)
+function BarManager:IsBarInArray(array, key)
   for _, bar in ipairs(array) do
     -- Handle either an array of bar data objects, or BarFrame objects
     local barKey = bar.data and bar.data.key or bar.key
@@ -52,11 +61,11 @@ function BarManager.prototype:IsBarInArray(array, key)
   return false
 end
 
-function BarManager.prototype:CreateBar(data)
+function BarManager:CreateBar(data)
   return ManaMinder.BarFrame:new(ManaMinder.mainFrame.frame, data)
 end
 
-function BarManager.prototype:RemoveStaleBars(newData)
+function BarManager:RemoveStaleBars(newData)
   for i = table.getn(self.barFrames), 1, -1 do
     if not self:IsBarInArray(newData, self.barFrames[i].data.key) then
       self.barFrames[i].frame:Hide()
@@ -65,21 +74,22 @@ function BarManager.prototype:RemoveStaleBars(newData)
   end
 end
 
-function BarManager.prototype:UpdatePriorities()
+function BarManager:UpdatePriorities()
   if db.char.bars.testMode then
     return
   end
 
   for i = table.getn(self.barFrames), 1, -1 do
-    for priority, consumable in db.char.consumables do
+    for index = 1, db.char.consumableCount, 1 do
+      consumable = db.char.consumables[index]
       if self.barFrames[i].data.key == consumable.key then
-        self.barFrames[i].data.priority = priority
+        self.barFrames[i].data.priority = index
       end
     end
   end
 end
 
-function BarManager.prototype:SortBars()
+function BarManager:SortBars()
   table.sort(self.barFrames, function(barA, barB)
     local cooldownRemainingA = self:GetCooldownRemaining(barA)
     local cooldownRemainingB = self:GetCooldownRemaining(barB)
@@ -91,14 +101,14 @@ function BarManager.prototype:SortBars()
   end)
 end
 
-function BarManager.prototype:GetCooldownRemaining(bar)
+function BarManager:GetCooldownRemaining(bar)
   if db.char.bars.testMode then
     return bar.data.cooldownRemaining
   end
   return ManaMinder:GetCooldownRemaining(bar.data.cooldownStart, bar.data.cooldown)
 end
 
-function BarManager.prototype:UpdateBars(newData)
+function BarManager:UpdateBars(newData)
   for i = 1, table.getn(self.barFrames), 1 do
     local bar = self.barFrames[i]
     for _, data in ipairs(newData) do
@@ -115,20 +125,20 @@ function BarManager.prototype:UpdateBars(newData)
   end
 end
 
-function BarManager.prototype:GetTotalHeight()
+function BarManager:GetTotalHeight()
   local barMargin = db.char.bars.margin
   local barHeight = db.char.bars.height
   local count =  table.getn(self.barFrames)
   return HEADER_HEIGHT + count * barHeight + (count - 1) * barMargin
 end
 
-function BarManager.prototype:ForEachBar(func)
+function BarManager:ForEachBar(func)
   for i = 1, table.getn(self.barFrames), 1 do
     func(self.barFrames[i])
   end
 end
 
-function BarManager.prototype:ClearBars()
+function BarManager:ClearBars()
   self:ForEachBar(function(bar) bar.frame:Hide() end)
   self.barFrames = {}
 end

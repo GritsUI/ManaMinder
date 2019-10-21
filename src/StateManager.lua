@@ -1,9 +1,11 @@
-local AceOO = AceLibrary("AceOO-2.0")
-local StateManager = AceOO.Class()
-local db = ManaMinder.db
+local db = nil
 
-function StateManager.prototype:init()
-  StateManager.super.prototype.init(self)
+StateManager = {}
+StateManager.__index = StateManager;
+
+function StateManager:new()
+  local self = {}
+  setmetatable(self, StateManager)
 
   -- Tracks state of all consumable counts in bags and consumable/spell cooldowns. Only tracks those which are
   -- present in db.char.consumables/items/spells, currently enabled and with a bag count greater than 0.
@@ -13,9 +15,15 @@ function StateManager.prototype:init()
   -- "SPELL" objects additionally contain: spellId
   -- "EQUIPPED" objects additionally contain: slot
   self.state = {}
+
+  return self
 end
 
-function StateManager.prototype:Update()
+function StateManager:OnInitialize()
+  db = ManaMinder.db
+end
+
+function StateManager:Update()
   local newState = {}
   self:UpdateStateForConsumables(newState)
   self:UpdateStateForSpells(newState)
@@ -23,13 +31,12 @@ function StateManager.prototype:Update()
   self.state = newState
 end
 
-function StateManager.prototype:UpdateStateForConsumables(state)
+function StateManager:UpdateStateForConsumables(state)
   ManaMinder:ForEachContainerSlot(
     function(bag, slot)
-      local texture, itemCount = GetContainerItemInfo(bag, slot)
+      local texture, itemCount, _, _, _, _, _, _, _, itemId = GetContainerItemInfo(bag, slot)
+
       if itemCount then
-        local link = GetContainerItemLink(bag, slot)
-        local itemId = ManaMinder:GetItemIdFromLink(link)
         local consumableConfig, consumableData = self:GetConsumableConfigIfTracked(itemId)
 
         if consumableConfig then
@@ -58,8 +65,9 @@ function StateManager.prototype:UpdateStateForConsumables(state)
   )
 end
 
-function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
-  for _, consumableConfig in pairs(ManaMinder.db.char.consumables) do
+function StateManager:GetConsumableConfigIfTracked(itemId)
+  for index = 1, db.char.consumableCount, 1 do
+    consumableConfig = db.char.consumables[index]
     if consumableConfig.type == "ITEM" then
       local consumableData = ManaMinder.consumables[consumableConfig.key]
       if consumableData.itemId == itemId then
@@ -70,8 +78,9 @@ function StateManager.prototype:GetConsumableConfigIfTracked(itemId)
   return nil
 end
 
-function StateManager.prototype:UpdateStateForSpells(state)
-  for _, spellConfig in pairs(ManaMinder.db.char.consumables) do
+function StateManager:UpdateStateForSpells(state)
+  for index = 1, db.char.consumableCount, 1 do
+    spellConfig = db.char.consumables[index]
     if spellConfig.type == "SPELL" then
       local spellData = ManaMinder.spells[spellConfig.key]
       local cooldownStart, cooldown, spellId = ManaMinder:GetCooldownForSpellName(spellData.name)
@@ -93,16 +102,17 @@ function StateManager.prototype:UpdateStateForSpells(state)
   end
 end
 
-function StateManager.prototype:UpdateStateForEquippedItems(state)
+function StateManager:UpdateStateForEquippedItems(state)
   local equipped = {}
 
-  for _, itemConfig in pairs(ManaMinder.db.char.consumables) do
+  for index = 1, db.char.consumableCount, 1 do
+    itemConfig = db.char.consumables[index]
     if itemConfig.type == "EQUIPPED" then
       local itemData = ManaMinder.items[itemConfig.key]
-      for _, slot in itemData.slots do
+      for _, slot in pairs(itemData.slots) do
         local slotId = GetInventorySlotInfo(slot)
         if not equipped[slot] then
-          equipped[slot] = ManaMinder:GetItemIdFromLink(GetInventoryItemLink("player", slotId))
+          equipped[slot] = GetInventoryItemID("player", slotId)
         end
 
         if equipped[slot] == itemData.itemId then
@@ -124,10 +134,10 @@ function StateManager.prototype:UpdateStateForEquippedItems(state)
   end
 end
 
-function StateManager.prototype:GetBarData()
+function StateManager:GetBarData()
   local bars = {}
 
-  for _, consumable in self.state do
+  for _, consumable in pairs(self.state) do
     if consumable.type ~= "ITEM" or consumable.count > 0 then
       table.insert(bars, consumable)
     end
@@ -150,11 +160,11 @@ function StateManager.prototype:GetBarData()
   return bars
 end
 
-function StateManager.prototype:FilterGroup(bars, group)
+function StateManager:FilterGroup(bars, group)
   local filtered = {}
   local groupFound = false
 
-  for _, bar in bars do
+  for _, bar in pairs(bars) do
     if bar.group == group then
       if not groupFound then
         table.insert(filtered, bar)

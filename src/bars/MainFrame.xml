@@ -8,7 +8,7 @@
       <AbsDimension x="100" y="100"/>
     </Size>
     <Anchors>
-      <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+      <Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="CENTER">
         <Offset>
           <AbsDimension x="-300" y="0"/>
         </Offset>
@@ -152,7 +152,7 @@
     </Frames>
     <Scripts>
       <OnLoad>
-          ManaMinder.mainFrame:OnLoad(this)
+          ManaMinder.mainFrame:OnLoad(self)
       </OnLoad>
       <OnEnter>
           ManaMinder.mainFrame:OnEnter()

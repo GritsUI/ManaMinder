@@ -16,7 +16,7 @@
     </Anchors>
     <Frames>
 
-      <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Display_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="368"/>
         </Size>
@@ -51,8 +51,8 @@
                   ManaMinder.optionsFrame.alertsFrame:OnEnabledLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.alertsFrame:OnEnabledChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.alertsFrame:OnEnabledChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -73,8 +73,8 @@
                   ManaMinder.optionsFrame.alertsFrame:OnEnabledWhenHiddenLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.alertsFrame:OnEnabledWhenHiddenChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.alertsFrame:OnEnabledWhenHiddenChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -92,8 +92,8 @@
                   ManaMinder.optionsFrame.alertsFrame:OnLockedLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.alertsFrame:OnLockedChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.alertsFrame:OnLockedChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -122,16 +122,16 @@
                   ManaMinder.optionsFrame.alertsFrame:OnTextLoad()
               </OnLoad>
               <OnEnterPressed>
-                this:ClearFocus()
-                ManaMinder.optionsFrame.alertsFrame:OnTextChange(this:GetText())
+                self:ClearFocus()
+                ManaMinder.optionsFrame.alertsFrame:OnTextChange(self:GetText())
               </OnEnterPressed>
               <OnEscapePressed>
-                this:ClearFocus()
+                self:ClearFocus()
               </OnEscapePressed>
               <OnEnter>
-                  if this.tooltipText then
-                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  if self.tooltipText then
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
                   end
               </OnEnter>
               <OnLeave>
@@ -153,7 +153,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                ManaMinder.optionsFrame.alertsFrame:OnDurationChange(this:GetValue())
+                ManaMinder.optionsFrame.alertsFrame:OnDurationChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.alertsFrame:OnDurationLoad()
@@ -174,7 +174,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.alertsFrame:OnAnimationDurationChange(this:GetValue())
+                  ManaMinder.optionsFrame.alertsFrame:OnAnimationDurationChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.alertsFrame:OnAnimationDurationLoad()
@@ -195,7 +195,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.alertsFrame:OnIconSizeChange(this:GetValue())
+                  ManaMinder.optionsFrame.alertsFrame:OnIconSizeChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.alertsFrame:OnIconSizeLoad()
@@ -216,7 +216,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                  ManaMinder.optionsFrame.alertsFrame:OnFontSizeChange(this:GetValue())
+                  ManaMinder.optionsFrame.alertsFrame:OnFontSizeChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.alertsFrame:OnFontSizeLoad()
@@ -237,7 +237,7 @@
             </Anchors>
             <Scripts>
               <OnValueChanged>
-                ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayChange(this:GetValue())
+                ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayChange(self:GetValue())
               </OnValueChanged>
               <OnLoad>
                   ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayLoad()
@@ -248,12 +248,12 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>
 
-      <Frame name="$parent_Sounds_Section" inherits="OptionFrameBoxTemplate">
+      <Frame name="$parent_Sounds_Section" inherits="OptionsBoxTemplate">
         <Size>
           <AbsDimension x="281" y="368"/>
         </Size>
@@ -292,8 +292,8 @@
                   ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledLoad()
               </OnLoad>
               <OnClick>
-                  ManaMinder:OnCheckBoxClick()
-                  ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledChange(this:GetChecked())
+                  ManaMinder:OnCheckBoxClick(self)
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledChange(self:GetChecked())
               </OnClick>
             </Scripts>
           </CheckButton>
@@ -306,27 +306,13 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Layers>
-              <Layer level="ARTWORK">
-                <FontString name="$parent_Text" inherits="GameFontNormalSmall" justifyH="LEFT" text="Sound">
-                  <Anchors>
-                    <Anchor point="TOPLEFT">
-                      <Offset x="21" y="9" />
-                    </Anchor>
-                    <Anchor pont="BOTTOMRIGHT">
-                      <Offset x="0" y="0" />
-                    </Anchor>
-                  </Anchors>
-                </FontString>
-              </Layer>
-            </Layers>
             <Scripts>
               <OnLoad>
-                  ManaMinder.optionsFrame.alertsFrame:OnSoundDropDownLoad()
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundDropDownLoad(self)
               </OnLoad>
               <OnEnter>
-                  GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                  GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                  GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
               </OnEnter>
               <OnLeave>
                   GameTooltip:Hide();
@@ -358,7 +344,7 @@
         </Frames>
         <Scripts>
           <OnLoad>
-              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(self)
           </OnLoad>
         </Scripts>
       </Frame>

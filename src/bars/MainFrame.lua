@@ -122,7 +122,6 @@ function MainFrame:GetTimeInCombat()
 end
 
 function MainFrame:UpdateVisibility()
-  ManaMinder:Print(UnitInRaid("player"))
   local inRaid = UnitInRaid("player")
   local inGroup = IsInGroup() and not inRaid
   local isSolo = not inRaid and not inGroup
